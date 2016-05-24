@@ -1,0 +1,1530 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <Body>
+    <ReportItems>
+      <Tablix Name="Tablix2">
+        <TablixBody>
+          <TablixColumns>
+            <TablixColumn>
+              <Width>0.6in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>0.6in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>1in</Width>
+            </TablixColumn>
+          </TablixColumns>
+          <TablixRows>
+            <TablixRow>
+              <Height>0.2in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox20">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Prior Years Performance</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox20</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BackgroundColor>White</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                    <ColSpan>6</ColSpan>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+                <TablixCell />
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>0.2in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox3">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Year</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox3</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BackgroundColor>LightSteelBlue</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox7">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Hours</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox7</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BackgroundColor>LightSteelBlue</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox9">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Costs</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox9</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BackgroundColor>LightSteelBlue</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox11">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Sell</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox11</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BackgroundColor>LightSteelBlue</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox18">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>AMU</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox18</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BackgroundColor>LightSteelBlue</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox8">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Pct Increase</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox8</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BackgroundColor>LightSteelBlue</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>0.2in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Year1">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!Year1.Value</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Year1</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Hours">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!Hours.Value</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                                <Format>#,0.00;(#,0.00)</Format>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Hours</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Costs">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!Costs.Value</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                                <Format>#,0.00;(#,0.00)</Format>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Costs</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Billed">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!Billed.Value</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                                <Format>#,0.00;(#,0.00)</Format>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Billed</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="AMU1">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!AMU.Value</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                                <Format>#,0.00;(#,0.00)</Format>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>AMU1</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Action">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!Action.Value</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                                <Format>0%</Format>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Action</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+          </TablixRows>
+        </TablixBody>
+        <TablixColumnHierarchy>
+          <TablixMembers>
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+          </TablixMembers>
+        </TablixColumnHierarchy>
+        <TablixRowHierarchy>
+          <TablixMembers>
+            <TablixMember>
+              <KeepWithGroup>After</KeepWithGroup>
+            </TablixMember>
+            <TablixMember>
+              <KeepWithGroup>After</KeepWithGroup>
+            </TablixMember>
+            <TablixMember>
+              <Group Name="Details1" />
+            </TablixMember>
+          </TablixMembers>
+        </TablixRowHierarchy>
+        <DataSetName>dsPriorYears</DataSetName>
+        <Height>0.6in</Height>
+        <Width>5.2in</Width>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Tablix>
+    </ReportItems>
+    <Height>0.6in</Height>
+    <Style />
+  </Body>
+  <Width>5.2in</Width>
+  <Page>
+    <PageHeight>8.5in</PageHeight>
+    <PageWidth>11in</PageWidth>
+    <LeftMargin>0.5in</LeftMargin>
+    <RightMargin>0.5in</RightMargin>
+    <TopMargin>0.25in</TopMargin>
+    <BottomMargin>0.25in</BottomMargin>
+    <Style>
+      <BackgroundColor>White</BackgroundColor>
+    </Style>
+  </Page>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="MMFS">
+      <DataSourceReference>MMFS</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>728cea88-c540-4c0a-8738-3b11d1aae707</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="dsPriorYears">
+      <Query>
+        <DataSourceName>MMFS</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@Contract_Number">
+            <Value>=Parameters!Contract_Number.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+          <QueryParameter Name="@FromDate">
+            <Value>=Parameters!FromDate.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+          <QueryParameter Name="@ToDate">
+            <Value>=Parameters!ToDate.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+          <QueryParameter Name="@Corporate_Contract_Nbr">
+            <Value>=Parameters!Corporate_Contract_Nbr.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+          <QueryParameter Name="@Contract_Start_Date">
+            <Value>=Parameters!Contract_Start_Date.Value</Value>
+            <rd:UserDefined>true</rd:UserDefined>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>--DECLARE @Contract_Start_Date DATE = '3/1/2015'
+--DECLARE @FromDate DATE = '3/1/2015'
+--DECLARE @ToDate DATE = '12/31/2015'
+--DECLARE @Corporate_Contract_Nbr VARCHAR(100) = '%'
+--DECLARE @Contract_Number VARCHAR(100) = '%'
+
+	SET @Contract_Start_Date = DATEADD(YEAR, -2, @Contract_Start_Date)
+	SET @FromDate = DATEADD(YEAR, -2,  @FromDate)
+	SET @ToDate = DATEADD(YEAR, -2,  @ToDate)
+
+
+    IF ISNULL(@Contract_Number, '') = '' 
+        SET @Contract_Number = '%'
+
+    IF ISNULL(@Corporate_Contract_Nbr, '') = '' 
+        SET @Corporate_Contract_Nbr = '%'
+	
+	DECLARE @PriorYears TABLE (Year1 INT , Contract_Number CHAR(11) , Hours DECIMAL(19,2) ,Costs DECIMAL(19,2), Billed DECIMAL(19,2), YearNextCosts DECIMAL(19,2), YearNextBilled DECIMAL(19,2))
+
+
+    DECLARE @Contract TABLE
+        (
+          Contract_Number CHAR(11) ,
+          WSCONTSQ INT
+        )
+
+    INSERT  @Contract
+            ( Contract_Number ,
+              WSCONTSQ
+            )
+            SELECT  Contract_Number ,
+                    MAX(WSCONTSQ)
+            --modified 10/31/2012        
+            --FROM    SV00500
+            FROM MM.SV00500_SV00501
+            WHERE   YEAR(Contract_Start_Date) = YEAR(@Contract_Start_Date)
+                    AND MONTH(Contract_Start_Date) = MONTH(@Contract_Start_Date)
+                    AND Cancel_Box &lt;&gt; 1
+            GROUP BY Contract_Number
+
+
+    DECLARE @ReportPY TABLE
+        (
+          Contract_Number VARCHAR(100) ,
+          ADRSCODE VARCHAR(15) ,
+          CUSTNMBR VARCHAR(15) ,
+          Divisions VARCHAR(10) ,
+          Profit_Center VARCHAR(50) ,
+          ShowOverAllProfitability VARCHAR(1) ,
+          Type_Call_Short VARCHAR(100) ,
+          Type_of_Call VARCHAR(100) ,
+          Estimated_Hours DECIMAL(18, 2) ,
+          Actual_Hours DECIMAL(18, 2) ,
+          Costs DECIMAL(18, 2) ,
+          Billed DECIMAL(18, 2) ,
+          Profit DECIMAL(18, 2) ,
+          AMU DECIMAL(18, 3) ,
+          ProfitCenter_AMU DECIMAL(18, 3) ,
+          Contract_AMU DECIMAL(18, 3) ,
+          CustomerLocation_AMU DECIMAL(18, 3) ,
+          Customer_Address VARCHAR(1000) ,
+          Location_Address VARCHAR(1000)
+        )
+
+
+    DECLARE @SELECTION TABLE
+        (
+          ADRSCODE VARCHAR(15) ,
+          CUSTNMBR VARCHAR(15) ,
+          Bill_Customer_Number VARCHAR(15) ,
+          Bill_Address_Code VARCHAR(15) ,
+          Contract_Amount DECIMAL(19, 5) ,
+          Contract_Start_Date DATETIME ,
+          Contract_Experation_Date DATETIME ,
+          SLPRSNID CHAR(15) ,
+          Bill_Freq SMALLINT
+        )
+
+    DECLARE @Table TABLE
+        (
+          Contract_Number VARCHAR(100) ,
+          ADRSCODE VARCHAR(15) ,
+          CUSTNMBR VARCHAR(15) ,
+          Bill_Customer_Code VARCHAR(15) ,
+          Customer VARCHAR(1000) ,
+          Location VARCHAR(1000) ,
+          Divisions VARCHAR(100) ,
+          Service_Call_ID VARCHAR(100) ,
+          Type_Call_Short VARCHAR(100) ,
+          Type_of_Call VARCHAR(100) ,
+          Costs DECIMAL(18, 2) ,
+          Billed DECIMAL(18, 2) ,
+          Estimate_Hours DECIMAL(18, 2) ,
+          Actual_Hours DECIMAL(18, 2)
+        )
+
+	
+    INSERT  @SELECTION
+            ( ADRSCODE ,
+              CUSTNMBR
+            )
+            SELECT DISTINCT
+                    ADRSCODE ,
+                    CUSTNMBR
+            --modified 10/31/2012        
+            --FROM    SV00500
+            FROM MM.SV00500_SV00501
+            WHERE   YEAR(Contract_Start_Date) = YEAR(@Contract_Start_Date)
+                    AND MONTH(Contract_Start_Date) = MONTH(@Contract_Start_Date)
+                    AND Contract_Number LIKE @Contract_Number
+                    AND Corporate_Contract_Nbr LIKE @Corporate_Contract_Nbr
+                    AND Cancel_Box &lt;&gt; 1 
+                        
+ 
+    INSERT  @Table
+            ( Contract_Number ,
+              ADRSCODE ,
+              CUSTNMBR ,
+              Divisions ,
+              Service_Call_ID ,
+              Type_Call_Short ,
+              Type_of_Call ,
+              Costs ,
+              Billed ,
+              Actual_Hours ,
+              Estimate_Hours
+						 
+            )
+            SELECT  svServiceMstr.Contract_Number ,
+                    svServiceMstr.ADRSCODE ,
+                    svServiceMstr.CUSTNMBR ,
+                    svServiceMstr.Divisions ,
+                    svServiceMstr.Service_Call_ID ,
+                    svServiceMstr.Type_Call_Short ,
+                    TypeofCall.Type_of_Call ,
+                    Costs = SUM(CASE WHEN svInvoiceMstr.Invoice_Type = 8
+                                     THEN svInvoiceMstr.Cost_All * -1
+                                     ELSE svInvoiceMstr.Cost_All
+                                END) ,
+                    Billed = SUM(svInvoiceMstr.Billable_All
+                                 - svInvoiceMstr.Billable_Tax) ,
+                    Actual_Hours = 0 ,
+                    Estimate_Hours = 0
+            FROM    SV00300 svServiceMstr --Possible add        
+                    JOIN @SELECTION S ON svServiceMstr.ADRSCODE = S.ADRSCODE
+                                         AND svServiceMstr.CUSTNMBR = S.CUSTNMBR
+                    JOIN SV00701 svInvoiceMstr ON svServiceMstr.Service_Call_ID = svInvoiceMstr.Service_Call_ID
+                    JOIN SV00320 TypeofCall ON TypeofCall.Type_Call_Short = svServiceMstr.Type_Call_Short
+            WHERE   svServiceMstr.Completion_Date BETWEEN @FromDate
+                                                  AND     @ToDate
+                    AND svServiceMstr.Status_of_Call = 'CLOSED'
+            GROUP BY svServiceMstr.Divisions ,
+                    svServiceMstr.ADRSCODE ,
+                    svServiceMstr.CUSTNMBR ,
+                    svServiceMstr.Service_Call_ID ,
+                    svServiceMstr.Type_Call_Short ,
+                    TypeofCall.Type_of_Call ,
+                    svServiceMstr.Contract_Number
+                
+    UPDATE  @Table
+    SET     Actual_Hours = T.Actual_Hours
+    FROM    @Table A ,
+            ( SELECT    svServiceMstr.Service_Call_ID ,
+                        Actual_Hours = SUM(CASE WHEN svInvoiceHist.PAYRCORD IN (
+                                                     'R', 'O', 'D' )
+                                                THEN svInvoiceHist.TRXHRUNT
+                                                     * .01
+                                                ELSE 0
+                                           END)
+              FROM      SV00300 svServiceMstr
+                        JOIN SV000815 svInvoiceHist ON svServiceMstr.Service_Call_ID = svInvoiceHist.Service_Call_ID
+              GROUP BY  svServiceMstr.Service_Call_ID
+            ) T
+    WHERE   A.Service_Call_ID = T.Service_Call_ID
+       
+
+
+    INSERT  @Table
+            ( Contract_Number ,
+              ADRSCODE ,
+              CUSTNMBR ,
+              Divisions ,
+              Type_Call_Short ,
+              Type_of_Call ,
+              Costs ,
+              Billed ,
+              Actual_Hours ,
+              Estimate_Hours
+            )
+            SELECT  Contract_Number ,
+                    ADRSCODE ,
+                    CUSTNMBR ,
+                    Divisions ,
+                    Type_Call_Short ,
+                    Type_of_Call ,
+                    Costs = 0 ,
+                    Billed ,
+                    Actual_Hours = 0 ,
+                    Estimate_Hours = 0
+            FROM    ( SELECT    MM.SV00500_SV00501.Contract_Number ,
+                                MM.SV00564_FFSC_Billings.ADRSCODE ,
+                                MM.SV00564_FFSC_Billings.CUSTNMBR ,
+                                MM.SV00500_SV00501.Divisions ,
+                                Type_Call_Short = 'MCC' ,
+                                Type_of_Call = 'GENERATED MC   ' ,
+                                Billed = SUM(CASE RMDTYPAL
+                                               WHEN 7
+                                               THEN Billable_Subtotal * -1
+                                               ELSE Billable_Subtotal
+                                             END)
+							--Modified 7/18/2011
+							--changed from SV00500 to MM.SV00500_SV00501
+							--Billings may be from a contract that has moved to history
+                      FROM      MM.SV00500_SV00501 
+                                JOIN @SELECTION S ON MM.SV00500_SV00501.ADRSCODE = S.ADRSCODE
+                                                     AND MM.SV00500_SV00501.CUSTNMBR = S.CUSTNMBR
+                                JOIN MM.SV00564_FFSC_Billings ON MM.SV00564_FFSC_Billings.CUSTNMBR = MM.SV00500_SV00501.CUSTNMBR
+                                                              AND MM.SV00564_FFSC_Billings.ADRSCODE = MM.SV00500_SV00501.ADRSCODE
+                                                              AND MM.SV00564_FFSC_Billings.Contract_Number = MM.SV00500_SV00501.Contract_Number
+                               --Modified 6/14/2011 
+                                                              AND MM.SV00564_FFSC_Billings.WSCONTSQ = MM.SV00500_SV00501.WSCONTSQ
+                               --Should DATE1 be Wennsoft_Billing_Date
+                      WHERE     MM.SV00564_FFSC_Billings.DATE1 BETWEEN @FromDate
+                                                              AND
+                                                              @ToDate
+                  -- WHERE     MM.SV00564_FFSC_Billings.Wennsoft_Billing_Date BETWEEN @FromDate AND @ToDate
+                      GROUP BY  MM.SV00500_SV00501.Contract_Number ,
+                                MM.SV00564_FFSC_Billings.CUSTNMBR ,
+                                MM.SV00564_FFSC_Billings.ADRSCODE ,
+                                MM.SV00500_SV00501.Divisions
+                    ) A			
+               
+
+
+
+
+    INSERT  @ReportPY
+            ( Contract_Number ,
+              ADRSCODE ,
+              CUSTNMBR ,
+              Divisions ,
+              Profit_Center ,
+              ShowOverAllProfitability ,
+              Type_Call_Short ,
+              Type_of_Call ,
+              Estimated_Hours ,
+              Actual_Hours ,
+              Costs ,
+              Billed ,
+              Profit ,
+              AMU
+            )
+            SELECT  Contract_Number = CASE WHEN @Corporate_Contract_Nbr LIKE '[0-9]%'
+                                           THEN @Corporate_Contract_Nbr
+                                           WHEN Contract_Number = ''
+                                           THEN 'No Contract'
+                                           ELSE Contract_Number
+                                      END ,
+                    ADRSCODE = CASE WHEN @Corporate_Contract_Nbr LIKE '[0-9]%'
+                                    THEN ''
+                                    ELSE T.ADRSCODE
+                               END ,
+                    CUSTNMBR = CASE WHEN @Corporate_Contract_Nbr LIKE '[0-9]%'
+                                    THEN ''
+                                    ELSE T.CUSTNMBR
+                               END ,
+                    T.Divisions ,
+                    Profit_Center = CASE RIGHT(RTRIM(T.DIVISIONS), 2)
+                                      WHEN '40' THEN '40 - DEMAND'
+                                      WHEN '50' THEN '50 - SERVICE MAINT'
+                                      WHEN '90' THEN '90 - ADMIN'
+                                    END ,
+                    ShowOverAllProfitability = CASE RIGHT(RTRIM(T.DIVISIONS),
+                                                          2)
+                                                 WHEN 90 THEN '2'
+                                                 ELSE '1'
+                                               END ,
+                    Type_Call_Short ,
+                    Type_Of_Call ,
+                    Estimated_Hours = SUM(Estimate_Hours) ,
+                    Actual_Hours = SUM(Actual_Hours) ,
+                    Costs = SUM(Costs) ,
+                    Billed = SUM(Billed) ,
+                    Profit = SUM(Billed) - SUM(Costs) ,
+                    AMU = CONVERT(DECIMAL(9, 3), ISNULL(SUM(Billed)
+                                                        / NULLIF(SUM(Costs), 0),
+                                                        0))
+            FROM    @Table T
+            WHERE T.DIVISIONS LIKE '__50'
+            GROUP BY CASE WHEN @Corporate_Contract_Nbr LIKE '[0-9]%'
+                          THEN @Corporate_Contract_Nbr
+                          WHEN Contract_Number = '' THEN 'No Contract'
+                          ELSE Contract_Number
+                     END ,
+                    CASE WHEN @Corporate_Contract_Nbr LIKE '[0-9]%' THEN ''
+                         ELSE T.ADRSCODE
+                    END ,
+                    CASE WHEN @Corporate_Contract_Nbr LIKE '[0-9]%' THEN ''
+                         ELSE T.CUSTNMBR
+                    END ,
+                    T.Divisions ,
+                    Type_Call_Short ,
+                    Type_Of_Call
+            ORDER BY ADRSCODE ,
+                    Contract_Number ,
+                    DIVISIONS        
+
+
+
+
+	INSERT @PriorYears(Year1 , Contract_Number, Hours, Costs, Billed)
+        SELECT
+        YEAR(@Contract_Start_Date) ,
+        R.Contract_Number ,
+        Actual_Hours = SUM(R.Actual_Hours) ,
+        Costs = SUM(R.Costs) ,
+        Billed = SUM(R.Billed) 
+
+           -- R.AMU 
+    FROM
+        @ReportPY R
+    LEFT JOIN @Contract C
+        ON C.Contract_Number = R.Contract_Number
+    LEFT JOIN MM.SV00500_SV00501 S
+        ON S.Contract_Number = C.Contract_Number
+           AND S.WSCONTSQ = C.WSCONTSQ
+    LEFT JOIN UPR00100 E
+        ON E.EMPLOYID = S.SLPRSNID
+    WHERE
+        R.Profit_Center LIKE '50%'
+    GROUP BY
+        R.Contract_Number;
+
+
+	SET @Contract_Start_Date = DATEADD(YEAR, 1, @Contract_Start_Date)
+	SET @FromDate = DATEADD(YEAR, 1,  @FromDate)
+	SET @ToDate = DATEADD(YEAR, 1,  @ToDate)
+
+
+	DELETE @Contract
+	DELETE @ReportPY
+	DELETE @SELECTION
+	DELETE @Table
+
+    INSERT  @Contract
+            ( Contract_Number ,
+              WSCONTSQ
+            )
+            SELECT  Contract_Number ,
+                    MAX(WSCONTSQ)
+            --modified 10/31/2012        
+            --FROM    SV00500
+            FROM MM.SV00500_SV00501
+            WHERE   YEAR(Contract_Start_Date) = YEAR(@Contract_Start_Date)
+                    AND MONTH(Contract_Start_Date) = MONTH(@Contract_Start_Date)
+                    AND Cancel_Box &lt;&gt; 1
+            GROUP BY Contract_Number
+
+
+	
+    INSERT  @SELECTION
+            ( ADRSCODE ,
+              CUSTNMBR
+            )
+            SELECT DISTINCT
+                    ADRSCODE ,
+                    CUSTNMBR
+            --modified 10/31/2012        
+            --FROM    SV00500
+            FROM MM.SV00500_SV00501
+            WHERE   YEAR(Contract_Start_Date) = YEAR(@Contract_Start_Date)
+                    AND MONTH(Contract_Start_Date) = MONTH(@Contract_Start_Date)
+                    AND Contract_Number LIKE @Contract_Number
+                    AND Corporate_Contract_Nbr LIKE @Corporate_Contract_Nbr
+                    AND Cancel_Box &lt;&gt; 1 
+                        
+ 
+    INSERT  @Table
+            ( Contract_Number ,
+              ADRSCODE ,
+              CUSTNMBR ,
+              Divisions ,
+              Service_Call_ID ,
+              Type_Call_Short ,
+              Type_of_Call ,
+              Costs ,
+              Billed ,
+              Actual_Hours ,
+              Estimate_Hours
+						 
+            )
+            SELECT  svServiceMstr.Contract_Number ,
+                    svServiceMstr.ADRSCODE ,
+                    svServiceMstr.CUSTNMBR ,
+                    svServiceMstr.Divisions ,
+                    svServiceMstr.Service_Call_ID ,
+                    svServiceMstr.Type_Call_Short ,
+                    TypeofCall.Type_of_Call ,
+                    Costs = SUM(CASE WHEN svInvoiceMstr.Invoice_Type = 8
+                                     THEN svInvoiceMstr.Cost_All * -1
+                                     ELSE svInvoiceMstr.Cost_All
+                                END) ,
+                    Billed = SUM(svInvoiceMstr.Billable_All
+                                 - svInvoiceMstr.Billable_Tax) ,
+                    Actual_Hours = 0 ,
+                    Estimate_Hours = 0
+            FROM    SV00300 svServiceMstr --Possible add        
+--          JOIN @Contract C
+			--ON RTRIM(LTRIM(C.Contract_Number)) = RTRIM(LTRIM(svServiceMstr.Contract_Number))
+                    JOIN @SELECTION S ON svServiceMstr.ADRSCODE = S.ADRSCODE
+                                         AND svServiceMstr.CUSTNMBR = S.CUSTNMBR
+                    JOIN SV00701 svInvoiceMstr ON svServiceMstr.Service_Call_ID = svInvoiceMstr.Service_Call_ID
+                    JOIN SV00320 TypeofCall ON TypeofCall.Type_Call_Short = svServiceMstr.Type_Call_Short
+            WHERE   svServiceMstr.Completion_Date BETWEEN @FromDate
+                                                  AND     @ToDate
+                    AND svServiceMstr.Status_of_Call = 'CLOSED'
+            GROUP BY svServiceMstr.Divisions ,
+                    svServiceMstr.ADRSCODE ,
+                    svServiceMstr.CUSTNMBR ,
+                    svServiceMstr.Service_Call_ID ,
+                    svServiceMstr.Type_Call_Short ,
+                    TypeofCall.Type_of_Call ,
+                    svServiceMstr.Contract_Number
+                
+    UPDATE  @Table
+    SET     Actual_Hours = T.Actual_Hours
+    FROM    @Table A ,
+            ( SELECT    svServiceMstr.Service_Call_ID ,
+                        Actual_Hours = SUM(CASE WHEN svInvoiceHist.PAYRCORD IN (
+                                                     'R', 'O', 'D' )
+                                                THEN svInvoiceHist.TRXHRUNT
+                                                     * .01
+                                                ELSE 0
+                                           END)
+              FROM      SV00300 svServiceMstr
+                        JOIN SV000815 svInvoiceHist ON svServiceMstr.Service_Call_ID = svInvoiceHist.Service_Call_ID
+              GROUP BY  svServiceMstr.Service_Call_ID
+            ) T
+    WHERE   A.Service_Call_ID = T.Service_Call_ID
+       
+
+
+    INSERT  @Table
+            ( Contract_Number ,
+              ADRSCODE ,
+              CUSTNMBR ,
+              Divisions ,
+              Type_Call_Short ,
+              Type_of_Call ,
+              Costs ,
+              Billed ,
+              Actual_Hours ,
+              Estimate_Hours
+            )
+            SELECT  Contract_Number ,
+                    ADRSCODE ,
+                    CUSTNMBR ,
+                    Divisions ,
+                    Type_Call_Short ,
+                    Type_of_Call ,
+                    Costs = 0 ,
+                    Billed ,
+                    Actual_Hours = 0 ,
+                    Estimate_Hours = 0
+            FROM    ( SELECT    MM.SV00500_SV00501.Contract_Number ,
+                                MM.SV00564_FFSC_Billings.ADRSCODE ,
+                                MM.SV00564_FFSC_Billings.CUSTNMBR ,
+                                MM.SV00500_SV00501.Divisions ,
+                                Type_Call_Short = 'MCC' ,
+                                Type_of_Call = 'GENERATED MC   ' ,
+                                Billed = SUM(CASE RMDTYPAL
+                                               WHEN 7
+                                               THEN Billable_Subtotal * -1
+                                               ELSE Billable_Subtotal
+                                             END)
+							--Modified 7/18/2011
+							--changed from SV00500 to MM.SV00500_SV00501
+							--Billings may be from a contract that has moved to history
+                      FROM      MM.SV00500_SV00501 
+                                JOIN @SELECTION S ON MM.SV00500_SV00501.ADRSCODE = S.ADRSCODE
+                                                     AND MM.SV00500_SV00501.CUSTNMBR = S.CUSTNMBR
+                                JOIN MM.SV00564_FFSC_Billings ON MM.SV00564_FFSC_Billings.CUSTNMBR = MM.SV00500_SV00501.CUSTNMBR
+                                                              AND MM.SV00564_FFSC_Billings.ADRSCODE = MM.SV00500_SV00501.ADRSCODE
+                                                              AND MM.SV00564_FFSC_Billings.Contract_Number = MM.SV00500_SV00501.Contract_Number
+                               --Modified 6/14/2011 
+                                                              AND MM.SV00564_FFSC_Billings.WSCONTSQ = MM.SV00500_SV00501.WSCONTSQ
+                               --Should DATE1 be Wennsoft_Billing_Date
+                      WHERE     MM.SV00564_FFSC_Billings.DATE1 BETWEEN @FromDate
+                                                              AND
+                                                              @ToDate
+                  -- WHERE     MM.SV00564_FFSC_Billings.Wennsoft_Billing_Date BETWEEN @FromDate AND @ToDate
+                      GROUP BY  MM.SV00500_SV00501.Contract_Number ,
+                                MM.SV00564_FFSC_Billings.CUSTNMBR ,
+                                MM.SV00564_FFSC_Billings.ADRSCODE ,
+                                MM.SV00500_SV00501.Divisions
+                    ) A			
+               
+
+
+
+
+    INSERT  @ReportPY
+            ( Contract_Number ,
+              ADRSCODE ,
+              CUSTNMBR ,
+              Divisions ,
+              Profit_Center ,
+              ShowOverAllProfitability ,
+              Type_Call_Short ,
+              Type_of_Call ,
+              Estimated_Hours ,
+              Actual_Hours ,
+              Costs ,
+              Billed ,
+              Profit ,
+              AMU
+            )
+            SELECT  Contract_Number = CASE WHEN @Corporate_Contract_Nbr LIKE '[0-9]%'
+                                           THEN @Corporate_Contract_Nbr
+                                           WHEN Contract_Number = ''
+                                           THEN 'No Contract'
+                                           ELSE Contract_Number
+                                      END ,
+                    ADRSCODE = CASE WHEN @Corporate_Contract_Nbr LIKE '[0-9]%'
+                                    THEN ''
+                                    ELSE T.ADRSCODE
+                               END ,
+                    CUSTNMBR = CASE WHEN @Corporate_Contract_Nbr LIKE '[0-9]%'
+                                    THEN ''
+                                    ELSE T.CUSTNMBR
+                               END ,
+                    T.Divisions ,
+                    Profit_Center = CASE RIGHT(RTRIM(T.DIVISIONS), 2)
+                                      WHEN '40' THEN '40 - DEMAND'
+                                      WHEN '50' THEN '50 - SERVICE MAINT'
+                                      WHEN '90' THEN '90 - ADMIN'
+                                    END ,
+                    ShowOverAllProfitability = CASE RIGHT(RTRIM(T.DIVISIONS),
+                                                          2)
+                                                 WHEN 90 THEN '2'
+                                                 ELSE '1'
+                                               END ,
+                    Type_Call_Short ,
+                    Type_Of_Call ,
+                    Estimated_Hours = SUM(Estimate_Hours) ,
+                    Actual_Hours = SUM(Actual_Hours) ,
+                    Costs = SUM(Costs) ,
+                    Billed = SUM(Billed) ,
+                    Profit = SUM(Billed) - SUM(Costs) ,
+                    AMU = CONVERT(DECIMAL(9, 3), ISNULL(SUM(Billed)
+                                                        / NULLIF(SUM(Costs), 0),
+                                                        0))
+            FROM    @Table T
+			  WHERE T.DIVISIONS LIKE '__50'
+            GROUP BY CASE WHEN @Corporate_Contract_Nbr LIKE '[0-9]%'
+                          THEN @Corporate_Contract_Nbr
+                          WHEN Contract_Number = '' THEN 'No Contract'
+                          ELSE Contract_Number
+                     END ,
+                    CASE WHEN @Corporate_Contract_Nbr LIKE '[0-9]%' THEN ''
+                         ELSE T.ADRSCODE
+                    END ,
+                    CASE WHEN @Corporate_Contract_Nbr LIKE '[0-9]%' THEN ''
+                         ELSE T.CUSTNMBR
+                    END ,
+                    T.Divisions ,
+                    Type_Call_Short ,
+                    Type_Of_Call
+            ORDER BY ADRSCODE ,
+                    Contract_Number ,
+                    DIVISIONS        
+  
+
+
+
+
+
+	INSERT @PriorYears(Year1 , Contract_Number, Hours, Costs, Billed)
+    SELECT
+        YEAR(@Contract_Start_Date) ,
+        R.Contract_Number ,
+        Actual_Hours = SUM(R.Actual_Hours) ,
+        Costs = SUM(R.Costs) ,
+        Billed = SUM(R.Billed) 
+
+           -- R.AMU 
+    FROM
+        @ReportPY R
+    LEFT JOIN @Contract C
+        ON C.Contract_Number = R.Contract_Number
+    LEFT JOIN MM.SV00500_SV00501 S
+        ON S.Contract_Number = C.Contract_Number
+           AND S.WSCONTSQ = C.WSCONTSQ
+    LEFT JOIN UPR00100 E
+        ON E.EMPLOYID = S.SLPRSNID
+    WHERE
+        R.Profit_Center LIKE '50%'
+    GROUP BY
+        R.Contract_Number;
+
+--SELECT * FROM @PriorYears
+
+
+UPDATE @PriorYears 
+SET YearNextCosts = (SELECT SUM(Costs) FROM @ReportPY WHERE Profit_Center LIKE '50%'  AND Contract_Number = [@PriorYears].Contract_Number)
+, YearNextBilled = (SELECT SUM(BILLED) FROM @ReportPY  WHERE Profit_Center LIKE '50%'  AND Contract_Number = [@PriorYears].Contract_Number)
+WHERE Year1 = YEAR(@Contract_Start_Date) -1
+
+
+
+	SET @Contract_Start_Date = DATEADD(YEAR, 1, @Contract_Start_Date)
+	SET @FromDate = DATEADD(YEAR, 1,  @FromDate)
+	SET @ToDate = DATEADD(YEAR, 1,  @ToDate)
+
+	
+
+	DELETE @Contract
+	DELETE @ReportPY
+	DELETE @SELECTION
+	DELETE @Table
+
+    INSERT  @Contract
+            ( Contract_Number ,
+              WSCONTSQ
+            )
+            SELECT  Contract_Number ,
+                    MAX(WSCONTSQ)
+            --modified 10/31/2012        
+            --FROM    SV00500
+            FROM MM.SV00500_SV00501
+            WHERE   YEAR(Contract_Start_Date) = YEAR(@Contract_Start_Date)
+                    AND MONTH(Contract_Start_Date) = MONTH(@Contract_Start_Date)
+                    AND Cancel_Box &lt;&gt; 1
+            GROUP BY Contract_Number
+
+
+	
+    INSERT  @SELECTION
+            ( ADRSCODE ,
+              CUSTNMBR
+            )
+            SELECT DISTINCT
+                    ADRSCODE ,
+                    CUSTNMBR
+            --modified 10/31/2012        
+            --FROM    SV00500
+            FROM MM.SV00500_SV00501
+            WHERE   YEAR(Contract_Start_Date) = YEAR(@Contract_Start_Date)
+                    AND MONTH(Contract_Start_Date) = MONTH(@Contract_Start_Date)
+                    AND Contract_Number LIKE @Contract_Number
+                    AND Corporate_Contract_Nbr LIKE @Corporate_Contract_Nbr
+                    AND Cancel_Box &lt;&gt; 1 
+                        
+ 
+    INSERT  @Table
+            ( Contract_Number ,
+              ADRSCODE ,
+              CUSTNMBR ,
+              Divisions ,
+              Service_Call_ID ,
+              Type_Call_Short ,
+              Type_of_Call ,
+              Costs ,
+              Billed ,
+              Actual_Hours ,
+              Estimate_Hours
+						 
+            )
+            SELECT  svServiceMstr.Contract_Number ,
+                    svServiceMstr.ADRSCODE ,
+                    svServiceMstr.CUSTNMBR ,
+                    svServiceMstr.Divisions ,
+                    svServiceMstr.Service_Call_ID ,
+                    svServiceMstr.Type_Call_Short ,
+                    TypeofCall.Type_of_Call ,
+                    Costs = SUM(CASE WHEN svInvoiceMstr.Invoice_Type = 8
+                                     THEN svInvoiceMstr.Cost_All * -1
+                                     ELSE svInvoiceMstr.Cost_All
+                                END) ,
+                    Billed = SUM(svInvoiceMstr.Billable_All
+                                 - svInvoiceMstr.Billable_Tax) ,
+                    Actual_Hours = 0 ,
+                    Estimate_Hours = 0
+            FROM    SV00300 svServiceMstr --Possible add        
+--          JOIN @Contract C
+			--ON RTRIM(LTRIM(C.Contract_Number)) = RTRIM(LTRIM(svServiceMstr.Contract_Number))
+                    JOIN @SELECTION S ON svServiceMstr.ADRSCODE = S.ADRSCODE
+                                         AND svServiceMstr.CUSTNMBR = S.CUSTNMBR
+                    JOIN SV00701 svInvoiceMstr ON svServiceMstr.Service_Call_ID = svInvoiceMstr.Service_Call_ID
+                    JOIN SV00320 TypeofCall ON TypeofCall.Type_Call_Short = svServiceMstr.Type_Call_Short
+            WHERE   svServiceMstr.Completion_Date BETWEEN @FromDate
+                                                  AND     @ToDate
+                    AND svServiceMstr.Status_of_Call = 'CLOSED'
+            GROUP BY svServiceMstr.Divisions ,
+                    svServiceMstr.ADRSCODE ,
+                    svServiceMstr.CUSTNMBR ,
+                    svServiceMstr.Service_Call_ID ,
+                    svServiceMstr.Type_Call_Short ,
+                    TypeofCall.Type_of_Call ,
+                    svServiceMstr.Contract_Number
+                
+    UPDATE  @Table
+    SET     Actual_Hours = T.Actual_Hours
+    FROM    @Table A ,
+            ( SELECT    svServiceMstr.Service_Call_ID ,
+                        Actual_Hours = SUM(CASE WHEN svInvoiceHist.PAYRCORD IN (
+                                                     'R', 'O', 'D' )
+                                                THEN svInvoiceHist.TRXHRUNT
+                                                     * .01
+                                                ELSE 0
+                                           END)
+              FROM      SV00300 svServiceMstr
+                        JOIN SV000815 svInvoiceHist ON svServiceMstr.Service_Call_ID = svInvoiceHist.Service_Call_ID
+              GROUP BY  svServiceMstr.Service_Call_ID
+            ) T
+    WHERE   A.Service_Call_ID = T.Service_Call_ID
+       
+    INSERT  @Table
+            ( Contract_Number ,
+              ADRSCODE ,
+              CUSTNMBR ,
+              Divisions ,
+              Type_Call_Short ,
+              Type_of_Call ,
+              Costs ,
+              Billed ,
+              Actual_Hours ,
+              Estimate_Hours
+            )
+            SELECT  Contract_Number ,
+                    ADRSCODE ,
+                    CUSTNMBR ,
+                    Divisions ,
+                    Type_Call_Short ,
+                    Type_of_Call ,
+                    Costs = 0 ,
+                    Billed ,
+                    Actual_Hours = 0 ,
+                    Estimate_Hours = 0
+            FROM    ( SELECT    MM.SV00500_SV00501.Contract_Number ,
+                                MM.SV00564_FFSC_Billings.ADRSCODE ,
+                                MM.SV00564_FFSC_Billings.CUSTNMBR ,
+                                MM.SV00500_SV00501.Divisions ,
+                                Type_Call_Short = 'MCC' ,
+                                Type_of_Call = 'GENERATED MC   ' ,
+                                Billed = SUM(CASE RMDTYPAL
+                                               WHEN 7
+                                               THEN Billable_Subtotal * -1
+                                               ELSE Billable_Subtotal
+                                             END)
+							--Modified 7/18/2011
+							--changed from SV00500 to MM.SV00500_SV00501
+							--Billings may be from a contract that has moved to history
+                      FROM      MM.SV00500_SV00501 
+--Possible Add                  
+            --    JOIN @Contract C
+			         --ON RTRIM(LTRIM(C.Contract_Number)) = RTRIM(LTRIM(MM.SV00500_SV00501.Contract_Number))
+                                JOIN @SELECTION S ON MM.SV00500_SV00501.ADRSCODE = S.ADRSCODE
+                                                     AND MM.SV00500_SV00501.CUSTNMBR = S.CUSTNMBR
+                                JOIN MM.SV00564_FFSC_Billings ON MM.SV00564_FFSC_Billings.CUSTNMBR = MM.SV00500_SV00501.CUSTNMBR
+                                                              AND MM.SV00564_FFSC_Billings.ADRSCODE = MM.SV00500_SV00501.ADRSCODE
+                                                              AND MM.SV00564_FFSC_Billings.Contract_Number = MM.SV00500_SV00501.Contract_Number
+                               --Modified 6/14/2011 
+                                                              AND MM.SV00564_FFSC_Billings.WSCONTSQ = MM.SV00500_SV00501.WSCONTSQ
+                               --Should DATE1 be Wennsoft_Billing_Date
+                      WHERE     MM.SV00564_FFSC_Billings.DATE1 BETWEEN @FromDate
+                                                              AND
+                                                              @ToDate
+                  -- WHERE     MM.SV00564_FFSC_Billings.Wennsoft_Billing_Date BETWEEN @FromDate AND @ToDate
+                      GROUP BY  MM.SV00500_SV00501.Contract_Number ,
+                                MM.SV00564_FFSC_Billings.CUSTNMBR ,
+                                MM.SV00564_FFSC_Billings.ADRSCODE ,
+                                MM.SV00500_SV00501.Divisions
+                    ) A			
+               
+
+
+
+
+    INSERT  @ReportPY
+            ( Contract_Number ,
+              ADRSCODE ,
+              CUSTNMBR ,
+              Divisions ,
+              Profit_Center ,
+              ShowOverAllProfitability ,
+              Type_Call_Short ,
+              Type_of_Call ,
+              Estimated_Hours ,
+              Actual_Hours ,
+              Costs ,
+              Billed ,
+              Profit ,
+              AMU
+            )
+            SELECT  Contract_Number = CASE WHEN @Corporate_Contract_Nbr LIKE '[0-9]%'
+                                           THEN @Corporate_Contract_Nbr
+                                           WHEN Contract_Number = ''
+                                           THEN 'No Contract'
+                                           ELSE Contract_Number
+                                      END ,
+                    ADRSCODE = CASE WHEN @Corporate_Contract_Nbr LIKE '[0-9]%'
+                                    THEN ''
+                                    ELSE T.ADRSCODE
+                               END ,
+                    CUSTNMBR = CASE WHEN @Corporate_Contract_Nbr LIKE '[0-9]%'
+                                    THEN ''
+                                    ELSE T.CUSTNMBR
+                               END ,
+                    T.Divisions ,
+                    Profit_Center = CASE RIGHT(RTRIM(T.DIVISIONS), 2)
+                                      WHEN '40' THEN '40 - DEMAND'
+                                      WHEN '50' THEN '50 - SERVICE MAINT'
+                                      WHEN '90' THEN '90 - ADMIN'
+                                    END ,
+                    ShowOverAllProfitability = CASE RIGHT(RTRIM(T.DIVISIONS),
+                                                          2)
+                                                 WHEN 90 THEN '2'
+                                                 ELSE '1'
+                                               END ,
+                    Type_Call_Short ,
+                    Type_Of_Call ,
+                    Estimated_Hours = SUM(Estimate_Hours) ,
+                    Actual_Hours = SUM(Actual_Hours) ,
+                    Costs = SUM(Costs) ,
+                    Billed = SUM(Billed) ,
+                    Profit = SUM(Billed) - SUM(Costs) ,
+                    AMU = CONVERT(DECIMAL(9, 3), ISNULL(SUM(Billed)
+                                                        / NULLIF(SUM(Costs), 0),
+                                                        0))
+            FROM    @Table T
+			  WHERE T.DIVISIONS LIKE '__50'	
+            GROUP BY CASE WHEN @Corporate_Contract_Nbr LIKE '[0-9]%'
+                          THEN @Corporate_Contract_Nbr
+                          WHEN Contract_Number = '' THEN 'No Contract'
+                          ELSE Contract_Number
+                     END ,
+                    CASE WHEN @Corporate_Contract_Nbr LIKE '[0-9]%' THEN ''
+                         ELSE T.ADRSCODE
+                    END ,
+                    CASE WHEN @Corporate_Contract_Nbr LIKE '[0-9]%' THEN ''
+                         ELSE T.CUSTNMBR
+                    END ,
+                    T.Divisions ,
+                    Type_Call_Short ,
+                    Type_Of_Call
+            ORDER BY ADRSCODE ,
+                    Contract_Number ,
+                    DIVISIONS        
+  
+
+
+
+
+
+UPDATE @PriorYears 
+SET YearNextCosts = (SELECT SUM(Costs) FROM @ReportPY WHERE Profit_Center LIKE '50%' AND Contract_Number = [@PriorYears].Contract_Number)
+, YearNextBilled = (SELECT SUM(BILLED) FROM @ReportPY  WHERE Profit_Center LIKE '50%' AND Contract_Number = [@PriorYears].Contract_Number )
+WHERE Year1 = YEAR(@Contract_Start_Date) -1
+SELECT Year1
+	, Contract_Number
+	, Hours
+	, Costs
+	, Billed
+	, AMU = ISNULL(Billed/ NULLIF(Costs,0), 0) 
+	, Action = ISNULL((YearNextBilled - Billed)  / NULLIF(YearNextBilled, 0), 0)
+	, YearNextCosts , YearNextBilled
+
+FROM @PriorYears
+WHERE Contract_Number = @Contract_Number</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="Year1">
+          <DataField>Year1</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Contract_Number">
+          <DataField>Contract_Number</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Hours">
+          <DataField>Hours</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Costs">
+          <DataField>Costs</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Billed">
+          <DataField>Billed</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="AMU">
+          <DataField>AMU</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Action">
+          <DataField>Action</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="YearNextCosts">
+          <DataField>YearNextCosts</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="YearNextBilled">
+          <DataField>YearNextBilled</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+  <ReportParameters>
+    <ReportParameter Name="Contract_Start_Date">
+      <DataType>DateTime</DataType>
+      <Prompt>Contract Start Date</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="FromDate">
+      <DataType>DateTime</DataType>
+      <Prompt>Reporting From Date</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="ToDate">
+      <DataType>DateTime</DataType>
+      <Prompt>Reporting To Date</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="Contract_Number">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <Prompt>Contract Number</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="Corporate_Contract_Nbr">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <Prompt>Corporate Contract Nbr</Prompt>
+    </ReportParameter>
+  </ReportParameters>
+  <Code>Function IsDividedbyZero(ByVal Numerator As Double, ByVal Denominator As Double) As Double
+
+If Denominator = 0 Then
+	IsDividedbyZero = 0
+Else
+	IsDividedbyZero = Numerator / Denominator
+End If
+
+Return IsDividedbyZero
+
+End Function</Code>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>0d85900b-2e4e-4812-866e-5827cae8b9b7</rd:ReportID>
+</Report>

@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{F14B399A-7131-4C87-9E4B-1186C45EF12D}") = "WennSoft Service Modified", "WennSoft Service Modified.rptproj", "{9F8FB52F-F2AE-4DC7-A63F-E91F4FCB024F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		DebugLocal|Default = DebugLocal|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9F8FB52F-F2AE-4DC7-A63F-E91F4FCB024F}.Debug|Default.ActiveCfg = Debug
+		{9F8FB52F-F2AE-4DC7-A63F-E91F4FCB024F}.Debug|Default.Build.0 = Debug
+		{9F8FB52F-F2AE-4DC7-A63F-E91F4FCB024F}.Debug|Default.Deploy.0 = Debug
+		{9F8FB52F-F2AE-4DC7-A63F-E91F4FCB024F}.DebugLocal|Default.ActiveCfg = DebugLocal
+		{9F8FB52F-F2AE-4DC7-A63F-E91F4FCB024F}.DebugLocal|Default.Build.0 = DebugLocal
+		{9F8FB52F-F2AE-4DC7-A63F-E91F4FCB024F}.DebugLocal|Default.Deploy.0 = DebugLocal
+		{9F8FB52F-F2AE-4DC7-A63F-E91F4FCB024F}.Release|Default.ActiveCfg = Release
+		{9F8FB52F-F2AE-4DC7-A63F-E91F4FCB024F}.Release|Default.Build.0 = Release
+		{9F8FB52F-F2AE-4DC7-A63F-E91F4FCB024F}.Release|Default.Deploy.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

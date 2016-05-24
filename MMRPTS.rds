@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RptDataSource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="MMRPTS">
+  <ConnectionProperties>
+    <Extension>SQL</Extension>
+    <ConnectString>Data Source=SQL.Macmiller.local;Initial Catalog=MMRPTS</ConnectString>
+  </ConnectionProperties>
+  <DataSourceID>004ea154-f105-461a-a3c7-b66bb6b00bea</DataSourceID>
+</RptDataSource>
