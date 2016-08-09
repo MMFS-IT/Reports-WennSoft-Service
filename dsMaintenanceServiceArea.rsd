@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition">
+  <DataSet Name="">
+    <Query>
+      <DataSourceReference>MMRPTS</DataSourceReference>
+      <CommandText>SELECT 
+                         RTRIM(CASE WHEN ISNULL(SV00220.Service_Area_Description, '') = '' THEN 'Unassigned' ELSE Service_Area_Description END) AS Service_Area_Description
+FROM            SV00300 INNER JOIN
+                         SV00220 ON SV00300.Service_Area = SV00220.Service_Area
+WHERE        (SV00300.Divisions LIKE '%50') AND (SV00220.Service_Area_Description NOT IN ('Local 16 - PDX', 'Internal Costs', 'SPTI-OR', 'Subcontract Area'))
+
+UNION
+
+SELECT 'Unassigned'</CommandText>
+    </Query>
+    <Fields>
+      <Field Name="Service_Area_Description">
+        <DataField>Service_Area_Description</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>

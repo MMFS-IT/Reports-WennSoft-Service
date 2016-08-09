@@ -386,8 +386,8 @@
   </Page>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
-    <DataSource Name="MMFS">
-      <DataSourceReference>MMFS</DataSourceReference>
+    <DataSource Name="MMRPTS">
+      <DataSourceReference>MMRPTS</DataSourceReference>
       <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>18c60247-696f-4690-8e0a-19a3f2ee15db</rd:DataSourceID>
     </DataSource>
@@ -395,17 +395,17 @@
   <DataSets>
     <DataSet Name="dsReport">
       <Query>
-        <DataSourceName>MMFS</DataSourceName>
+        <DataSourceName>MMRPTS</DataSourceName>
         <CommandText>/* ZERO UNBILLED COUNT QUERY*/
 SELECT 
 	  'Goals' = 'Zero Unbilled (Work Orders over 30 Days)'
 	, Service_Area = RTRIM(B.Service_Area)
 	, Service_Area_Description = RTRIM(Z.Service_Area_Description)
 	, Score =COUNT(*)
-FROM dbo.SV00300 AS A
-JOIN SV00200 AS B
+FROM dbo.SV00300 AS A (NOLOCK)
+JOIN SV00200 AS B  (NOLOCK)
 	ON A.ADRSCODE = B.ADRSCODE AND A.CUSTNMBR = B.CUSTNMBR
-JOIN SV00220 Z
+JOIN SV00220 Z (NOLOCK)
 	ON B.Service_Area = Z.Service_Area
 WHERE B.Service_Area != '9090' AND A.Status_of_Call != 'CLOSED' AND A.Type_Call_Short IN ('BLB', 'COD', 'MC', 'QTE', 'RW', 'W', 'T&amp;M') AND A.DATE1 &lt;= DATEADD(day, -30, GETDATE())
 GROUP BY B.Service_Area , Service_Area_Description
@@ -417,13 +417,11 @@ SELECT
 	, Service_Area = RTRIM(B.Service_Area)
 	, Service_Area_Description = RTRIM(Z.Service_Area_Description)
 	, Score = COUNT(*)
-FROM dbo.SV00300 AS A
-JOIN SV00200 AS B
+FROM dbo.SV00300 AS A (NOLOCK)
+JOIN SV00200 AS B (NOLOCK)
 	ON A.ADRSCODE = B.ADRSCODE AND A.CUSTNMBR = B.CUSTNMBR
-JOIN SV00220 Z
+JOIN SV00220 Z (NOLOCK)
 	ON B.Service_Area = Z.Service_Area
-
-
 WHERE B.Service_Area != '9090' AND A.Status_of_Call != 'CLOSED' AND A.Type_Call_Short = 'MCC' AND A.DATE1 &lt;= DATEADD(day, -30, GETDATE())
 GROUP BY B.Service_Area,  Service_Area_Description</CommandText>
       </Query>

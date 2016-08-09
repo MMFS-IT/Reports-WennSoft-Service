@@ -1369,7 +1369,7 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
-        <DataSetName>DataSet1</DataSetName>
+        <DataSetName>dsReport</DataSetName>
         <Top>0.29875in</Top>
         <Height>0.70833in</Height>
         <Width>23.68751in</Width>
@@ -1471,16 +1471,16 @@
   </Page>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
-    <DataSource Name="MMFS">
-      <DataSourceReference>MMFS</DataSourceReference>
+    <DataSource Name="MMRPTS">
+      <DataSourceReference>MMRPTS</DataSourceReference>
       <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>78800ec9-d2b4-49b0-8d87-45c18e4aaad2</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="DataSet1">
+    <DataSet Name="dsReport">
       <Query>
-        <DataSourceName>MMFS</DataSourceName>
+        <DataSourceName>MMRPTS</DataSourceName>
         <QueryParameters>
           <QueryParameter Name="@Month">
             <Value>=Parameters!Month.Value</Value>
@@ -1489,8 +1489,54 @@
             <Value>=Parameters!Year.Value</Value>
           </QueryParameter>
         </QueryParameters>
-        <CommandType>StoredProcedure</CommandType>
-        <CommandText>MM.pReport_Service_Quoted_Repairs_Profit_Summary</CommandText>
+        <CommandText>
+--DECLARE @Month VARCHAR(2) ='7'
+--DECLARE @Year  VARCHAR(4) = '2016'
+
+SELECT  Salesperson = RTRIM(E.LASTNAME) + ' ' + RTRIM(E.FRSTNAME),
+        TECH.Technician_Long_Name,
+        SM.Service_Call_ID,
+        SM.ADRSCODE,
+        Description = RTRIM(L.LOCATNNM) + ' ' + RTRIM(L.ADDRESS1) + ' ',
+        SM.Type_of_Call,
+        Type_Description = RTRIM(L.User_Define_2a),
+       -- Billed = SM.Billable_All, 7/28/2010 Andrea
+        Billed = INV.Billable_All - inv.Billable_Tax ,
+        --Cost = SM.Cost_All,
+        --7/28/2010 Andrea
+        Cost = INV.Cost_All,
+        INV.POSTEDDT,
+        --GP = ( SM.Billable_All) - ( SM.Cost_All ),
+        GP = (INV.Billable_All)  - inv.Billable_Tax - ( INV.Cost_All ),
+        --MU = CONVERT(DECIMAL(9, 2), CASE WHEN ( SM.Cost_All ) = 0
+        --                                 THEN 0
+        --                                 ELSE ( SM.Billable_All ) / ( SM.Cost_All )
+        --                            END),
+        MU = CONVERT(DECIMAL(9, 2), CASE WHEN ( INV.Cost_All ) = 0
+                                         THEN 0
+                                         ELSE ( INV.Billable_All - inv.Billable_Tax ) / ( INV.Cost_All )
+                                    END),
+
+        Invoice_Description = RTRIM(CONVERT(VARCHAR(MAX), INV.Invoice_Description))
+
+FROM    SV00300 SM (NOLOCK)
+JOIN    UPR00100 E
+        ON SM.SLPRSNID = E.EMPLOYID
+JOIN SV00200 L (NOLOCK)
+        ON SM.CUSTNMBR = L.CUSTNMBR
+           AND SM.ADRSCODE = L.ADRSCODE
+LEFT JOIN    SV00115 TECH (NOLOCK)
+        ON SM.Technician_ID = TECH.Technician_ID
+LEFT JOIN    SV00701 INV (NOLOCK)
+        ON SM.Service_Call_ID = INV.Service_Call_ID
+WHERE   Type_Call_Short = 'QTE'
+        AND Status_of_Call = 'CLOSED'
+        AND YEAR(INV.DOCDATE) = @Year
+        AND MONTH(INV.DOCDATE) = @Month
+ORDER BY SALESPERSON    
+
+
+</CommandText>
       </Query>
       <Fields>
         <Field Name="Salesperson">

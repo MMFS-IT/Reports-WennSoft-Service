@@ -1188,7 +1188,7 @@ SELECT
                           ELSE 0
                      END)
 FROM
-    BI.SV000810_SV000815
+    BI.SV000810_SV000815 (NOLOCK)
 GROUP BY
     Service_Call_ID
 ),
@@ -1199,7 +1199,7 @@ AS
 SELECT Service_Call_ID,
 	Record_Notes,
 	Note_Service_Index
-	FROM dbo.SV000805
+	FROM dbo.SV000805 (NOLOCK)
 	WHERE Note_Service_Index = 'Description'
 ),
 
@@ -1209,7 +1209,7 @@ AS
 SELECT Service_Call_ID,
 	Record_Notes,
 	Note_Service_Index
-	FROM dbo.SV000805
+	FROM dbo.SV000805 (NOLOCK)
 	WHERE Note_Service_Index = 'Resolution'
 )
 
@@ -1234,7 +1234,7 @@ SELECT SM.Service_Call_ID,
      TotalCosts = ISNULL(Costs.TotalCosts, 0),
      SMNotes.Record_Notes AS Service_Management_Notes,
      RSNotes.Record_Notes AS Resolution_Notes
-FROM dbo.SV00300 AS SM
+FROM dbo.SV00300 AS SM (NOLOCK)
 LEFT JOIN Costs
 ON Costs.Service_Call_Id = SM.Service_Call_ID
 LEFT JOIN SMNotes

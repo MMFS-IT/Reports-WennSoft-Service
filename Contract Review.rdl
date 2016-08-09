@@ -3082,8 +3082,8 @@
   </Page>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
-    <DataSource Name="MMFS">
-      <DataSourceReference>MMFS</DataSourceReference>
+    <DataSource Name="MMRPTS">
+      <DataSourceReference>MMRPTS</DataSourceReference>
       <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>728cea88-c540-4c0a-8738-3b11d1aae707</rd:DataSourceID>
     </DataSource>
@@ -3091,11 +3091,11 @@
   <DataSets>
     <DataSet Name="dsContractStartMonth">
       <Query>
-        <DataSourceName>MMFS</DataSourceName>
+        <DataSourceName>MMRPTS</DataSourceName>
         <CommandText>SELECT TOP 36
 CALDATE , MonthYear = LEFT(DATENAME(MONTH, Caldate), 3) + ' ' + DATENAME(YEAR, CALDATE)
 
-FROM MM.Calendar
+FROM MM.Calendar (NOLOCK)
 WHERE DAY(Caldate) = 1 
 AND YEAR(CALDATE) &gt; YEAR(GETDATE())- 3
 AND YEAR(Caldate) &gt; '2008'
@@ -3116,10 +3116,10 @@ ORDER BY CALDATE</CommandText>
     </DataSet>
     <DataSet Name="dsFromDates">
       <Query>
-        <DataSourceName>MMFS</DataSourceName>
+        <DataSourceName>MMRPTS</DataSourceName>
         <CommandText>SELECT TOP 36
 CALDATE, Label = LEFT(CONVERT(VARCHAR, CALDATE, 9), 11)
-FROM MM.Calendar
+FROM MM.Calendar (NOLOCK)
 WHERE DAY(Caldate) = 1 
 AND YEAR(CALDATE) &gt; YEAR(GETDATE())- 3
 AND YEAR(Caldate)&gt; 2009
@@ -3140,17 +3140,16 @@ ORDER BY CONVERT(VARCHAR, CALDATE, 112)</CommandText>
     </DataSet>
     <DataSet Name="dsToDate">
       <Query>
-        <DataSourceName>MMFS</DataSourceName>
+        <DataSourceName>MMRPTS</DataSourceName>
         <CommandText>SELECT TOP 36
  CalDate = CONVERT(DATE, DATEADD(ms,-3,DATEADD(m,0,DATEADD(m,DATEDIFF(m,0,CALDATE)+1,0)))),
  Label = LEFT(CONVERT(VARCHAR, DATEADD(ms,-3,DATEADD(m,0,DATEADD(m,DATEDIFF(m,0,CALDATE)+1,0))), 9), 11)
-FROM MM.Calendar
+FROM MM.Calendar (NOLOCK)
 WHERE DAY(Caldate) = 1 
 AND YEAR(CALDATE) &gt; YEAR(GETDATE())- 3
 AND Caldate &gt; '11/1/2009'
 AND CALDATE &lt; DATEADD(MONTH, -1, GETDATE())
-ORDER BY CONVERT(VARCHAR, CALDATE, 112)
-</CommandText>
+ORDER BY CONVERT(VARCHAR, CALDATE, 112)</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <Fields>
@@ -3166,7 +3165,7 @@ ORDER BY CONVERT(VARCHAR, CALDATE, 112)
     </DataSet>
     <DataSet Name="dsContract">
       <Query>
-        <DataSourceName>MMFS</DataSourceName>
+        <DataSourceName>MMRPTS</DataSourceName>
         <QueryParameters>
           <QueryParameter Name="@FromDate">
             <Value>=Parameters!FromDate.Value</Value>
@@ -3184,8 +3183,482 @@ ORDER BY CONVERT(VARCHAR, CALDATE, 112)
             <Value>=Parameters!Corporate_Contract_Nbr.Value</Value>
           </QueryParameter>
         </QueryParameters>
-        <CommandType>StoredProcedure</CommandType>
-        <CommandText>MM.pReport_ContractReview</CommandText>
+        <CommandText>--DECLARE @Contract_Start_Date DATE = '5/1/2015'
+--DECLARE @FromDate DATE = '7/1/2015'
+--DECLARE @ToDate DATE = '6/30/2016'
+--DECLARE @Corporate_Contract_Nbr VARCHAR(100) = null
+--DECLARE @Contract_Number VARCHAR(100) = '33619CNT'
+
+	
+    --IF ISNULL(@Contract_Number, '') = '' 
+    --    SET @Contract_Number = null
+
+    --IF ISNULL(@Corporate_Contract_Nbr, '') = '' 
+    --    SET @Corporate_Contract_Nbr = null
+
+
+
+
+    CREATE TABLE #Contract
+        (
+          Contract_Number CHAR(11) ,
+          WSCONTSQ INT
+        )
+
+    INSERT  #Contract
+            ( Contract_Number ,
+              WSCONTSQ
+            )
+            SELECT  Contract_Number ,
+                    MAX(WSCONTSQ)
+            --modified 10/31/2012        
+            --FROM    SV00500
+            FROM BI.SV00500_SV00501 (NOLOCK)
+            WHERE   YEAR(Contract_Start_Date) = YEAR(@Contract_Start_Date)
+                    AND MONTH(Contract_Start_Date) = MONTH(@Contract_Start_Date)
+                    AND Cancel_Box &lt;&gt; 1
+            GROUP BY Contract_Number
+
+
+    CREATE TABLE #ReportPY
+        (
+          Contract_Number VARCHAR(100) ,
+          ADRSCODE VARCHAR(15) ,
+          CUSTNMBR VARCHAR(15) ,
+          Divisions VARCHAR(10) ,
+          Profit_Center VARCHAR(50) ,
+          ShowOverAllProfitability VARCHAR(1) ,
+          Type_Call_Short VARCHAR(100) ,
+          Type_of_Call VARCHAR(100) ,
+          Estimated_Hours DECIMAL(18, 2) ,
+          Actual_Hours DECIMAL(18, 2) ,
+          Costs DECIMAL(18, 2) ,
+          Billed DECIMAL(18, 2) ,
+          Profit DECIMAL(18, 2) ,
+          AMU DECIMAL(18, 3) ,
+          ProfitCenter_AMU DECIMAL(18, 3) ,
+          Contract_AMU DECIMAL(18, 3) ,
+          CustomerLocation_AMU DECIMAL(18, 3) ,
+          Customer_Address VARCHAR(1000) ,
+          Location_Address VARCHAR(1000)
+        )
+
+
+    CREATE TABLE #Selection
+        (
+          ADRSCODE VARCHAR(15) ,
+          CUSTNMBR VARCHAR(15) ,
+          Bill_Customer_Number VARCHAR(15) ,
+          Bill_Address_Code VARCHAR(15) ,
+          Contract_Amount DECIMAL(19, 5) ,
+          Contract_Start_Date DATETIME ,
+          Contract_Experation_Date DATETIME ,
+          SLPRSNID CHAR(15) ,
+          Bill_Freq SMALLINT
+        )
+
+    CREATE TABLE #Report
+        (
+          Contract_Number VARCHAR(100) ,
+          ADRSCODE VARCHAR(15) ,
+          CUSTNMBR VARCHAR(15) ,
+          Bill_Customer_Code VARCHAR(15) ,
+          Customer VARCHAR(1000) ,
+          Location VARCHAR(1000) ,
+          Divisions VARCHAR(100) ,
+          Service_Call_ID VARCHAR(100) ,
+          Type_Call_Short VARCHAR(100) ,
+          Type_of_Call VARCHAR(100) ,
+          Costs DECIMAL(18, 2) ,
+          Billed DECIMAL(18, 2) ,
+          Estimate_Hours DECIMAL(18, 2) ,
+          Actual_Hours DECIMAL(18, 2)
+        )
+
+	
+    INSERT  #Selection
+            ( ADRSCODE ,
+              CUSTNMBR
+            )
+            SELECT DISTINCT
+                    ADRSCODE ,
+                    CUSTNMBR
+            --modified 10/31/2012        
+            --FROM    SV00500
+            FROM BI.SV00500_SV00501 (NOLOCK)
+            WHERE   YEAR(Contract_Start_Date) = YEAR(@Contract_Start_Date)
+                    AND MONTH(Contract_Start_Date) = MONTH(@Contract_Start_Date)
+                    AND (Contract_Number = @Contract_Number OR @Contract_Number IS NULL)
+                    AND (Corporate_Contract_Nbr = @Corporate_Contract_Nbr OR @Corporate_Contract_Nbr IS NULL)
+                    AND Cancel_Box &lt;&gt; 1 
+                        
+ 
+    INSERT  #Report
+            ( Contract_Number ,
+              ADRSCODE ,
+              CUSTNMBR ,
+              Divisions ,
+              Service_Call_ID ,
+              Type_Call_Short ,
+              Type_of_Call ,
+              Costs ,
+              Billed ,
+              Actual_Hours ,
+              Estimate_Hours
+						 
+            )
+            SELECT  svServiceMstr.Contract_Number ,
+                    svServiceMstr.ADRSCODE ,
+                    svServiceMstr.CUSTNMBR ,
+                    svServiceMstr.Divisions ,
+                    svServiceMstr.Service_Call_ID ,
+                    svServiceMstr.Type_Call_Short ,
+                    TypeofCall.Type_of_Call ,
+                    Costs = SUM(CASE WHEN svInvoiceMstr.Invoice_Type = 8
+                                     THEN svInvoiceMstr.Cost_All * -1
+                                     ELSE svInvoiceMstr.Cost_All
+                                END) ,
+                    Billed = SUM(svInvoiceMstr.Billable_All
+                                 - svInvoiceMstr.Billable_Tax) ,
+                    Actual_Hours = 0 ,
+                    Estimate_Hours = 0
+            FROM    SV00300 svServiceMstr (NOLOCK)
+            JOIN #Selection S 					
+				ON svServiceMstr.ADRSCODE = S.ADRSCODE
+                AND svServiceMstr.CUSTNMBR = S.CUSTNMBR
+            JOIN SV00701 svInvoiceMstr (NOLOCK)
+				ON svServiceMstr.Service_Call_ID = svInvoiceMstr.Service_Call_ID
+            JOIN SV00320 TypeofCall (NOLOCK)
+				ON TypeofCall.Type_Call_Short = svServiceMstr.Type_Call_Short
+            WHERE   svServiceMstr.Completion_Date BETWEEN @FromDate
+                                                  AND     @ToDate
+                    AND svServiceMstr.Status_of_Call = 'CLOSED'
+					AND (svServiceMstr.Contract_Number = @Contract_Number OR @Contract_Number IS NULL)
+                    AND (svServiceMstr.Corporate_Contract_Nbr = @Corporate_Contract_Nbr OR @Corporate_Contract_Nbr IS NULL)
+            GROUP BY svServiceMstr.Divisions ,
+                    svServiceMstr.ADRSCODE ,
+                    svServiceMstr.CUSTNMBR ,
+                    svServiceMstr.Service_Call_ID ,
+                    svServiceMstr.Type_Call_Short ,
+                    TypeofCall.Type_of_Call ,
+                    svServiceMstr.Contract_Number
+                
+    UPDATE  #Report
+    SET     Actual_Hours = T.Actual_Hours
+    FROM    #Report A ,
+            ( SELECT    svServiceMstr.Service_Call_ID ,
+                        Actual_Hours = SUM(CASE WHEN svInvoiceHist.PAYRCORD IN (
+                                                     'R', 'O', 'D' )
+                                                THEN svInvoiceHist.TRXHRUNT
+                                                     * .01
+                                                ELSE 0
+                                           END)
+              FROM      SV00300 svServiceMstr (NOLOCK)
+              JOIN SV000815 svInvoiceHist (NOLOCK)
+						ON svServiceMstr.Service_Call_ID = svInvoiceHist.Service_Call_ID
+              GROUP BY  svServiceMstr.Service_Call_ID
+            ) T
+    WHERE   A.Service_Call_ID = T.Service_Call_ID
+       
+
+    UPDATE  #Report
+    SET     Estimate_Hours = E.Estimate_Hours
+    FROM    #Report T ,
+            ( SELECT    svServiceMstr.Service_Call_ID ,
+                        Estimate_Hours = SUM(Estimate_Hours * .01)
+              FROM      SV00300 svServiceMstr (NOLOCK)
+              JOIN SV00302 (NOLOCK)
+			  ON sv00302.Service_Call_ID = svServiceMstr.Service_Call_ID
+              GROUP BY  svServiceMstr.Service_Call_ID
+            ) E
+    WHERE   E.Service_Call_ID = T.Service_Call_ID
+
+
+
+
+    INSERT  #Report
+            ( Contract_Number ,
+              ADRSCODE ,
+              CUSTNMBR ,
+              Divisions ,
+              Type_Call_Short ,
+              Type_of_Call ,
+              Costs ,
+              Billed ,
+              Actual_Hours ,
+              Estimate_Hours
+            )
+            SELECT  Contract_Number ,
+                    ADRSCODE ,
+                    CUSTNMBR ,
+                    Divisions ,
+                    Type_Call_Short ,
+                    Type_of_Call ,
+                    Costs = 0 ,
+                    Billed ,
+                    Actual_Hours = 0 ,
+                    Estimate_Hours = 0
+            FROM    ( SELECT    BI.SV00500_SV00501.Contract_Number ,
+                                MM.SV00564_FFSC_Billings.ADRSCODE ,
+                                MM.SV00564_FFSC_Billings.CUSTNMBR ,
+                                BI.SV00500_SV00501.Divisions ,
+                                Type_Call_Short = 'MCC' ,
+                                Type_of_Call = 'GENERATED MC   ' ,
+                                Billed = SUM(CASE RMDTYPAL
+                                               WHEN 7
+                                               THEN Billable_Subtotal * -1
+                                               ELSE Billable_Subtotal
+                                             END)
+							--Modified 7/18/2011
+							--changed from SV00500 to MM.SV00500_SV00501
+							--Billings may be from a contract that has moved to history
+                      FROM      BI.SV00500_SV00501 (NOLOCK)
+                      JOIN #Selection S 
+							ON BI.SV00500_SV00501.ADRSCODE = S.ADRSCODE
+							AND BI.SV00500_SV00501.CUSTNMBR = S.CUSTNMBR
+                     JOIN MM.SV00564_FFSC_Billings (NOLOCK)
+							ON MM.SV00564_FFSC_Billings.CUSTNMBR = BI.SV00500_SV00501.CUSTNMBR
+                            AND MM.SV00564_FFSC_Billings.ADRSCODE = BI.SV00500_SV00501.ADRSCODE
+                            AND MM.SV00564_FFSC_Billings.Contract_Number = BI.SV00500_SV00501.Contract_Number
+                               --Modified 6/14/2011 
+                            AND MM.SV00564_FFSC_Billings.WSCONTSQ = BI.SV00500_SV00501.WSCONTSQ
+                               --Should DATE1 be Wennsoft_Billing_Date
+                      WHERE     MM.SV00564_FFSC_Billings.DATE1 BETWEEN @FromDate
+                                                              AND
+                                                              @ToDate
+															  			AND (BI.SV00500_SV00501.Contract_Number = @Contract_Number OR @Contract_Number IS NULL)
+                    AND (BI.SV00500_SV00501.Corporate_Contract_Nbr = @Corporate_Contract_Nbr OR @Corporate_Contract_Nbr IS NULL)
+                  -- WHERE     MM.SV00564_FFSC_Billings.Wennsoft_Billing_Date BETWEEN @FromDate AND @ToDate
+                      GROUP BY  BI.SV00500_SV00501.Contract_Number ,
+                                MM.SV00564_FFSC_Billings.CUSTNMBR ,
+                                MM.SV00564_FFSC_Billings.ADRSCODE ,
+                                BI.SV00500_SV00501.Divisions
+                    ) A			
+               
+
+
+
+
+    INSERT  #ReportPY
+            ( Contract_Number ,
+              ADRSCODE ,
+              CUSTNMBR ,
+              Divisions ,
+              Profit_Center ,
+              ShowOverAllProfitability ,
+              Type_Call_Short ,
+              Type_of_Call ,
+              Estimated_Hours ,
+              Actual_Hours ,
+              Costs ,
+              Billed ,
+              Profit ,
+              AMU
+            )
+            SELECT  Contract_Number = CASE WHEN @Corporate_Contract_Nbr LIKE '[0-9]%'
+                                           THEN @Corporate_Contract_Nbr
+                                           WHEN Contract_Number = ''
+                                           THEN 'No Contract'
+                                           ELSE Contract_Number
+                                      END ,
+                    ADRSCODE = CASE WHEN @Corporate_Contract_Nbr LIKE '[0-9]%'
+                                    THEN ''
+                                    ELSE T.ADRSCODE
+                               END ,
+                    CUSTNMBR = CASE WHEN @Corporate_Contract_Nbr LIKE '[0-9]%'
+                                    THEN ''
+                                    ELSE T.CUSTNMBR
+                               END ,
+                    T.Divisions ,
+                    Profit_Center = CASE RIGHT(RTRIM(T.DIVISIONS), 2)
+                                      WHEN '40' THEN '40 - DEMAND'
+                                      WHEN '50' THEN '50 - SERVICE MAINT'
+                                      WHEN '90' THEN '90 - ADMIN'
+                                    END ,
+                    ShowOverAllProfitability = CASE RIGHT(RTRIM(T.DIVISIONS),
+                                                          2)
+                                                 WHEN 90 THEN '2'
+                                                 ELSE '1'
+                                               END ,
+                    Type_Call_Short ,
+                    Type_Of_Call ,
+                    Estimated_Hours = SUM(Estimate_Hours) ,
+                    Actual_Hours = SUM(Actual_Hours) ,
+                    Costs = SUM(Costs) ,
+                    Billed = SUM(Billed) ,
+                    Profit = SUM(Billed) - SUM(Costs) ,
+                    AMU = CONVERT(DECIMAL(9, 3), ISNULL(SUM(Billed)
+                                                        / NULLIF(SUM(Costs), 0),
+                                                        0))
+            FROM    #Report T
+            GROUP BY CASE WHEN @Corporate_Contract_Nbr LIKE '[0-9]%'
+                          THEN @Corporate_Contract_Nbr
+                          WHEN Contract_Number = '' THEN 'No Contract'
+                          ELSE Contract_Number
+                     END ,
+                    CASE WHEN @Corporate_Contract_Nbr LIKE '[0-9]%' THEN ''
+                         ELSE T.ADRSCODE
+                    END ,
+                    CASE WHEN @Corporate_Contract_Nbr LIKE '[0-9]%' THEN ''
+                         ELSE T.CUSTNMBR
+                    END ,
+                    T.Divisions ,
+                    Type_Call_Short ,
+                    Type_Of_Call
+            ORDER BY ADRSCODE ,
+                    Contract_Number ,
+                    DIVISIONS        
+  
+
+    UPDATE  #ReportPY
+    SET     Customer_Address = RTRIM(r1.CUSTNAME) + CHAR(10)
+            + CASE WHEN R2.ADDRESS1 = '' THEN ''
+                   ELSE RTRIM(R2.ADDRESS1) + CHAR(10)
+              END + CASE WHEN R2.ADDRESS2 = '' THEN ''
+                         ELSE RTRIM(R2.ADDRESS2) + CHAR(10)
+                    END + CASE WHEN R2.ADDRESS3 = '' THEN ''
+                               ELSE RTRIM(R2.ADDRESS3) + CHAR(10)
+                          END + RTRIM(R2.CITY) + ', ' + RTRIM(R2.STATE) + ' '
+            + RTRIM(R2.ZIP) + CHAR(10) ,
+            Location_Address = RTRIM(L.LOCATNNM) + CHAR(10) + RTRIM(L.ADDRESS1)
+            + CHAR(10) + RTRIM(L.City) + ', ' + RTRIM(L.STATE) + ' '
+            + RTRIM(L.ZIP)
+    FROM    #ReportPY r
+            JOIN #Contract C 
+				ON C.Contract_Number = R.Contract_Number
+            JOIN BI.SV00500_SV00501 S (NOLOCK)
+				ON S.Contract_Number = C.Contract_Number
+                  AND S.WSCONTSQ = C.WSCONTSQ
+            JOIN RM00101 R1 (NOLOCK)
+				ON S.CUSTNMBR = R1.CUSTNMBR
+                AND S.BILL_Address_Code = R1.ADRSCODE
+            JOIN RM00102 R2 (NOLOCK)
+				ON S.Bill_Customer_Number = R2.CUSTNMBR
+                AND S.Bill_Address_Code = R2.ADRSCODE
+            JOIN SV00200 L (NOLOCK)
+				ON R.CUSTNMBR = L.CUSTNMBR
+                AND R.ADRSCODE = L.ADRSCODE
+	            
+
+
+    UPDATE  #ReportPY
+    SET     ProfitCenter_AMU = T.AMU
+    FROM    #ReportPY R
+            JOIN ( SELECT   Contract_Number ,
+                            PC = SUBSTRING(Divisions, 3, 2) ,
+                            AMU = CONVERT(DECIMAL(9, 3), ISNULL(SUM(Billed)
+                                                              / NULLIF(SUM(Costs),
+                                                              0), 0))
+                   FROM     #ReportPY
+                   GROUP BY Contract_Number ,
+                            SUBSTRING(Divisions, 3, 2)
+                 ) T ON T.Contract_Number = R.Contract_Number
+                        AND T.PC = SUBSTRING(R.Divisions, 3, 2)
+
+    UPDATE  #ReportPY
+    SET     CustomerLocation_AMU = T.AMU
+    FROM    #ReportPY R
+            JOIN ( SELECT   CUSTNMBR ,
+                            ADRSCODE ,
+                            AMU = CONVERT(DECIMAL(9, 3), ISNULL(SUM(Billed)
+                                                              / NULLIF(SUM(Costs),
+                                                              0), 0))
+                   FROM     #ReportPY
+                   GROUP BY CUSTNMBR ,
+                            ADRSCODE
+                 ) T ON T.CUSTNMBR = R.CUSTNMBR
+                        AND T.ADRSCODE = R.ADRSCODE
+
+    UPDATE  #ReportPY
+    SET     Contract_AMU = T.AMU
+    FROM    #ReportPY R
+            JOIN ( SELECT   Contract_Number ,
+                            AMU = CONVERT(DECIMAL(9, 3), ISNULL(SUM(Billed)
+                                                              / NULLIF(SUM(Costs),
+                                                              0), 0))
+                   FROM     #ReportPY
+                   WHERE    ShowOverAllProfitability = 1
+                   GROUP BY Contract_Number
+                 ) T ON T.Contract_Number = R.Contract_Number
+
+
+--Added 8/2/2012
+--Frank
+--initialize Estimated Hours to 0
+    UPDATE  #ReportPY
+    SET     Estimated_Hours = 0
+    WHERE   Type_of_Call = 'GENERATED MC   '      
+
+    UPDATE  #ReportPY
+    SET     Estimated_Hours = E.Estimate_Hours * .01
+    FROM    #ReportPY T
+            JOIN #Contract C ON T.Contract_Number = C.Contract_Number
+            JOIN ( SELECT   CUSTNMBR ,
+                            ADRSCODE ,
+                            Contract_Number
+			, WSCONTSQ  
+                            ,
+                            Estimate_Hours = SUM(Estimate_Hours)
+                   FROM     SV00585 (NOLOCK)
+                   --WHERE    Schedule_Date BETWEEN @FromDate AND @ToDate
+                   GROUP BY CUSTNMBR ,
+                            ADRSCODE ,
+                            Contract_Number
+		, WSCONTSQ
+                 ) E ON E.CUSTNMBR = T.CUSTNMBR
+                        AND E.ADRSCODE = T.ADRSCODE
+                        AND E.Contract_Number = T.Contract_Number
+AND E.WSCONTSQ = C.WSCONTSQ
+    WHERE   Type_of_Call = 'GENERATED MC   ' 
+
+
+     
+    SELECT  R.Contract_Number ,
+            R.ADRSCODE ,
+            R.CUSTNMBR ,
+            R.Divisions ,
+            R.Profit_Center ,
+            R.ShowOverAllProfitability ,
+            R.Type_Call_Short ,
+            R.Type_of_Call ,
+            R.Estimated_Hours ,
+            R.Actual_Hours ,
+            R.Costs ,
+            R.Billed ,
+            R.Profit ,
+            R.AMU ,
+            R.ProfitCenter_AMU ,
+            R.Contract_AMU ,
+            R.CustomerLocation_AMU ,
+            R.Customer_Address ,
+            R.Location_Address ,
+            SalesPerson = RTRIM(E.FRSTNAME) + ' ' + RTRIM(E.LASTNAME) ,
+            Contract_Internal_Name = RTRIM(S.Contract_Internal_Name) ,
+            Contract_Description = RTRIM(S.Contract_Description) ,
+            Contract_Amount = S.User_Define_4a ,
+            S.Contract_Start_Date ,
+            S.Contract_Expiration_Date ,
+            'Billing_Frequency' = CASE S.Bill_Freq
+                                    WHEN 1 THEN 'MONTHLY'
+                                    WHEN 2 THEN 'QUARTERLY'
+                                    WHEN 3 THEN 'ANNUAL'
+                                    WHEN 4 THEN 'SEMI-ANNUAL'
+                                    WHEN 5 THEN 'CUSTOM'
+                                    WHEN 6 THEN 'EVERY OTHER MONTH'
+                                  END
+    FROM    #ReportPY R
+            LEFT JOIN #Contract C ON C.Contract_Number = R.Contract_Number
+            LEFT JOIN BI.SV00500_SV00501 S (NOLOCK)
+				ON S.Contract_Number = C.Contract_Number
+                AND S.WSCONTSQ = C.WSCONTSQ            
+            LEFT JOIN UPR00100 E (NOLOCK)
+				ON E.EMPLOYID = S.SLPRSNID
+	  
+
+DROP TABLE #ReportPY
+DROP TABLE #Contract
+DROP TABLE #Selection
+DROP TABLE #Report</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <Fields>

@@ -617,8 +617,8 @@
   </Page>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
-    <DataSource Name="MMFS">
-      <DataSourceReference>MMFS</DataSourceReference>
+    <DataSource Name="MMRPTS">
+      <DataSourceReference>MMRPTS</DataSourceReference>
       <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>728cea88-c540-4c0a-8738-3b11d1aae707</rd:DataSourceID>
     </DataSource>
@@ -626,7 +626,7 @@
   <DataSets>
     <DataSet Name="dsCurrentContactCompleted">
       <Query>
-        <DataSourceName>MMFS</DataSourceName>
+        <DataSourceName>MMRPTS</DataSourceName>
         <QueryParameters>
           <QueryParameter Name="@Contract_Number">
             <Value>=Parameters!Contract_Number.Value</Value>
@@ -647,7 +647,7 @@
     DateScheduled = CONVERT(DATE, DATE1) ,
     DateCompleted = CONVERT(DATE, Completion_Date)
 FROM
-    SV00300
+    SV00300 (NOLOCK)
 WHERE
     Contract_Number = @Contract_Number
 	AND CONVERT(DATE, DATE1) BETWEEN @FromDate AND @ToDate

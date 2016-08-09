@@ -662,7 +662,7 @@
         </TablixRowHierarchy>
         <DataSetName>dsReport</DataSetName>
         <Height>0.5in</Height>
-        <Width>16in</Width>
+        <Width>15.99997in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -743,19 +743,33 @@
             <Value>=Parameters!ToDate.Value</Value>
           </QueryParameter>
         </QueryParameters>
-        <CommandText>SELECT s.Service_Call_ID, s.Service_Description, s.Type_Call_Short, s.Date_of_Service_Call, s.LOCATNNM, s.Contract_Number, s.ADRSCODE, s.CUSTNMBR
-, Record_Notes = CONVERT(VARCHAR(MAX), n.Record_Notes)
-, Record_Notes2 = REPLACE(REPLACE(CONVERT(VARCHAR(MAX), n.Record_Notes), CHAR(10), ' '), CHAR(10), ' ') FROM sv000805 N
-LEFT JOIN sv00300 s
-ON n.Service_Call_ID=s.Service_Call_ID
-AND s.ADRSCODE = N.ADRSCODE
-AND s.CUSTNMBR = N.CUSTNMBR
-WHERE s.CUSTNAME LIKE '%verizon%'
-AND n.Note_Service_Index='Resolution'
-AND s.Date_of_Service_Call BETWEEN @FromDate AND @ToDate
-AND s.Type_Call_Short='MCC'
-AND N.Record_Notes LIKE '%Site Coordinates%'
-	ORDER BY N.Service_Call_ID</CommandText>
+        <CommandText>SELECT
+    s.Service_Call_ID ,
+    s.Service_Description ,
+    s.Type_Call_Short ,
+    s.Date_of_Service_Call ,
+    s.LOCATNNM ,
+    s.Contract_Number ,
+    s.ADRSCODE ,
+    s.CUSTNMBR ,
+    Record_Notes = CONVERT(VARCHAR(MAX), N.Record_Notes) ,
+    Record_Notes2 = REPLACE(REPLACE(CONVERT(VARCHAR(MAX), N.Record_Notes),
+                                    CHAR(10), ' '), CHAR(10), ' ')
+FROM
+    SV000805 N (NOLOCK)
+LEFT JOIN SV00300 s (NOLOCK)
+    ON N.Service_Call_ID = s.Service_Call_ID
+       AND s.ADRSCODE = N.ADRSCODE
+       AND s.CUSTNMBR = N.CUSTNMBR
+WHERE
+    s.CUSTNAME LIKE '%verizon%'
+    AND N.Note_Service_Index = 'Resolution'
+    AND s.Date_of_Service_Call BETWEEN @FromDate
+                               AND     @ToDate
+    AND s.Type_Call_Short = 'MCC'
+    AND N.Record_Notes LIKE '%Site Coordinates%'
+ORDER BY
+    N.Service_Call_ID;</CommandText>
       </Query>
       <Fields>
         <Field Name="Service_Call_ID">

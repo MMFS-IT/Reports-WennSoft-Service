@@ -3312,7 +3312,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>="MM " + Globals!ReportName</Value>
+                  <Value>=Globals!ReportName</Value>
                   <Style>
                     <FontSize>8pt</FontSize>
                     <Color>DimGray</Color>
@@ -3356,8 +3356,8 @@
   </Page>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
-    <DataSource Name="MMFS">
-      <DataSourceReference>MMFS</DataSourceReference>
+    <DataSource Name="MMRPTS">
+      <DataSourceReference>MMRPTS</DataSourceReference>
       <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>41f1d38d-71df-4210-ac2c-7a2b74ea011c</rd:DataSourceID>
     </DataSource>
@@ -3365,15 +3365,13 @@
   <DataSets>
     <DataSet Name="dsBody">
       <Query>
-        <DataSourceName>MMFS</DataSourceName>
+        <DataSourceName>MMRPTS</DataSourceName>
         <QueryParameters>
           <QueryParameter Name="@LOCATNNM">
             <Value>=Parameters!LOCATNNM.Value</Value>
           </QueryParameter>
         </QueryParameters>
         <CommandText>--DECLARE @LOCATNNM VARCHAR(100) = '505 BUILDING MAIN';
-
-
 
 WITH    Most_Recent_Contract
           AS (
@@ -3383,8 +3381,8 @@ WITH    Most_Recent_Contract
                 C.Contract_Number ,
                 MAX(C.WSCONTSQ) AS Seq
                FROM
-                SV00500 C
-               INNER JOIN SV00585 S
+                SV00500 C (NOLOCK)
+               INNER JOIN SV00585 S (NOLOCK)
                 ON C.WSCONTSQ = S.WSCONTSQ
                    AND C.Contract_Number = S.Contract_Number
                    AND C.ADRSCODE = S.ADRSCODE
@@ -3467,19 +3465,19 @@ WITH    Most_Recent_Contract
 		, ItemDesc = ''
     FROM
         Most_Recent_Contract
-    INNER JOIN ( ( ( SV00115
-                     INNER JOIN UPR00100 E
+    INNER JOIN ( ( ( SV00115  (NOLOCK)
+                     INNER JOIN UPR00100 E  (NOLOCK)
                         ON SV00115.EMPLOYID = E.EMPLOYID
                    )
-                   INNER JOIN ( ( SV99403
-                                  INNER JOIN SV00582
+                   INNER JOIN ( ( SV99403  (NOLOCK)
+                                  INNER JOIN SV00582  (NOLOCK)
                                     ON ( SV99403.CUSTNMBR = SV00582.CUSTNMBR )
                                        AND ( SV99403.ADRSCODE = SV00582.ADRSCODE )
                                        AND ( SV99403.Contract_Number = SV00582.Contract_Number )
                                        AND ( SV99403.WSCONTSQ = SV00582.WSCONTSQ )
                                        AND ( SV99403.Equipment_ID = SV00582.Equipment_ID )
                                 )
-                                INNER JOIN SV00585
+                                INNER JOIN SV00585  (NOLOCK)
                                     ON ( SV00582.CUSTNMBR = SV00585.CUSTNMBR )
                                        AND ( SV00582.ADRSCODE = SV00585.ADRSCODE )
                                        AND ( SV00582.Contract_Number = SV00585.Contract_Number )
@@ -3489,7 +3487,7 @@ WITH    Most_Recent_Contract
                               )
                               ON SV00115.Technician = SV00582.Technician_ID
 					)
-                 INNER JOIN SV00200
+                 INNER JOIN SV00200  (NOLOCK)
                     ON ( SV99403.CUSTNMBR = SV00200.CUSTNMBR )
                        AND ( SV99403.ADRSCODE = SV00200.ADRSCODE )
                )
@@ -3552,19 +3550,19 @@ UNION ALL
 		, ItemDesc = RTRIM(ITEMDESC)
     FROM
         Most_Recent_Contract
-    INNER JOIN ( ( ( SV00115
-                     INNER JOIN UPR00100 E
+    INNER JOIN ( ( ( SV00115 (NOLOCK)
+                     INNER JOIN UPR00100 E  (NOLOCK)
                         ON SV00115.EMPLOYID = E.EMPLOYID
                    )
-                   INNER JOIN ( ( SV99403
-                                  INNER JOIN SV00582
+                   INNER JOIN ( ( SV99403  (NOLOCK)
+                                  INNER JOIN SV00582  (NOLOCK)
                                     ON ( SV99403.CUSTNMBR = SV00582.CUSTNMBR )
                                        AND ( SV99403.ADRSCODE = SV00582.ADRSCODE )
                                        AND ( SV99403.Contract_Number = SV00582.Contract_Number )
                                        AND ( SV99403.WSCONTSQ = SV00582.WSCONTSQ )
                                        AND ( SV99403.Equipment_ID = SV00582.Equipment_ID )
                                 )
-                                INNER JOIN SV00585
+                                INNER JOIN SV00585  (NOLOCK)
                                     ON ( SV00582.CUSTNMBR = SV00585.CUSTNMBR )
                                        AND ( SV00582.ADRSCODE = SV00585.ADRSCODE )
                                        AND ( SV00582.Contract_Number = SV00585.Contract_Number )
@@ -3574,7 +3572,7 @@ UNION ALL
                               )
                               ON SV00115.Technician = SV00582.Technician_ID
 					)
-				JOIN dbo.SV00586
+				JOIN dbo.SV00586  (NOLOCK)
 				                    ON ( SV00582.CUSTNMBR = SV00586.CUSTNMBR )
                                        AND ( SV00582.ADRSCODE = SV00586.ADRSCODE )
                                        AND ( SV00582.Contract_Number = SV00586.Contract_Number )
@@ -3582,7 +3580,7 @@ UNION ALL
                                        AND ( SV00582.Equipment_ID = SV00586.Equipment_ID )
                                        AND ( SV00582.Task_Code = SV00586.Task_Code )
 									   AND 	SV00586.Task_Code LIKE 'FILTERS%'
-                 INNER JOIN SV00200
+                 INNER JOIN SV00200  (NOLOCK)
                     ON ( SV99403.CUSTNMBR = SV00200.CUSTNMBR )
                        AND ( SV99403.ADRSCODE = SV00200.ADRSCODE )
                )
@@ -3605,8 +3603,6 @@ UNION ALL
         SV00582.Sub_4,
 		SV00586.ITEMDESC,
 		SV00586.QUANTITY
-
-
 </CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
@@ -3707,16 +3703,19 @@ UNION ALL
     </DataSet>
     <DataSet Name="dsLocation">
       <Query>
-        <DataSourceName>MMFS</DataSourceName>
+        <DataSourceName>MMRPTS</DataSourceName>
         <CommandText>WITH
-Most_Recent_Contract
+Contract 
 AS
 (
-SELECT C.CUSTNMBR,
+SELECT 
+	C.CUSTNMBR,
 	C.ADRSCODE, 
 	C.Contract_Number, 
 	Max(C.WSCONTSQ) AS Seq
-FROM SV00500 C INNER JOIN SV00585 S ON C.WSCONTSQ = S.WSCONTSQ
+FROM SV00500 C (NOLOCK)
+INNER JOIN SV00585 S (NOLOCK)
+	ON C.WSCONTSQ = S.WSCONTSQ
 	AND C.Contract_Number = S.Contract_Number
 	AND C.ADRSCODE = S.ADRSCODE 
 	AND C.CUSTNMBR = S.CUSTNMBR
@@ -3725,51 +3724,17 @@ WHERE C.Cancel_Box = 0
 	AND S.Estimate_Hours &lt;&gt; 0 
 	AND S.Schedule_Date &gt; CAST('1/1/1950' as datetime)
 GROUP BY C.CUSTNMBR, C.ADRSCODE, C.Contract_Number
-
-)
-
+) 
 SELECT DISTINCT
-     RTRIM(SV00200.LOCATNNM) AS Location_Name
-FROM
-    Most_Recent_Contract
-INNER JOIN ( ( ( SV00115
-                 INNER JOIN UPR00100 E
-                    ON SV00115.EMPLOYID = E.EMPLOYID
-               )
-               INNER JOIN ( ( SV99403
-                              INNER JOIN SV00582
-                                ON ( SV99403.CUSTNMBR = SV00582.CUSTNMBR )
-                                   AND ( SV99403.ADRSCODE = SV00582.ADRSCODE )
-                                   AND ( SV99403.Contract_Number = SV00582.Contract_Number )
-                                   AND ( SV99403.WSCONTSQ = SV00582.WSCONTSQ )
-                                   AND ( SV99403.Equipment_ID = SV00582.Equipment_ID )
-                            )
-                            INNER JOIN SV00585
-                                ON ( SV00582.CUSTNMBR = SV00585.CUSTNMBR )
-                                   AND ( SV00582.ADRSCODE = SV00585.ADRSCODE )
-                                   AND ( SV00582.Contract_Number = SV00585.Contract_Number )
-                                   AND ( SV00582.WSCONTSQ = SV00585.WSCONTSQ )
-                                   AND ( SV00582.Equipment_ID = SV00585.Equipment_ID )
-                                   AND ( SV00582.Task_Code = SV00585.Task_Code )
-                          )
-                          ON SV00115.Technician = SV00582.Technician_ID
-             )
-             INNER JOIN SV00200
-                ON ( SV99403.CUSTNMBR = SV00200.CUSTNMBR )
-                   AND ( SV99403.ADRSCODE = SV00200.ADRSCODE )
-           )
-    ON ( Most_Recent_Contract.CUSTNMBR = SV99403.CUSTNMBR )
-       AND ( Most_Recent_Contract.ADRSCODE = SV99403.ADRSCODE )
-       AND ( Most_Recent_Contract.Contract_Number = SV99403.Contract_Number )
-       AND ( Most_Recent_Contract.[Seq] = SV99403.WSCONTSQ )
-WHERE
-SV00585.Estimate_Hours  &gt; 0
-ORDER BY Location_Name
-</CommandText>
+L.LOCATNNM FROM SV00200 L (NOLOCK)
+	JOIN Contract C
+	ON C.ADRSCODE = L.ADRSCODE
+	AND C.CUSTNMBR = L.CUSTNMBR
+ORDER BY L.LOCATNNM</CommandText>
       </Query>
       <Fields>
-        <Field Name="Location_Name">
-          <DataField>Location_Name</DataField>
+        <Field Name="LOCATNNM">
+          <DataField>LOCATNNM</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
@@ -3782,8 +3747,8 @@ ORDER BY Location_Name
       <ValidValues>
         <DataSetReference>
           <DataSetName>dsLocation</DataSetName>
-          <ValueField>Location_Name</ValueField>
-          <LabelField>Location_Name</LabelField>
+          <ValueField>LOCATNNM</ValueField>
+          <LabelField>LOCATNNM</LabelField>
         </DataSetReference>
       </ValidValues>
     </ReportParameter>

@@ -2090,8 +2090,8 @@
   </Page>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
-    <DataSource Name="MMFS">
-      <DataSourceReference>MMFS</DataSourceReference>
+    <DataSource Name="MMRPTS">
+      <DataSourceReference>MMRPTS</DataSourceReference>
       <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>cc70d921-a05b-4468-9374-671ce5695561</rd:DataSourceID>
     </DataSource>
@@ -2099,196 +2099,337 @@
   <DataSets>
     <DataSet Name="MainTable">
       <Query>
-        <DataSourceName>MMFS</DataSourceName>
+        <DataSourceName>MMRPTS</DataSourceName>
         <QueryParameters>
           <QueryParameter Name="@ServiceCall">
             <Value>=Parameters!ServiceCall.Value</Value>
           </QueryParameter>
         </QueryParameters>
-        <CommandText>
-			  SELECT sc.Service_Call_ID,
-			  sc.Divisions,
-			  sc.Type_Call_Short,
-			  sc.Service_Description,
-			  sc.Type_of_Problem,
-			  dtl.Call_Invoice_Number,
-			  CASE dtl.WS_Cost_Code
-			  WHEN 6 THEN 0
-			  WHEN 7 THEN 0
-			  WHEN 8 THEN 0
-			  WHEN 9 THEN 0 ELSE dtl.WS_Cost_Code
-			  END AS WS_Cost_Code,
-			  CASE dtl.WS_Cost_Code
-			  WHEN 1 THEN 'Equipment'
-			  WHEN 2 THEN 'Materials'
-			  WHEN 3 THEN 'Subcontractors'
-			  WHEN 4 THEN ''
-			  WHEN 5 THEN 'Other' ELSE 'Labor'
-			  END AS Cost_Type,
-			  dtl.DOCDATE,
-			  dtl.EMPLNAME,
-			  dtl.Cost_Code_Description,
-			  dtl.Reference_TRX_Number,
-			  dtl.TRXDSCRN,
-			  dtl.TRXSOURC,
-			  CASE WHEN sc.Billing_Amount_Fixed = 0 then dtl.Billing_Amount Else 0 END as Billing_Amount,
-			  (CAST (dtl.TRXHRUNT AS DECIMAL (10, 2)) * .01) + dtl.TRXQTY AS QTY,
-			  dtl.ITEMNMBR,
-			  dtl.ITEMDESC,
-			  dtl.UNITPRCE,
-			  dtl.WS_Extended_Cost,
-			  CASE WHEN sc.Billing_Amount_Fixed = 0 then dtl.Billing_Amount - dtl.WS_Extended_Cost ELSE - dtl.WS_Extended_Cost END AS Profit,
-			  CASE WHEN dtl.Billing_Amount &lt;&gt; 0 THEN (dtl.Billing_Amount - dtl.WS_Extended_Cost) / dtl.Billing_Amount ELSE 0 END AS EGPPC,
-			  0 AS Amount_Billed,
-			  CASE WHEN dtl.Dynamics_Status = 'WORK' THEN 0 ELSE -dtl.WS_Extended_Cost END AS GPTD
-			  FROM   SV000810 AS dtl
-			  INNER JOIN
-			  SV00300 AS sc
-			  ON dtl.Service_Call_ID = sc.Service_Call_ID
-			  WHERE  sc.Service_Call_ID = @ServiceCall
-			  UNION ALL
-			  SELECT sc.Service_Call_ID,
-			  sc.Divisions,
-			  sc.Type_Call_Short,
-			  sc.Service_Description,
-			  sc.Type_of_Problem,
-			  dtl.Call_Invoice_Number,
-			  CASE dtl.WS_Cost_Code
-			  WHEN 6 THEN 0
-			  WHEN 7 THEN 0
-			  WHEN 8 THEN 0
-			  WHEN 9 THEN 0 ELSE dtl.WS_Cost_Code
-			  END AS WS_Cost_Code,
-			  CASE dtl.WS_Cost_Code
-			  WHEN 1 THEN 'Equipment'
-			  WHEN 2 THEN 'Materials'
-			  WHEN 3 THEN 'Subcontractors'
-			  WHEN 4 THEN ''
-			  WHEN 5 THEN 'Other' ELSE 'Labor'
-			  END AS Cost_Type,
-			  dtl.DOCDATE,
-			  dtl.EMPLNAME,
-			  dtl.Cost_Code_Description,
-			  dtl.Reference_TRX_Number,
-			  dtl.TRXDSCRN,
-			  dtl.TRXSOURC,
-			  CASE WHEN sc.Billing_Amount_Fixed = 0 then dtl.Billing_Amount Else 0 END as Billing_Amount,
-			  (CAST (dtl.TRXHRUNT AS DECIMAL (10, 2)) * .01) + dtl.TRXQTY AS QTY,
-			  dtl.ITEMNMBR,
-			  dtl.ITEMDESC,
-			  dtl.UNITPRCE,
-			  dtl.WS_Extended_Cost,
-			  CASE WHEN sc.Billing_Amount_Fixed = 0 then dtl.Billing_Amount - dtl.WS_Extended_Cost ELSE - dtl.WS_Extended_Cost END AS Profit,
-			  CASE WHEN dtl.Billing_Amount &lt;&gt; 0 THEN (dtl.Billing_Amount - dtl.WS_Extended_Cost) / dtl.Billing_Amount ELSE 0 END AS EGPPC,
-			  CASE WHEN sc.Billing_Amount_Fixed = 0 then dtl.Billing_Amount ELSE 0 END AS Amount_Billed,
-			  CASE WHEN sc.Billing_Amount_Fixed = 0 then dtl.Billing_Amount - dtl.WS_Extended_Cost ELSE - dtl.WS_Extended_Cost END AS GPTD
-			  FROM   SV000815 AS dtl
-			  INNER JOIN
-			  SV00300 AS sc
-			  ON dtl.Service_Call_ID = sc.Service_Call_ID
-			  WHERE  sc.Service_Call_ID = @ServiceCall
-
-
-
-			  UNION ALL
-			  Select sc.Service_Call_ID, sc.Divisions, sc.Type_Call_Short, sc.Service_Description, sc.Type_of_Problem,
-			  dtl.Call_Invoice_Number,
-			  CASE dtl.WS_Cost_Code
-			  WHEN 6 THEN 0
-			  WHEN 7 THEN 0
-			  WHEN 8 THEN 0
-			  WHEN 9 THEN 0
-			  ELSE dtl.WS_Cost_Code END as WS_Cost_Code,
-			  CASE dtl.WS_Cost_Code
-			  WHEN 1 THEN 'Equipment'
-			  WHEN 2 THEN 'Materials'
-			  WHEN 3 THEN 'Subcontractors'
-			  WHEN 4 THEN ''
-			  WHEN 5 THEN 'Other'
-			  ELSE 'Labor' END as Cost_Type,
-			  dtl.GLPOSTDT as DOCDATE, '' as EMPLNAME, 'Trailing Cost' as Cost_Code_Description, dtl. Reference_TRX_Number, 'Trailing Cost' as TRXDSCRN, dtl.TRXSOURC, 0 as Billing_Amount,
-			  0 as QTY, '' as ITEMNMBR, 'Trailing Cost' as ITEMDESC, 0 as UNITPRCE, dtl.Trailing_Cost as WS_Extended_Cost, - dtl.Trailing_Cost as Profit,
-			  0 as EGPPC,
-			  0 as Amount_Billed, - dtl.Trailing_Cost as GPTD
-			  FROM
-			  SV000817 dtl
-			  INNER JOIN SV00300 sc ON dtl.Service_Call_ID = sc.Service_Call_ID
-			  WHERE sc.Service_Call_ID = @ServiceCall
-
-			  UNION ALL
-			  Select sc.Service_Call_ID, sc.Divisions, sc.Type_Call_Short, sc.Service_Description, sc.Type_of_Problem,
-			  '' as Call_Invoice_Number,
-			  0 as WS_Cost_Code,
-			  'Labor' as Cost_Type,
-			  q.QUOTEDAT as DOCDATE, '' as EMPLNAME, 'Quote' as Cost_Code_Description, '' as Reference_TRX_Number, 'Quote' as TRXDSCRN, 'Quote' as TRXSOURC, q.Billing_Labor as Billing_Amount,
-			  0 as QTY, '' as ITEMNMBR, 'Quote' as ITEMDESC, 0 as UNITPRCE, 0 as WS_Extended_Cost, q.Billing_Labor as Profit,
-			  0 as EGPPC,
-			  0 as Amount_Billed, q.Billing_Labor as GPTD
-			  FROM
-			  SV00502 q
-			  INNER JOIN SV00300 sc ON q.Quote_Number = sc.Service_Call_ID
-			  WHERE sc.Service_Call_ID = @ServiceCall
-			  and q.Billing_Labor &gt; 0
-
-			  UNION ALL
-			  Select sc.Service_Call_ID, sc.Divisions, sc.Type_Call_Short, sc.Service_Description, sc.Type_of_Problem,
-			  '' as Call_Invoice_Number,
-			  1 as WS_Cost_Code,
-			  'Equipment' as Cost_Type,
-			  q.QUOTEDAT as DOCDATE, '' as EMPLNAME, 'Quote' as Cost_Code_Description, '' as Reference_TRX_Number, 'Quote' as TRXDSCRN, 'Quote' as TRXSOURC, q.Billing_Equipment as Billing_Amount,
-			  0 as QTY, '' as ITEMNMBR, 'Quote' as ITEMDESC, 0 as UNITPRCE, 0 as WS_Extended_Cost, q.Billing_Equipment as Profit,
-			  0 as EGPPC,
-			  0 as Amount_Billed, q.Billing_Equipment as GPTD
-			  FROM
-			  SV00502 q
-			  INNER JOIN SV00300 sc ON q.Quote_Number = sc.Service_Call_ID
-			  WHERE sc.Service_Call_ID = @ServiceCall
-			  and q.Billing_Equipment &gt; 0
-
-			  UNION ALL
-			  Select sc.Service_Call_ID, sc.Divisions, sc.Type_Call_Short, sc.Service_Description, sc.Type_of_Problem,
-			  '' as Call_Invoice_Number,
-			  2 as WS_Cost_Code,
-			  'Material' as Cost_Type,
-			  q.QUOTEDAT as DOCDATE, '' as EMPLNAME, 'Quote' as Cost_Code_Description, '' as Reference_TRX_Number, 'Quote' as TRXDSCRN, 'Quote' as TRXSOURC, q.Billing_Material as Billing_Amount,
-			  0 as QTY, '' as ITEMNMBR, 'Quote' as ITEMDESC, 0 as UNITPRCE, 0 as WS_Extended_Cost, q.Billing_Material as Profit,
-			  0 as EGPPC,
-			  0 as Amount_Billed, q.Billing_Material as GPTD
-			  FROM
-			  SV00502 q
-			  INNER JOIN SV00300 sc ON q.Quote_Number = sc.Service_Call_ID
-			  WHERE sc.Service_Call_ID = @ServiceCall
-			  and q.Billing_Material &gt; 0
-
-			  UNION ALL
-			  Select sc.Service_Call_ID, sc.Divisions, sc.Type_Call_Short, sc.Service_Description, sc.Type_of_Problem,
-			  '' as Call_Invoice_Number,
-			  2 as WS_Cost_Code,
-			  'Subcontractors' as Cost_Type,
-			  q.QUOTEDAT as DOCDATE, '' as EMPLNAME, 'Quote' as Cost_Code_Description, '' as Reference_TRX_Number, 'Quote' as TRXDSCRN, 'Quote' as TRXSOURC, q.Billing_Subs as Billing_Amount,
-			  0 as QTY, '' as ITEMNMBR, 'Quote' as ITEMDESC, 0 as UNITPRCE, 0 as WS_Extended_Cost, q.Billing_Subs as Profit,
-			  0 as EGPPC,
-			  0 as Amount_Billed, q.Billing_Subs as GPTD
-			  FROM
-			  SV00502 q
-			  INNER JOIN SV00300 sc ON q.Quote_Number = sc.Service_Call_ID
-			  WHERE sc.Service_Call_ID = @ServiceCall
-			  and q.Billing_Subs &gt; 0
-
-			  UNION ALL
-			  Select sc.Service_Call_ID, sc.Divisions, sc.Type_Call_Short, sc.Service_Description, sc.Type_of_Problem,
-			  '' as Call_Invoice_Number,
-			  2 as WS_Cost_Code,
-			  'Other' as Cost_Type,
-			  q.QUOTEDAT as DOCDATE, '' as EMPLNAME, 'Quote' as Cost_Code_Description, '' as Reference_TRX_Number, 'Quote' as TRXDSCRN, 'Quote' as TRXSOURC, q.Billing_Other as Billing_Amount,
-			  0 as QTY, '' as ITEMNMBR, 'Quote' as ITEMDESC, 0 as UNITPRCE, 0 as WS_Extended_Cost, q.Billing_Other as Profit,
-			  0 as EGPPC,
-			  0 as Amount_Billed, q.Billing_Other as GPTD
-			  FROM
-			  SV00502 q
-			  INNER JOIN SV00300 sc ON q.Quote_Number = sc.Service_Call_ID
-			  WHERE sc.Service_Call_ID = @ServiceCall
-			  and q.Billing_Other &gt; 0
+        <CommandText>--DECLARE @ServiceCall VARCHAR(100) = '150723-0082      '
+              SELECT
+                sc.Service_Call_ID ,
+                sc.Divisions ,
+                sc.Type_Call_Short ,
+                sc.Service_Description ,
+                sc.Type_of_Problem ,
+                dtl.Call_Invoice_Number ,
+                CASE dtl.WS_Cost_Code
+                  WHEN 6 THEN 0
+                  WHEN 7 THEN 0
+                  WHEN 8 THEN 0
+                  WHEN 9 THEN 0
+                  ELSE dtl.WS_Cost_Code
+                END AS WS_Cost_Code ,
+                CASE dtl.WS_Cost_Code
+                  WHEN 1 THEN 'Equipment'
+                  WHEN 2 THEN 'Materials'
+                  WHEN 3 THEN 'Subcontractors'
+                  WHEN 4 THEN ''
+                  WHEN 5 THEN 'Other'
+                  ELSE 'Labor'
+                END AS Cost_Type ,
+                dtl.DOCDATE ,
+                dtl.EMPLNAME ,
+                dtl.Cost_Code_Description ,
+                dtl.Reference_TRX_Number ,
+                dtl.TRXDSCRN ,
+                dtl.TRXSOURC ,
+                CASE WHEN sc.Billing_Amount_Fixed = 0 THEN dtl.Billing_Amount
+                     ELSE 0
+                END AS Billing_Amount ,
+                ( CAST (dtl.TRXHRUNT AS DECIMAL(10, 2)) * .01 ) + dtl.TRXQTY AS QTY ,
+                dtl.ITEMNMBR ,
+                dtl.ITEMDESC ,
+                dtl.UNITPRCE ,
+                dtl.WS_Extended_Cost ,
+                CASE WHEN sc.Billing_Amount_Fixed = 0
+                     THEN dtl.Billing_Amount - dtl.WS_Extended_Cost
+                     ELSE -dtl.WS_Extended_Cost
+                END AS Profit ,
+                CASE WHEN dtl.Billing_Amount &lt;&gt; 0
+                     THEN ( dtl.Billing_Amount - dtl.WS_Extended_Cost )
+                          / dtl.Billing_Amount
+                     ELSE 0
+                END AS EGPPC ,
+                0 AS Amount_Billed ,
+                CASE WHEN dtl.Dynamics_Status = 'WORK' THEN 0
+                     ELSE -dtl.WS_Extended_Cost
+                END AS GPTD
+              FROM
+                SV000810 AS dtl (NOLOCK)
+              INNER JOIN SV00300 AS sc (NOLOCK)
+                ON dtl.Service_Call_ID = sc.Service_Call_ID
+              WHERE
+                sc.Service_Call_ID = @ServiceCall
+              UNION ALL
+              SELECT
+                sc.Service_Call_ID ,
+                sc.Divisions ,
+                sc.Type_Call_Short ,
+                sc.Service_Description ,
+                sc.Type_of_Problem ,
+                dtl.Call_Invoice_Number ,
+                CASE dtl.WS_Cost_Code
+                  WHEN 6 THEN 0
+                  WHEN 7 THEN 0
+                  WHEN 8 THEN 0
+                  WHEN 9 THEN 0
+                  ELSE dtl.WS_Cost_Code
+                END AS WS_Cost_Code ,
+                CASE dtl.WS_Cost_Code
+                  WHEN 1 THEN 'Equipment'
+                  WHEN 2 THEN 'Materials'
+                  WHEN 3 THEN 'Subcontractors'
+                  WHEN 4 THEN ''
+                  WHEN 5 THEN 'Other'
+                  ELSE 'Labor'
+                END AS Cost_Type ,
+                dtl.DOCDATE ,
+                dtl.EMPLNAME ,
+                dtl.Cost_Code_Description ,
+                dtl.Reference_TRX_Number ,
+                dtl.TRXDSCRN ,
+                dtl.TRXSOURC ,
+                CASE WHEN sc.Billing_Amount_Fixed = 0 THEN dtl.Billing_Amount
+                     ELSE 0
+                END AS Billing_Amount ,
+                ( CAST (dtl.TRXHRUNT AS DECIMAL(10, 2)) * .01 ) + dtl.TRXQTY AS QTY ,
+                dtl.ITEMNMBR ,
+                dtl.ITEMDESC ,
+                dtl.UNITPRCE ,
+                dtl.WS_Extended_Cost ,
+                CASE WHEN sc.Billing_Amount_Fixed = 0
+                     THEN dtl.Billing_Amount - dtl.WS_Extended_Cost
+                     ELSE -dtl.WS_Extended_Cost
+                END AS Profit ,
+                CASE WHEN dtl.Billing_Amount &lt;&gt; 0
+                     THEN ( dtl.Billing_Amount - dtl.WS_Extended_Cost )
+                          / dtl.Billing_Amount
+                     ELSE 0
+                END AS EGPPC ,
+                CASE WHEN sc.Billing_Amount_Fixed = 0 THEN dtl.Billing_Amount
+                     ELSE 0
+                END AS Amount_Billed ,
+                CASE WHEN sc.Billing_Amount_Fixed = 0
+                     THEN dtl.Billing_Amount - dtl.WS_Extended_Cost
+                     ELSE -dtl.WS_Extended_Cost
+                END AS GPTD
+              FROM
+                SV000815 AS dtl ( NOLOCK )
+              INNER JOIN SV00300 AS sc ( NOLOCK )
+                ON dtl.Service_Call_ID = sc.Service_Call_ID
+              WHERE
+                sc.Service_Call_ID = @ServiceCall
+              UNION ALL
+              SELECT
+                sc.Service_Call_ID ,
+                sc.Divisions ,
+                sc.Type_Call_Short ,
+                sc.Service_Description ,
+                sc.Type_of_Problem ,
+                dtl.Call_Invoice_Number ,
+                CASE dtl.WS_Cost_Code
+                  WHEN 6 THEN 0
+                  WHEN 7 THEN 0
+                  WHEN 8 THEN 0
+                  WHEN 9 THEN 0
+                  ELSE dtl.WS_Cost_Code
+                END AS WS_Cost_Code ,
+                CASE dtl.WS_Cost_Code
+                  WHEN 1 THEN 'Equipment'
+                  WHEN 2 THEN 'Materials'
+                  WHEN 3 THEN 'Subcontractors'
+                  WHEN 4 THEN ''
+                  WHEN 5 THEN 'Other'
+                  ELSE 'Labor'
+                END AS Cost_Type ,
+                dtl.GLPOSTDT AS DOCDATE ,
+                '' AS EMPLNAME ,
+                'Trailing Cost' AS Cost_Code_Description ,
+                dtl.Reference_TRX_Number ,
+                'Trailing Cost' AS TRXDSCRN ,
+                dtl.TRXSOURC ,
+                0 AS Billing_Amount ,
+                0 AS QTY ,
+                '' AS ITEMNMBR ,
+                'Trailing Cost' AS ITEMDESC ,
+                0 AS UNITPRCE ,
+                dtl.Trailing_Cost AS WS_Extended_Cost ,
+                -dtl.Trailing_Cost AS Profit ,
+                0 AS EGPPC ,
+                0 AS Amount_Billed ,
+                -dtl.Trailing_Cost AS GPTD
+              FROM
+                SV000817 dtl ( NOLOCK )
+              INNER JOIN SV00300 sc ( NOLOCK )
+                ON dtl.Service_Call_ID = sc.Service_Call_ID
+              WHERE
+                sc.Service_Call_ID = @ServiceCall
+              UNION ALL
+              SELECT
+                sc.Service_Call_ID ,
+                sc.Divisions ,
+                sc.Type_Call_Short ,
+                sc.Service_Description ,
+                sc.Type_of_Problem ,
+                '' AS Call_Invoice_Number ,
+                0 AS WS_Cost_Code ,
+                'Labor' AS Cost_Type ,
+                q.QUOTEDAT AS DOCDATE ,
+                '' AS EMPLNAME ,
+                'Quote' AS Cost_Code_Description ,
+                '' AS Reference_TRX_Number ,
+                'Quote' AS TRXDSCRN ,
+                'Quote' AS TRXSOURC ,
+                q.Billing_Labor AS Billing_Amount ,
+                0 AS QTY ,
+                '' AS ITEMNMBR ,
+                'Quote' AS ITEMDESC ,
+                0 AS UNITPRCE ,
+                0 AS WS_Extended_Cost ,
+                q.Billing_Labor AS Profit ,
+                0 AS EGPPC ,
+                0 AS Amount_Billed ,
+                q.Billing_Labor AS GPTD
+              FROM
+                SV00502 q (NOLOCK)
+              INNER JOIN SV00300 sc (NOLOCK)
+                ON q.Quote_Number = sc.Service_Call_ID
+              WHERE
+                sc.Service_Call_ID = @ServiceCall
+                AND q.Billing_Labor &gt; 0
+              UNION ALL
+              SELECT
+                sc.Service_Call_ID ,
+                sc.Divisions ,
+                sc.Type_Call_Short ,
+                sc.Service_Description ,
+                sc.Type_of_Problem ,
+                '' AS Call_Invoice_Number ,
+                1 AS WS_Cost_Code ,
+                'Equipment' AS Cost_Type ,
+                q.QUOTEDAT AS DOCDATE ,
+                '' AS EMPLNAME ,
+                'Quote' AS Cost_Code_Description ,
+                '' AS Reference_TRX_Number ,
+                'Quote' AS TRXDSCRN ,
+                'Quote' AS TRXSOURC ,
+                q.Billing_Equipment AS Billing_Amount ,
+                0 AS QTY ,
+                '' AS ITEMNMBR ,
+                'Quote' AS ITEMDESC ,
+                0 AS UNITPRCE ,
+                0 AS WS_Extended_Cost ,
+                q.Billing_Equipment AS Profit ,
+                0 AS EGPPC ,
+                0 AS Amount_Billed ,
+                q.Billing_Equipment AS GPTD
+              FROM
+                SV00502 q (NOLOCK)
+              INNER JOIN SV00300 sc (NOLOCK)
+                ON q.Quote_Number = sc.Service_Call_ID
+              WHERE
+                sc.Service_Call_ID = @ServiceCall
+                AND q.Billing_Equipment &gt; 0
+              UNION ALL
+              SELECT
+                sc.Service_Call_ID ,
+                sc.Divisions ,
+                sc.Type_Call_Short ,
+                sc.Service_Description ,
+                sc.Type_of_Problem ,
+                '' AS Call_Invoice_Number ,
+                2 AS WS_Cost_Code ,
+                'Material' AS Cost_Type ,
+                q.QUOTEDAT AS DOCDATE ,
+                '' AS EMPLNAME ,
+                'Quote' AS Cost_Code_Description ,
+                '' AS Reference_TRX_Number ,
+                'Quote' AS TRXDSCRN ,
+                'Quote' AS TRXSOURC ,
+                q.Billing_Material AS Billing_Amount ,
+                0 AS QTY ,
+                '' AS ITEMNMBR ,
+                'Quote' AS ITEMDESC ,
+                0 AS UNITPRCE ,
+                0 AS WS_Extended_Cost ,
+                q.Billing_Material AS Profit ,
+                0 AS EGPPC ,
+                0 AS Amount_Billed ,
+                q.Billing_Material AS GPTD
+              FROM
+                SV00502 q (NOLOCK)
+              INNER JOIN SV00300 sc (NOLOCK)
+                ON q.Quote_Number = sc.Service_Call_ID
+              WHERE
+                sc.Service_Call_ID = @ServiceCall
+                AND q.Billing_Material &gt; 0
+              UNION ALL
+              SELECT
+                sc.Service_Call_ID ,
+                sc.Divisions ,
+                sc.Type_Call_Short ,
+                sc.Service_Description ,
+                sc.Type_of_Problem ,
+                '' AS Call_Invoice_Number ,
+                2 AS WS_Cost_Code ,
+                'Subcontractors' AS Cost_Type ,
+                q.QUOTEDAT AS DOCDATE ,
+                '' AS EMPLNAME ,
+                'Quote' AS Cost_Code_Description ,
+                '' AS Reference_TRX_Number ,
+                'Quote' AS TRXDSCRN ,
+                'Quote' AS TRXSOURC ,
+                q.Billing_Subs AS Billing_Amount ,
+                0 AS QTY ,
+                '' AS ITEMNMBR ,
+                'Quote' AS ITEMDESC ,
+                0 AS UNITPRCE ,
+                0 AS WS_Extended_Cost ,
+                q.Billing_Subs AS Profit ,
+                0 AS EGPPC ,
+                0 AS Amount_Billed ,
+                q.Billing_Subs AS GPTD
+              FROM
+                SV00502 q (NOLOCK)
+              INNER JOIN SV00300 sc (NOLOCK)
+                ON q.Quote_Number = sc.Service_Call_ID
+              WHERE
+                sc.Service_Call_ID = @ServiceCall
+                AND q.Billing_Subs &gt; 0
+              UNION ALL
+              SELECT
+                sc.Service_Call_ID ,
+                sc.Divisions ,
+                sc.Type_Call_Short ,
+                sc.Service_Description ,
+                sc.Type_of_Problem ,
+                '' AS Call_Invoice_Number ,
+                2 AS WS_Cost_Code ,
+                'Other' AS Cost_Type ,
+                q.QUOTEDAT AS DOCDATE ,
+                '' AS EMPLNAME ,
+                'Quote' AS Cost_Code_Description ,
+                '' AS Reference_TRX_Number ,
+                'Quote' AS TRXDSCRN ,
+                'Quote' AS TRXSOURC ,
+                q.Billing_Other AS Billing_Amount ,
+                0 AS QTY ,
+                '' AS ITEMNMBR ,
+                'Quote' AS ITEMDESC ,
+                0 AS UNITPRCE ,
+                0 AS WS_Extended_Cost ,
+                q.Billing_Other AS Profit ,
+                0 AS EGPPC ,
+                0 AS Amount_Billed ,
+                q.Billing_Other AS GPTD
+              FROM
+                SV00502 q (NOLOCK)
+              INNER JOIN SV00300 sc (NOLOCK)
+                ON q.Quote_Number = sc.Service_Call_ID
+              WHERE
+                sc.Service_Call_ID = @ServiceCall
+                AND q.Billing_Other &gt; 0;
 		  </CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>

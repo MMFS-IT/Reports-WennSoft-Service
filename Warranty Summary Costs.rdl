@@ -514,7 +514,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -764,7 +763,7 @@
             <Value>=Parameters!ServiceCallID.Value</Value>
           </QueryParameter>
         </QueryParameters>
-        <CommandText>SELECT * FROM BI.ServiceWarrantyCosts WHERE ServiceCallID = @ServiceCallID</CommandText>
+        <CommandText>SELECT * FROM BI.ServiceWarrantyCosts (NOLOCK) WHERE ServiceCallID = @ServiceCallID</CommandText>
       </Query>
       <Fields>
         <Field Name="ServiceCallID">

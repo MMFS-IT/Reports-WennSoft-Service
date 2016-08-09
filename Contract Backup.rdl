@@ -1766,7 +1766,7 @@ SELECT CUSTNMBR,
 	Cost_All,
 	Cost_Labor,
 	Cost_Material
-From dbo.SV99300
+From dbo.SV99300 (NOLOCK)
 WHERE Contract_Number = @Contract_Number
 	AND Completion_Date BETWEEN @FromDate AND @ToDate
 	AND Status_of_Call = 'CLOSED'
@@ -1845,7 +1845,7 @@ ORDER BY Type_of_Call, Date_of_Service_Call</CommandText>
         <CommandText>SELECT TOP 36
 CALDATE , MonthYear = LEFT(DATENAME(MONTH, Caldate), 3) + ' ' + DATENAME(YEAR, CALDATE)
 
-FROM MM.Calendar
+FROM MM.Calendar (NOLOCK)
 WHERE DAY(Caldate) = 1 
 AND YEAR(CALDATE) &gt; YEAR(GETDATE())- 3
 AND YEAR(Caldate) &gt; '2008'
@@ -1868,7 +1868,7 @@ ORDER BY CALDATE</CommandText>
         <DataSourceName>mmfs</DataSourceName>
         <CommandText>SELECT TOP 36
 CALDATE, Label = LEFT(CONVERT(VARCHAR, CALDATE, 9), 11)
-FROM MM.Calendar
+FROM MM.Calendar (NOLOCK)
 WHERE DAY(Caldate) = 1 
 AND YEAR(CALDATE) &gt; YEAR(GETDATE())- 3
 AND YEAR(Caldate)&gt; 2009
@@ -1892,7 +1892,7 @@ ORDER BY CONVERT(VARCHAR, CALDATE, 112)</CommandText>
         <CommandText>SELECT TOP 36
  CalDate = CONVERT(DATE, DATEADD(ms,-3,DATEADD(m,0,DATEADD(m,DATEDIFF(m,0,CALDATE)+1,0)))),
  Label = LEFT(CONVERT(VARCHAR, DATEADD(ms,-3,DATEADD(m,0,DATEADD(m,DATEDIFF(m,0,CALDATE)+1,0))), 9), 11)
-FROM MM.Calendar
+FROM MM.Calendar (NOLOCK)
 WHERE DAY(Caldate) = 1 
 AND YEAR(CALDATE) &gt; YEAR(GETDATE())- 3
 AND Caldate &gt; '11/1/2009'

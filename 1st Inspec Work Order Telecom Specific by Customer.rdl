@@ -13159,8 +13159,8 @@
   </Page>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
-    <DataSource Name="MMFS">
-      <DataSourceReference>MMFS</DataSourceReference>
+    <DataSource Name="MMRPTS">
+      <DataSourceReference>MMRPTS</DataSourceReference>
       <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>ec2292ab-843f-4908-b0b9-b56deba25259</rd:DataSourceID>
     </DataSource>
@@ -13168,7 +13168,7 @@
   <DataSets>
     <DataSet Name="dsInspection">
       <Query>
-        <DataSourceName>MMFS</DataSourceName>
+        <DataSourceName>MMRPTS</DataSourceName>
         <QueryParameters>
           <QueryParameter Name="@FromCutomerNumber">
             <Value>=Parameters!FromCutomerNumber.Value</Value>
@@ -13177,28 +13177,34 @@
             <Value>=Parameters!ToCustomerNumber.Value</Value>
           </QueryParameter>
         </QueryParameters>
-        <CommandText>SELECT  a.*
-	, Loc_Name = RTRIM(dbo.SV00200.LOCATNNM),
-	 Loc_Address1 = RTRIM(b.ADDRESS1),
-     Loc_Address2 = RTRIM(b.ADDRESS2),
-        Loc_CityStateZip = RTRIM(dbo.SV00200.City) + ', ' +  RTRIM(dbo.SV00200.State) + ' ' + RTRIM(dbo.SV00200.Zip)	
-        ,dbo.sv00200.CNTCPRSN
-        ,dbo.sv00200.PHONE1
-FROM SV00300 a
-JOIN dbo.SV00200
-ON a.CUSTNMBR = dbo.SV00200.CUSTNMBR
-AND a.ADRSCODE = dbo.SV00200.ADRSCODE
- LEFT OUTER JOIN RM00102 AS b
-                            ON a.CUSTNMBR = b.CUSTNMBR
-                               AND a.ADRSCODE = b.ADRSCODE
-
-WHERE a.CUSTNMBR BETWEEN   @FromCutomerNumber AND @ToCustomerNumber
-AND  a.Type_Call_Short = 'MCC'
-AND a.Status_of_Call = 'OPEN'
-AND a.Service_Description = 'FI'
---AND a.Date1 = '2/1/2011'
---AND  ( isnull(b.Sub_Task_Line_Number, 0) = 0 )
-ORDER BY a.Service_Area, A.Technician_ID</CommandText>
+        <CommandText>--DECLARE @FromCutomerNumber VARCHAR(100) = '24030'
+--DECLARE @ToCustomerNumber VARCHAR(100) = '24030'
+SELECT
+    a.* ,
+    Loc_Name = RTRIM(dbo.SV00200.LOCATNNM) ,
+    Loc_Address1 = RTRIM(b.ADDRESS1) ,
+    Loc_Address2 = RTRIM(b.ADDRESS2) ,
+    Loc_CityStateZip = RTRIM(dbo.SV00200.CITY) + ', '
+    + RTRIM(dbo.SV00200.STATE) + ' ' + RTRIM(dbo.SV00200.ZIP) ,
+    dbo.SV00200.CNTCPRSN ,
+    dbo.SV00200.PHONE1
+FROM
+    SV00300 a ( NOLOCK )
+JOIN dbo.SV00200 (NOLOCK)
+    ON a.CUSTNMBR = dbo.SV00200.CUSTNMBR
+       AND a.ADRSCODE = dbo.SV00200.ADRSCODE
+LEFT OUTER JOIN RM00102 AS b ( NOLOCK )
+    ON a.CUSTNMBR = b.CUSTNMBR
+       AND a.ADRSCODE = b.ADRSCODE
+WHERE
+    a.CUSTNMBR BETWEEN @FromCutomerNumber
+               AND     @ToCustomerNumber
+    AND a.Type_Call_Short = 'MCC'
+    AND a.Status_of_Call = 'OPEN'
+    AND a.Service_Description = 'FI'
+ORDER BY
+    a.Service_Area ,
+    a.Technician_ID;</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <Fields>
@@ -13606,6 +13612,10 @@ ORDER BY a.Service_Area, A.Technician_ID</CommandText>
           <DataField>Labor_Billing_Catagory_4</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
+        <Field Name="Orig_Call_ID">
+          <DataField>Orig_Call_ID</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="Labor_Billing_Catagory_5">
           <DataField>Labor_Billing_Catagory_5</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
@@ -13782,6 +13792,14 @@ ORDER BY a.Service_Area, A.Technician_ID</CommandText>
           <DataField>WSReserved_CB5</DataField>
           <rd:TypeName>System.Byte</rd:TypeName>
         </Field>
+        <Field Name="Rental_Agreement_Number">
+          <DataField>Rental_Agreement_Number</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Rental_Agreement_LineOrd">
+          <DataField>Rental_Agreement_LineOrd</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
         <Field Name="BilledToJobOther">
           <DataField>BilledToJobOther</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
@@ -13789,6 +13807,10 @@ ORDER BY a.Service_Area, A.Technician_ID</CommandText>
         <Field Name="WSReserved_STR1">
           <DataField>WSReserved_STR1</DataField>
           <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Vendor_Quote_Printed">
+          <DataField>Vendor_Quote_Printed</DataField>
+          <rd:TypeName>System.Int16</rd:TypeName>
         </Field>
         <Field Name="WSReserved_STR2">
           <DataField>WSReserved_STR2</DataField>

@@ -1,566 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
-  <DataSources>
-    <DataSource Name="MMFS">
-      <DataSourceReference>MMFS</DataSourceReference>
-      <rd:DataSourceID>ec2292ab-843f-4908-b0b9-b56deba25259</rd:DataSourceID>
-      <rd:SecurityType>None</rd:SecurityType>
-    </DataSource>
-  </DataSources>
-  <DataSets>
-    <DataSet Name="dsInspection">
-      <Fields>
-        <Field Name="Service_Call_ID">
-          <DataField>Service_Call_ID</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="CUSTNMBR">
-          <DataField>CUSTNMBR</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ADRSCODE">
-          <DataField>ADRSCODE</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Status_of_Call">
-          <DataField>Status_of_Call</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="DATE1">
-          <DataField>DATE1</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="Date_of_Service_Call">
-          <DataField>Date_of_Service_Call</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="Call_Time">
-          <DataField>Call_Time</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Completion_Date">
-          <DataField>Completion_Date</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="Contract_Number">
-          <DataField>Contract_Number</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Wennsoft_Affiliate">
-          <DataField>Wennsoft_Affiliate</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Wennsoft_Region">
-          <DataField>Wennsoft_Region</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Wennsoft_Branch">
-          <DataField>Wennsoft_Branch</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Technician">
-          <DataField>Technician</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Type_Call_Short">
-          <DataField>Type_Call_Short</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Type_of_Call">
-          <DataField>Type_of_Call</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Type_of_Problem">
-          <DataField>Type_of_Problem</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Service_Area">
-          <DataField>Service_Area</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Divisions">
-          <DataField>Divisions</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Purchase_Order">
-          <DataField>Purchase_Order</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Priority_of_Call">
-          <DataField>Priority_of_Call</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Time_Zone">
-          <DataField>Time_Zone</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Caller_Name">
-          <DataField>Caller_Name</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Caller_Phone">
-          <DataField>Caller_Phone</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Caller_Email_Address">
-          <DataField>Caller_Email_Address</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SLPRSNID">
-          <DataField>SLPRSNID</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Expr1">
-          <DataField>Expr1</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Expr2">
-          <DataField>Expr2</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Service_Description">
-          <DataField>Service_Description</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="User_Define_1a">
-          <DataField>User_Define_1a</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="User_Define_2a">
-          <DataField>User_Define_2a</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="User_Define_3a">
-          <DataField>User_Define_3a</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="User_Define_4a">
-          <DataField>User_Define_4a</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Service_User_Define_1">
-          <DataField>Service_User_Define_1</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Service_User_Define_2">
-          <DataField>Service_User_Define_2</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Service_User_Define_3">
-          <DataField>Service_User_Define_3</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Service_User_Define_4">
-          <DataField>Service_User_Define_4</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Service_User_Define_5">
-          <DataField>Service_User_Define_5</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Service_User_Define_6">
-          <DataField>Service_User_Define_6</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Service_User_Define_7">
-          <DataField>Service_User_Define_7</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Service_User_Define_8">
-          <DataField>Service_User_Define_8</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Service_User_Define_9">
-          <DataField>Service_User_Define_9</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="Service_User_Define_10">
-          <DataField>Service_User_Define_10</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="Service_User_Define_11">
-          <DataField>Service_User_Define_11</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="Service_User_Define_12">
-          <DataField>Service_User_Define_12</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="Service_User_Define_18">
-          <DataField>Service_User_Define_18</DataField>
-          <rd:TypeName>System.Byte</rd:TypeName>
-        </Field>
-        <Field Name="Service_User_Define_19">
-          <DataField>Service_User_Define_19</DataField>
-          <rd:TypeName>System.Byte</rd:TypeName>
-        </Field>
-        <Field Name="Service_User_Define_20">
-          <DataField>Service_User_Define_20</DataField>
-          <rd:TypeName>System.Byte</rd:TypeName>
-        </Field>
-        <Field Name="Service_User_Define_21">
-          <DataField>Service_User_Define_21</DataField>
-          <rd:TypeName>System.Byte</rd:TypeName>
-        </Field>
-        <Field Name="Service_User_Define_22">
-          <DataField>Service_User_Define_22</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="Service_User_Define_23">
-          <DataField>Service_User_Define_23</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="Service_User_Define_24">
-          <DataField>Service_User_Define_24</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="Service_User_Define_25">
-          <DataField>Service_User_Define_25</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="Expr3">
-          <DataField>Expr3</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Expr4">
-          <DataField>Expr4</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Expr5">
-          <DataField>Expr5</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Expr6">
-          <DataField>Expr6</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Expr7">
-          <DataField>Expr7</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Expr8">
-          <DataField>Expr8</DataField>
-          <rd:TypeName>System.Int16</rd:TypeName>
-        </Field>
-        <Field Name="Expr9">
-          <DataField>Expr9</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="Expr10">
-          <DataField>Expr10</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="CUSTNAME">
-          <DataField>CUSTNAME</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="PYMTRMID">
-          <DataField>PYMTRMID</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SHIPMTHD">
-          <DataField>SHIPMTHD</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="BILLADDRESS1">
-          <DataField>BILLADDRESS1</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="BILLADDRESS2">
-          <DataField>BILLADDRESS2</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="COUNTRY">
-          <DataField>COUNTRY</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="BILLCITY">
-          <DataField>BILLCITY</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="BILLSTATE">
-          <DataField>BILLSTATE</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="BILLZIP">
-          <DataField>BILLZIP</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Expr11">
-          <DataField>Expr11</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Expr12">
-          <DataField>Expr12</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Expr13">
-          <DataField>Expr13</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Expr14">
-          <DataField>Expr14</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="User_Define_5a">
-          <DataField>User_Define_5a</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="User_Define_6a">
-          <DataField>User_Define_6a</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Loc_Name">
-          <DataField>Loc_Name</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Loc_Address1">
-          <DataField>Loc_Address1</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Loc_Address2">
-          <DataField>Loc_Address2</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="CITY">
-          <DataField>CITY</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Loc_CityStateZip">
-          <DataField>Loc_CityStateZip</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="STATE">
-          <DataField>STATE</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ZIP">
-          <DataField>ZIP</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="CNTCPRSN">
-          <DataField>CNTCPRSN</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="PHONE1">
-          <DataField>PHONE1</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Contact2">
-          <DataField>Contact2</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Contact2_Phone">
-          <DataField>Contact2_Phone</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Loc_UserDefine1a">
-          <DataField>Loc_UserDefine1a</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Loc_UserDefine2a">
-          <DataField>Loc_UserDefine2a</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Loc_UserDefine3a">
-          <DataField>Loc_UserDefine3a</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Loc_UserDefine4a">
-          <DataField>Loc_UserDefine4a</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Loc_UserDefine5a">
-          <DataField>Loc_UserDefine5a</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Loc_UserDefine6a">
-          <DataField>Loc_UserDefine6a</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Note_Service_Index">
-          <DataField>Note_Service_Index</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Record_Notes">
-          <DataField>Record_Notes</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>MMFS</DataSourceName>
-        <CommandText>SELECT  a.Service_Call_ID,
-        a.CUSTNMBR,
-        a.ADRSCODE,
-        a.Status_of_Call,
-        a.DATE1,
-        a.Date_of_Service_Call,
-        a.Call_Time,
-        a.Completion_Date,
-        a.Contract_Number,
-        a.Wennsoft_Affiliate,
-        a.Wennsoft_Region,
-        a.Wennsoft_Branch,
-        a.Technician,
-        a.Type_Call_Short,
-        a.Type_of_Call,
-        a.Type_of_Problem,
-        a.Service_Area,
-        a.Divisions,
-        a.Purchase_Order,
-        a.Priority_of_Call,
-        a.Time_Zone,
-        a.Caller_Name,
-        a.Caller_Phone,
-        a.Caller_Email_Address,
-        a.SLPRSNID,
-        ISNULL(sp.SLPRSNFN, '') AS Expr1,
-        ISNULL(sp.SPRSNSLN, '') AS Expr2,
-        a.Service_Description,
-        a.User_Define_1a,
-        a.User_Define_2a,
-        a.User_Define_3a,
-        a.User_Define_4a,
-        a.Service_User_Define_1,
-        a.Service_User_Define_2,
-        a.Service_User_Define_3,
-        a.Service_User_Define_4,
-        a.Service_User_Define_5,
-        a.Service_User_Define_6,
-        a.Service_User_Define_7,
-        a.Service_User_Define_8,
-        a.Service_User_Define_9,
-        a.Service_User_Define_10,
-        a.Service_User_Define_11,
-        a.Service_User_Define_12,
-        a.Service_User_Define_18,
-        a.Service_User_Define_19,
-        a.Service_User_Define_20,
-        a.Service_User_Define_21,
-        a.Service_User_Define_22,
-        a.Service_User_Define_23,
-        a.Service_User_Define_24,
-        a.Service_User_Define_25,
-        ISNULL(e.Equipment_ID, '') AS Expr3,
-        ISNULL(e.Equipment_Type, '') AS Expr4,
-        ISNULL(e.Wennsoft_Serial_Number, '') AS Expr5,
-        ISNULL(e.Wennsoft_Model_Number, '') AS Expr6,
-        ISNULL(e.Manufacturer_ID, '') AS Expr7,
-        ISNULL(q.Quote_Type, 0) AS Expr8,
-        ISNULL(q.QUOTEDAT, '1/1/1900') AS Expr9,
-        ISNULL(q.Contract_Description, '') AS Expr10,
-        cm.CUSTNAME,
-        cm.PYMTRMID,
-        cm.SHIPMTHD,
-        billTo.ADDRESS1 AS BILLADDRESS1,
-        billTo.ADDRESS2 AS BILLADDRESS2,
-        billTo.COUNTRY,
-        billTo.CITY AS BILLCITY,
-        billTo.STATE AS BILLSTATE,
-        billTo.ZIP AS BILLZIP,
-        sc.User_Define_1a AS Expr11,
-        sc.User_Define_2a AS Expr12,
-        sc.User_Define_3a AS Expr13,
-        sc.User_Define_4a AS Expr14,
-        sc.User_Define_5a,
-        sc.User_Define_6a,
-        sl.Loc_Name,
-        sl.Loc_Address1,
-        sl.Loc_Address2,
-        Loc_CityStateZip = RTRIM(sl.Loc_City) + ', ' +  RTRIM(sl.Loc_State) + ' ' + RTRIM(sl.Loc_Zip),	
-       
-        sl.Loc_City AS CITY,
-        sl.Loc_State AS STATE,
-        sl.Loc_Zip AS ZIP,
-        sl.Contact1 AS CNTCPRSN,
-        sl.Contact1_Phone AS PHONE1,
-        sl.Contact2,
-        sl.Contact2_Phone,
-        sl.Loc_UserDefine1a,
-        sl.Loc_UserDefine2a,
-        sl.Loc_UserDefine3a,
-        sl.Loc_UserDefine4a,
-        sl.Loc_UserDefine5a,
-        sl.Loc_UserDefine6a,
-        scn.Note_Service_Index,
-        scn.Record_Notes
-FROM    SV00300 AS a
-left outer join SV00302 AS b
-        ON a.Service_Call_ID = b.Service_Call_ID
-INNER JOIN RM00101 AS cm
-        ON a.CUSTNMBR = cm.CUSTNMBR
-INNER JOIN SV00100 AS sc
-        ON a.CUSTNMBR = sc.CUSTNMBR
-LEFT OUTER JOIN SV000805 AS scn
-        ON a.Service_Call_ID = scn.Service_Call_ID
-LEFT OUTER JOIN RM00301 AS sp
-        ON a.SLPRSNID = sp.SLPRSNID
-LEFT OUTER JOIN SV00502 AS q
-        ON a.Service_Call_ID = q.Quote_Number
-           AND a.CUSTNMBR = q.CUSTNMBR
-           AND a.ADRSCODE = q.ADRSCODE
-LEFT OUTER JOIN SV00400 AS e
-        ON a.CUSTNMBR = e.CUSTNMBR
-           AND a.ADRSCODE = e.ADRSCODE
-           AND b.Equipment_ID = e.Equipment_ID
-LEFT OUTER JOIN ( SELECT    a.CUSTNMBR,
-                            a.ADRSCODE,
-                            a.CUSTNAME AS Loc_CustomerName,
-                            a.ADDRESS1 AS Loc_Address1,
-                            b.ADDRESS2 AS Loc_Address2,
-                            a.CITY AS Loc_City,
-                            a.STATE AS Loc_State,
-                            a.ZIP AS Loc_Zip,
-                            a.LOCATNNM AS Loc_Name,
-                            a.User_Define_1a AS Loc_UserDefine1a,
-                            a.User_Define_2a AS Loc_UserDefine2a,
-                            a.User_Define_3a AS Loc_UserDefine3a,
-                            a.User_Define_4a AS Loc_UserDefine4a,
-                            a.User_Define_5a AS Loc_UserDefine5a,
-                            a.User_Define_6a AS Loc_UserDefine6a,
-                            a.CNTCPRSN AS Contact1,
-                            CASE a.PHONE1 WHEN '' THEN '' ELSE '(' + SUBSTRING(a.PHONE1,1,3) + ') ' + SUBSTRING(a.PHONE1,4,3) + '-' + SUBSTRING(a.PHONE1,7,4) END AS Contact1_Phone,
-                            a.Contact_Name AS Contact2,
-                            a.PHONE2 AS Contact2_Phone
-                  FROM      SV00200 AS a
-                  LEFT OUTER JOIN RM00102 AS b
-                            ON a.CUSTNMBR = b.CUSTNMBR
-                               AND a.ADRSCODE = b.ADRSCODE
-                ) AS sl
-        ON a.CUSTNMBR = sl.CUSTNMBR
-           AND a.ADRSCODE = sl.ADRSCODE
-left outer join --INNER JOIN
-        RM00102 AS billTo
-        ON billTo.CUSTNMBR = a.CUSTNMBR
-           AND billTo.ADRSCODE = cm.PRBTADCD
-WHERE   ( a.Service_Call_ID = @Service_Call_ID )
-        AND ( isnull(b.Sub_Task_Line_Number, 0) = 0 )</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="@Service_Call_ID">
-            <Value>=Parameters!Service_Call_ID.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
-      </Query>
-    </DataSet>
-    <DataSet Name="dsText">
-      <Fields>
-        <Field Name="Sequence">
-          <DataField>Sequence</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
-        </Field>
-        <Field Name="TEXTLINE">
-          <DataField>TEXTLINE</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>MMFS</DataSourceName>
-        <CommandText>SELECT * FROM MM.MM_1ST_Inspection_Text_Std</CommandText>
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
-      </Query>
-    </DataSet>
-  </DataSets>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <Body>
     <ReportItems>
       <Tablix Name="Tablix1">
@@ -1790,17 +1229,6 @@ WHERE   ( a.Service_Call_ID = @Service_Call_ID )
     <Height>1.45in</Height>
     <Style />
   </Body>
-  <ReportParameters>
-    <ReportParameter Name="Service_Call_ID">
-      <DataType>String</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>130624-0030</Value>
-        </Values>
-      </DefaultValue>
-      <Prompt>Service Call ID</Prompt>
-    </ReportParameter>
-  </ReportParameters>
   <Width>8in</Width>
   <Page>
     <PageFooter>
@@ -1926,6 +1354,576 @@ WHERE   ( a.Service_Call_ID = @Service_Call_ID )
     <BottomMargin>0.18in</BottomMargin>
     <Style />
   </Page>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="MMRPTS">
+      <DataSourceReference>MMRPTS</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>ec2292ab-843f-4908-b0b9-b56deba25259</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="dsInspection">
+      <Query>
+        <DataSourceName>MMRPTS</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@Service_Call_ID">
+            <Value>=Parameters!Service_Call_ID.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>--DECLARE @Service_Call_ID VARCHAR(100) ='150605-0161'
+
+SELECT  a.Service_Call_ID,
+        a.CUSTNMBR,
+        a.ADRSCODE,
+        a.Status_of_Call,
+        a.DATE1,
+        a.Date_of_Service_Call,
+        a.Call_Time,
+        a.Completion_Date,
+        a.Contract_Number,
+        a.Wennsoft_Affiliate,
+        a.Wennsoft_Region,
+        a.Wennsoft_Branch,
+        a.Technician,
+        a.Type_Call_Short,
+        a.Type_of_Call,
+        a.Type_of_Problem,
+        a.Service_Area,
+        a.Divisions,
+        a.Purchase_Order,
+        a.Priority_of_Call,
+        a.Time_Zone,
+        a.Caller_Name,
+        a.Caller_Phone,
+        a.Caller_Email_Address,
+        a.SLPRSNID,
+        ISNULL(sp.SLPRSNFN, '') AS Expr1,
+        ISNULL(sp.SPRSNSLN, '') AS Expr2,
+        a.Service_Description,
+        a.User_Define_1a,
+        a.User_Define_2a,
+        a.User_Define_3a,
+        a.User_Define_4a,
+        a.Service_User_Define_1,
+        a.Service_User_Define_2,
+        a.Service_User_Define_3,
+        a.Service_User_Define_4,
+        a.Service_User_Define_5,
+        a.Service_User_Define_6,
+        a.Service_User_Define_7,
+        a.Service_User_Define_8,
+        a.Service_User_Define_9,
+        a.Service_User_Define_10,
+        a.Service_User_Define_11,
+        a.Service_User_Define_12,
+        a.Service_User_Define_18,
+        a.Service_User_Define_19,
+        a.Service_User_Define_20,
+        a.Service_User_Define_21,
+        a.Service_User_Define_22,
+        a.Service_User_Define_23,
+        a.Service_User_Define_24,
+        a.Service_User_Define_25,
+        ISNULL(e.Equipment_ID, '') AS Expr3,
+        ISNULL(e.Equipment_Type, '') AS Expr4,
+        ISNULL(e.Wennsoft_Serial_Number, '') AS Expr5,
+        ISNULL(e.Wennsoft_Model_Number, '') AS Expr6,
+        ISNULL(e.Manufacturer_ID, '') AS Expr7,
+        ISNULL(q.Quote_Type, 0) AS Expr8,
+        ISNULL(q.QUOTEDAT, '1/1/1900') AS Expr9,
+        ISNULL(q.Contract_Description, '') AS Expr10,
+        cm.CUSTNAME,
+        cm.PYMTRMID,
+        cm.SHIPMTHD,
+        billTo.ADDRESS1 AS BILLADDRESS1,
+        billTo.ADDRESS2 AS BILLADDRESS2,
+        billTo.COUNTRY,
+        billTo.CITY AS BILLCITY,
+        billTo.STATE AS BILLSTATE,
+        billTo.ZIP AS BILLZIP,
+        sc.User_Define_1a AS Expr11,
+        sc.User_Define_2a AS Expr12,
+        sc.User_Define_3a AS Expr13,
+        sc.User_Define_4a AS Expr14,
+        sc.User_Define_5a,
+        sc.User_Define_6a,
+        sl.Loc_Name,
+        sl.Loc_Address1,
+        sl.Loc_Address2,
+        Loc_CityStateZip = RTRIM(sl.Loc_City) + ', ' +  RTRIM(sl.Loc_State) + ' ' + RTRIM(sl.Loc_Zip),	
+       
+        sl.Loc_City AS CITY,
+        sl.Loc_State AS STATE,
+        sl.Loc_Zip AS ZIP,
+        sl.Contact1 AS CNTCPRSN,
+        sl.Contact1_Phone AS PHONE1,
+        sl.Contact2,
+        sl.Contact2_Phone,
+        sl.Loc_UserDefine1a,
+        sl.Loc_UserDefine2a,
+        sl.Loc_UserDefine3a,
+        sl.Loc_UserDefine4a,
+        sl.Loc_UserDefine5a,
+        sl.Loc_UserDefine6a,
+        scn.Note_Service_Index,
+        scn.Record_Notes
+FROM    SV00300 AS a (NOLOCK)
+left outer join SV00302 AS b (NOLOCK)
+        ON a.Service_Call_ID = b.Service_Call_ID
+INNER JOIN RM00101 AS cm (NOLOCK)
+        ON a.CUSTNMBR = cm.CUSTNMBR
+INNER JOIN SV00100 AS sc (NOLOCK)
+        ON a.CUSTNMBR = sc.CUSTNMBR
+LEFT OUTER JOIN SV000805 AS scn (NOLOCK)
+        ON a.Service_Call_ID = scn.Service_Call_ID
+LEFT OUTER JOIN RM00301 AS sp (NOLOCK)
+        ON a.SLPRSNID = sp.SLPRSNID
+LEFT OUTER JOIN SV00502 AS q (NOLOCK)
+        ON a.Service_Call_ID = q.Quote_Number
+           AND a.CUSTNMBR = q.CUSTNMBR
+           AND a.ADRSCODE = q.ADRSCODE
+LEFT OUTER JOIN SV00400 AS e (NOLOCK)
+        ON a.CUSTNMBR = e.CUSTNMBR
+           AND a.ADRSCODE = e.ADRSCODE
+           AND b.Equipment_ID = e.Equipment_ID
+LEFT OUTER JOIN ( SELECT    a.CUSTNMBR,
+                            a.ADRSCODE,
+                            a.CUSTNAME AS Loc_CustomerName,
+                            a.ADDRESS1 AS Loc_Address1,
+                            b.ADDRESS2 AS Loc_Address2,
+                            a.CITY AS Loc_City,
+                            a.STATE AS Loc_State,
+                            a.ZIP AS Loc_Zip,
+                            a.LOCATNNM AS Loc_Name,
+                            a.User_Define_1a AS Loc_UserDefine1a,
+                            a.User_Define_2a AS Loc_UserDefine2a,
+                            a.User_Define_3a AS Loc_UserDefine3a,
+                            a.User_Define_4a AS Loc_UserDefine4a,
+                            a.User_Define_5a AS Loc_UserDefine5a,
+                            a.User_Define_6a AS Loc_UserDefine6a,
+                            a.CNTCPRSN AS Contact1,
+                            CASE a.PHONE1 WHEN '' THEN '' ELSE '(' + SUBSTRING(a.PHONE1,1,3) + ') ' + SUBSTRING(a.PHONE1,4,3) + '-' + SUBSTRING(a.PHONE1,7,4) END AS Contact1_Phone,
+                            a.Contact_Name AS Contact2,
+                            a.PHONE2 AS Contact2_Phone
+                  FROM      SV00200 AS a (NOLOCK)
+                  LEFT OUTER JOIN RM00102 AS b (NOLOCK)
+                            ON a.CUSTNMBR = b.CUSTNMBR
+                               AND a.ADRSCODE = b.ADRSCODE
+                ) AS sl
+        ON a.CUSTNMBR = sl.CUSTNMBR
+           AND a.ADRSCODE = sl.ADRSCODE
+left outer join --INNER JOIN
+        RM00102 AS billTo (NOLOCK)
+        ON billTo.CUSTNMBR = a.CUSTNMBR
+           AND billTo.ADRSCODE = cm.PRBTADCD
+WHERE   ( a.Service_Call_ID = @Service_Call_ID )
+        AND ( isnull(b.Sub_Task_Line_Number, 0) = 0 )</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="Service_Call_ID">
+          <DataField>Service_Call_ID</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CUSTNMBR">
+          <DataField>CUSTNMBR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ADRSCODE">
+          <DataField>ADRSCODE</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Status_of_Call">
+          <DataField>Status_of_Call</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DATE1">
+          <DataField>DATE1</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Date_of_Service_Call">
+          <DataField>Date_of_Service_Call</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Call_Time">
+          <DataField>Call_Time</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Completion_Date">
+          <DataField>Completion_Date</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Contract_Number">
+          <DataField>Contract_Number</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Wennsoft_Affiliate">
+          <DataField>Wennsoft_Affiliate</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Wennsoft_Region">
+          <DataField>Wennsoft_Region</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Wennsoft_Branch">
+          <DataField>Wennsoft_Branch</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Technician">
+          <DataField>Technician</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Type_Call_Short">
+          <DataField>Type_Call_Short</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Type_of_Call">
+          <DataField>Type_of_Call</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Type_of_Problem">
+          <DataField>Type_of_Problem</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Service_Area">
+          <DataField>Service_Area</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Divisions">
+          <DataField>Divisions</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Purchase_Order">
+          <DataField>Purchase_Order</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Priority_of_Call">
+          <DataField>Priority_of_Call</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Time_Zone">
+          <DataField>Time_Zone</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Caller_Name">
+          <DataField>Caller_Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Caller_Phone">
+          <DataField>Caller_Phone</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Caller_Email_Address">
+          <DataField>Caller_Email_Address</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SLPRSNID">
+          <DataField>SLPRSNID</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Expr1">
+          <DataField>Expr1</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Expr2">
+          <DataField>Expr2</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Service_Description">
+          <DataField>Service_Description</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="User_Define_1a">
+          <DataField>User_Define_1a</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="User_Define_2a">
+          <DataField>User_Define_2a</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="User_Define_3a">
+          <DataField>User_Define_3a</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="User_Define_4a">
+          <DataField>User_Define_4a</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Service_User_Define_1">
+          <DataField>Service_User_Define_1</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Service_User_Define_2">
+          <DataField>Service_User_Define_2</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Service_User_Define_3">
+          <DataField>Service_User_Define_3</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Service_User_Define_4">
+          <DataField>Service_User_Define_4</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Service_User_Define_5">
+          <DataField>Service_User_Define_5</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Service_User_Define_6">
+          <DataField>Service_User_Define_6</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Service_User_Define_7">
+          <DataField>Service_User_Define_7</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Service_User_Define_8">
+          <DataField>Service_User_Define_8</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Service_User_Define_9">
+          <DataField>Service_User_Define_9</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Service_User_Define_10">
+          <DataField>Service_User_Define_10</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Service_User_Define_11">
+          <DataField>Service_User_Define_11</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Service_User_Define_12">
+          <DataField>Service_User_Define_12</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Service_User_Define_18">
+          <DataField>Service_User_Define_18</DataField>
+          <rd:TypeName>System.Byte</rd:TypeName>
+        </Field>
+        <Field Name="Service_User_Define_19">
+          <DataField>Service_User_Define_19</DataField>
+          <rd:TypeName>System.Byte</rd:TypeName>
+        </Field>
+        <Field Name="Service_User_Define_20">
+          <DataField>Service_User_Define_20</DataField>
+          <rd:TypeName>System.Byte</rd:TypeName>
+        </Field>
+        <Field Name="Service_User_Define_21">
+          <DataField>Service_User_Define_21</DataField>
+          <rd:TypeName>System.Byte</rd:TypeName>
+        </Field>
+        <Field Name="Service_User_Define_22">
+          <DataField>Service_User_Define_22</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Service_User_Define_23">
+          <DataField>Service_User_Define_23</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Service_User_Define_24">
+          <DataField>Service_User_Define_24</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Service_User_Define_25">
+          <DataField>Service_User_Define_25</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Expr3">
+          <DataField>Expr3</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Expr4">
+          <DataField>Expr4</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Expr5">
+          <DataField>Expr5</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Expr6">
+          <DataField>Expr6</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Expr7">
+          <DataField>Expr7</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Expr8">
+          <DataField>Expr8</DataField>
+          <rd:TypeName>System.Int16</rd:TypeName>
+        </Field>
+        <Field Name="Expr9">
+          <DataField>Expr9</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Expr10">
+          <DataField>Expr10</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CUSTNAME">
+          <DataField>CUSTNAME</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="PYMTRMID">
+          <DataField>PYMTRMID</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SHIPMTHD">
+          <DataField>SHIPMTHD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BILLADDRESS1">
+          <DataField>BILLADDRESS1</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BILLADDRESS2">
+          <DataField>BILLADDRESS2</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="COUNTRY">
+          <DataField>COUNTRY</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BILLCITY">
+          <DataField>BILLCITY</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BILLSTATE">
+          <DataField>BILLSTATE</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BILLZIP">
+          <DataField>BILLZIP</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Expr11">
+          <DataField>Expr11</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Expr12">
+          <DataField>Expr12</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Expr13">
+          <DataField>Expr13</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Expr14">
+          <DataField>Expr14</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="User_Define_5a">
+          <DataField>User_Define_5a</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="User_Define_6a">
+          <DataField>User_Define_6a</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Loc_Name">
+          <DataField>Loc_Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Loc_Address1">
+          <DataField>Loc_Address1</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Loc_Address2">
+          <DataField>Loc_Address2</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CITY">
+          <DataField>CITY</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Loc_CityStateZip">
+          <DataField>Loc_CityStateZip</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="STATE">
+          <DataField>STATE</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ZIP">
+          <DataField>ZIP</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CNTCPRSN">
+          <DataField>CNTCPRSN</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="PHONE1">
+          <DataField>PHONE1</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Contact2">
+          <DataField>Contact2</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Contact2_Phone">
+          <DataField>Contact2_Phone</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Loc_UserDefine1a">
+          <DataField>Loc_UserDefine1a</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Loc_UserDefine2a">
+          <DataField>Loc_UserDefine2a</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Loc_UserDefine3a">
+          <DataField>Loc_UserDefine3a</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Loc_UserDefine4a">
+          <DataField>Loc_UserDefine4a</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Loc_UserDefine5a">
+          <DataField>Loc_UserDefine5a</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Loc_UserDefine6a">
+          <DataField>Loc_UserDefine6a</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Note_Service_Index">
+          <DataField>Note_Service_Index</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Record_Notes">
+          <DataField>Record_Notes</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="dsText">
+      <Query>
+        <DataSourceName>MMRPTS</DataSourceName>
+        <CommandText>SELECT * FROM MM.MM_1ST_Inspection_Text_Std (NOLOCK)</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="Sequence">
+          <DataField>Sequence</DataField>
+          <rd:TypeName>System.Double</rd:TypeName>
+        </Field>
+        <Field Name="TEXTLINE">
+          <DataField>TEXTLINE</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+  <ReportParameters>
+    <ReportParameter Name="Service_Call_ID">
+      <DataType>String</DataType>
+      <Prompt>Service Call ID</Prompt>
+    </ReportParameter>
+  </ReportParameters>
   <EmbeddedImages>
     <EmbeddedImage Name="CompanyLogo">
       <MIMEType>image/jpeg</MIMEType>
@@ -1980,6 +1978,6 @@ a2B03O1Q+dBrsnka3KD79qqQtacaNXo08W917rF0n0F1H8dNq1myOmNm02yNr1+Zn3DV4mlyWbykc2Yq
 0dRDlKitycMzeerac1cjHU0hbn37r3XGl6D6ho+mf9l7h2RjW6c/u5UbT/uPU1OTrKD+AVMks0lCK2rrp8uGWeUyRzfcfcRShXR1ZVI917pGL8P/AI1f6HaXoGbqTblb1HQZCty2O2hkpctk48ZlsjXVOSrMpi8zkMjU7hxmSlrKyVhPT1ccqLIyKwQlffuvdJrqD4I/EzojdMO9+sOl9u4HdtIs60G4Kytz+5cjizUqUnlxEm58vmExNVJEShmp1im8bMmrSxB917o3Hv3Xuve/de697917r3v3Xuv/1t/j37r3Xvfuvde9+691737r3Xvfuvde9+691737r3Xvfuvde9+691737r3Xvfuvde9+691737r3Xvfuvde9+691737r3Xvfuvde9+691737r3Xvfuvde9+691737r3Xvfuvde9+691737r3Xvfuvde9+691737r3Xvfuvde9+691737r3Xvfuvde9+691//2Q==</ImageData>
     </EmbeddedImage>
   </EmbeddedImages>
-  <rd:ReportID>31264c19-a661-49a9-a46f-e62c32b32a58</rd:ReportID>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>31264c19-a661-49a9-a46f-e62c32b32a58</rd:ReportID>
 </Report>

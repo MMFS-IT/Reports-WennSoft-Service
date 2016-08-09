@@ -13,8 +13,88 @@
   </DataSources>
   <DataSets>
     <ProjectItem>
-      <Name>dsReport.rsd</Name>
-      <FullPath>dsReport.rsd</FullPath>
+      <Name>dsAdministrationSales.rsd</Name>
+      <FullPath>dsAdministrationSales.rsd</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>dsAdministrationServiceArea.rsd</Name>
+      <FullPath>dsAdministrationServiceArea.rsd</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>dsBuisnessUnits.rsd</Name>
+      <FullPath>dsBuisnessUnits.rsd</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>dsCallType.rsd</Name>
+      <FullPath>dsCallType.rsd</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>dsContractDescription.rsd</Name>
+      <FullPath>dsContractDescription.rsd</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>dsContractSequence.rsd</Name>
+      <FullPath>dsContractSequence.rsd</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>dsCutomer.rsd</Name>
+      <FullPath>dsCutomer.rsd</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>dsDefaultCustomer.rsd</Name>
+      <FullPath>dsDefaultCustomer.rsd</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>dsDefaultLocation.rsd</Name>
+      <FullPath>dsDefaultLocation.rsd</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>dsDemandServiceBusinessUnits.rsd</Name>
+      <FullPath>dsDemandServiceBusinessUnits.rsd</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>dsDemandServiceSales.rsd</Name>
+      <FullPath>dsDemandServiceSales.rsd</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>dsDemandServicesServiceArea.rsd</Name>
+      <FullPath>dsDemandServicesServiceArea.rsd</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>dsLocation.rsd</Name>
+      <FullPath>dsLocation.rsd</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>dsMaintenanceBusinessUnits.rsd</Name>
+      <FullPath>dsMaintenanceBusinessUnits.rsd</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>dsMaintenanceSales.rsd</Name>
+      <FullPath>dsMaintenanceSales.rsd</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>dsMaintenanceServiceArea.rsd</Name>
+      <FullPath>dsMaintenanceServiceArea.rsd</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>dsServiceArea.rsd</Name>
+      <FullPath>dsServiceArea.rsd</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>dsTaskType.rsd</Name>
+      <FullPath>dsTaskType.rsd</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>dsTechnician.rsd</Name>
+      <FullPath>dsTechnician.rsd</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>dsTechnicianTeam.rsd</Name>
+      <FullPath>dsTechnicianTeam.rsd</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>dsTradeType.rsd</Name>
+      <FullPath>dsTradeType.rsd</FullPath>
     </ProjectItem>
   </DataSets>
   <Reports>
@@ -47,10 +127,6 @@
       <FullPath>Complete Service Call with Open POs.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>Contract Backup Test.rdl</Name>
-      <FullPath>Contract Backup Test.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
       <Name>Contract Backup.rdl</Name>
       <FullPath>Contract Backup.rdl</FullPath>
     </ProjectItem>
@@ -77,10 +153,6 @@
     <ProjectItem>
       <Name>Contract Tasking Adjustment Calculator.rdl</Name>
       <FullPath>Contract Tasking Adjustment Calculator.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>Copy of Job Safety Audit.rdl</Name>
-      <FullPath>Copy of Job Safety Audit.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>Job Safety Audit.rdl</Name>
@@ -115,12 +187,8 @@
       <FullPath>Materials by Piece of Equipment.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
-      <Name>New Warranty Review.rdl</Name>
-      <FullPath>New Warranty Review.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>New Warranty Review2.rdl</Name>
-      <FullPath>New Warranty Review2.rdl</FullPath>
+      <Name>MMFS Open Calls.rdl</Name>
+      <FullPath>MMFS Open Calls.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>Open Call Exception Report.rdl</Name>
@@ -133,6 +201,10 @@
     <ProjectItem>
       <Name>Purchase Order Internal.rdl</Name>
       <FullPath>Purchase Order Internal.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Refrigerant Tracking.rdl</Name>
+      <FullPath>Refrigerant Tracking.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
       <Name>Scheduled Maintenance Material Order.rdl</Name>
@@ -215,6 +287,10 @@
       <FullPath>Service Scorecard.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>Service Wip Notes.rdl</Name>
+      <FullPath>Service Wip Notes.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>Service WIP.rdl</Name>
       <FullPath>Service WIP.rdl</FullPath>
     </ProjectItem>
@@ -247,6 +323,14 @@
       <FullPath>Technician Workload by Tech.rdl</FullPath>
     </ProjectItem>
     <ProjectItem>
+      <Name>TestLineFeed.rdl</Name>
+      <FullPath>TestLineFeed.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
+      <Name>Verizon Maintenance Call Resolution.rdl</Name>
+      <FullPath>Verizon Maintenance Call Resolution.rdl</FullPath>
+    </ProjectItem>
+    <ProjectItem>
       <Name>Warranty Review.rdl</Name>
       <FullPath>Warranty Review.rdl</FullPath>
     </ProjectItem>
@@ -266,14 +350,6 @@
       <Name>WS Call Summary.rdl</Name>
       <FullPath>WS Call Summary.rdl</FullPath>
     </ProjectItem>
-    <ProjectItem>
-      <Name>XXX Maintenance Master Invoice.rdl</Name>
-      <FullPath>XXX Maintenance Master Invoice.rdl</FullPath>
-    </ProjectItem>
-    <ProjectItem>
-      <Name>Verizon Maintenance Call Resolution.rdl</Name>
-      <FullPath>Verizon Maintenance Call Resolution.rdl</FullPath>
-    </ProjectItem>
   </Reports>
   <Configurations>
     <Configuration>
@@ -285,7 +361,8 @@
         <TargetServerURL>http://wa001-sql-db01/ReportServer</TargetServerURL>
         <TargetFolder>MMFS/WennSoft Service</TargetFolder>
         <TargetDataSourceFolder>MMFS/Data Sources</TargetDataSourceFolder>
-        <TargetDatasetFolder>Datasets</TargetDatasetFolder>
+        <TargetDatasetFolder>MMFS/Datasets</TargetDatasetFolder>
+        <OverwriteDatasets>true</OverwriteDatasets>
         <TargetReportPartFolder>Report Parts</TargetReportPartFolder>
       </Options>
     </Configuration>

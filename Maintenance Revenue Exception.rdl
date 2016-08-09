@@ -821,26 +821,32 @@
             <Value>=Parameters!ToDate.Value</Value>
           </QueryParameter>
         </QueryParameters>
-        <CommandText>SELECT CUSTNMBR = RTRIM(A.CUSTNMBR), 
-	  'Customer Name' = RTRIM(B.CUSTNAME),
-	  'ADRSCODE' = RTRIM(A.ADRSCODE),
-	  'Location Name' = RTRIM(B.LOCATNNM),
-	  'Service Area' = RTRIM(B.Service_Area),
-      'Contract Number' = RTRIM(A.Contract_Number),
-      --A.WSCONTSQ, /*DO NOT DISPLAY*/
-      --A.SEQNUMBR, /*DO NOT DISPLAY*/
-      'On Hold' = CASE C.HOLD WHEN 1 THEN 'Yes' ELSE 'No' END , /*SET THE VALUE OF THIS FIELD TO YES/NO WHERE 0 = NO AND 1 = YES*/
-      'Revenue Amount' = A.DOCAMNT,
-      'Date' = A.DATE1 ,
-      'Posted Date' = A.POSTDATE 
-FROM dbo.SV00509 AS A
-JOIN dbo.SV00200 AS B
-ON A.CUSTNMBR = B.CUSTNMBR AND A.ADRSCODE = B.ADRSCODE
-JOIN dbo.SV00053 AS C
-ON A.Contract_Number = C.Contract_Number AND A.WSCONTSQ = C.WSCONTSQ
-WHERE DOCAMNT &gt; '0' AND POSTDATE = '1900-01-01 00:00:00.000' 
-/*MAKE THE BELOW LINE A USER-SELECTED FILTER NAMED "FROM DATE" AND "TO DATE".  THIS WILL BE THE ONLY USER DEFINED FILTER*/
-AND DATE1 BETWEEN @FromDate AND @ToDate --'2015-04-01 00:00:00.000' AND '2016-03-31 00:00:00.000'</CommandText>
+        <CommandText>SELECT
+    CUSTNMBR = RTRIM(A.CUSTNMBR) ,
+    'Customer Name' = RTRIM(B.CUSTNAME) ,
+    'ADRSCODE' = RTRIM(A.ADRSCODE) ,
+    'Location Name' = RTRIM(B.LOCATNNM) ,
+    'Service Area' = RTRIM(B.Service_Area) ,
+    'Contract Number' = RTRIM(A.Contract_Number) ,
+    'On Hold' = CASE C.HOLD
+                  WHEN 1 THEN 'Yes'
+                  ELSE 'No'
+                END , /*SET THE VALUE OF THIS FIELD TO YES/NO WHERE 0 = NO AND 1 = YES*/
+    'Revenue Amount' = A.DOCAMNT ,
+    'Date' = A.DATE1 ,
+    'Posted Date' = A.POSTDATE
+FROM
+    dbo.SV00509 AS A (NOLOCK)
+JOIN dbo.SV00200 AS B (NOLOCK)
+    ON A.CUSTNMBR = B.CUSTNMBR
+       AND A.ADRSCODE = B.ADRSCODE
+JOIN dbo.SV00053 AS C (NOLOCK)
+    ON A.Contract_Number = C.Contract_Number
+       AND A.WSCONTSQ = C.WSCONTSQ
+WHERE
+    DOCAMNT &gt; '0'
+    AND POSTDATE = '1900-01-01 00:00:00.000' 
+    AND DATE1 BETWEEN @FromDate AND @ToDate; --'2015-04-01 00:00:00.000' AND '2016-03-31 00:00:00.000'</CommandText>
       </Query>
       <Fields>
         <Field Name="CUSTNMBR">

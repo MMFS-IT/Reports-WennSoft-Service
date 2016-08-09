@@ -2647,9 +2647,6 @@
       <Query>
         <DataSourceName>MMFS</DataSourceName>
         <QueryParameters>
-          <QueryParameter Name="@TaskCode">
-            <Value>=Parameters!TaskCode.Value</Value>
-          </QueryParameter>
           <QueryParameter Name="@ServiceArea">
             <Value>=Parameters!ServiceArea.Value</Value>
           </QueryParameter>
@@ -2676,7 +2673,8 @@
 ServiceCalls
 AS
 (
-SELECT DISTINCT Service_Call_ID  FROM SV00317 WHERE Task_Code IN (@TaskCode)
+--SELECT DISTINCT Service_Call_ID  FROM SV00317 WHERE Task_Code IN (@TaskCode)
+SELECT DISTINCT Service_Call_ID  FROM SV00317 WHERE Task_Code like 'WAR%'
 ),
 Costs
 AS
@@ -2874,7 +2872,6 @@ GROUP BY Service_Call_ID
 	AND (SM.DATE1 &lt;= DATEADD(day, -30, GETDATE()) OR @CallsCreatedOver30 = 0)
 	AND (Completion_Date &lt;= DATEADD(day,-30, GETDATE()) OR @CallsCompletedOver30 = 0)
 	AND (Status_Of_Call = 'COMPLETE' OR @CallsCompletedOver30 = 0)
-
 
 </CommandText>
       </Query>

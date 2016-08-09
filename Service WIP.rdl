@@ -2245,7 +2245,7 @@ SELECT
                           ELSE 0
                      END)
 FROM
-    SV000810
+    SV000810 (NOLOCK)
 GROUP BY
     Service_Call_ID
 
@@ -2290,23 +2290,23 @@ SELECT Service_Call_ID,Note_Author, Record_Notes FROM   SV000805 WHERE Note_Serv
 		N.Record_Notes
 	
       FROM
-        SV00300 SM
-		JOIN SV00200 L
+        SV00300 SM (NOLOCK)
+		JOIN SV00200 L (NOLOCK)
 			ON SM.ADRSCODE = L.ADRSCODE
 			AND SM.CUSTNMBR = L.CUSTNMBR 
-		LEFT JOIN SV00500  C
+		LEFT JOIN SV00500  C (NOLOCK)
 			ON SM.Contract_Number = C.CONTRACT_Number
 			AND SM.WSCONTSQ = C.WSCONTSQ
 			AND SM.ADRSCODE = C.ADRSCODE
 			AND SM.CUSTNMBR = C.CUSTNMBR
-		LEFT JOIN UPR00100 E
+		LEFT JOIN UPR00100 E (NOLOCK)
 			ON E.EMPLOYID = SM.SLPRSNID
-		LEFT JOIN SV00200 LM
+		LEFT JOIN SV00200 LM (NOLOCK)
 			ON LM.CUSTNMBR = SM.CUSTNMBR
 			AND LM.ADRSCODE = SM.ADRSCODE
 		LEFT JOIN Costs
 			ON Costs.Service_Call_Id = SM.Service_Call_ID
-		LEFT JOIN SV00220 S
+		LEFT JOIN SV00220 S (NOLOCK)
 			ON S.Service_Area = L.Service_Area
 		LEFT JOIN Notes N
 			ON N.Service_Call_ID = SM.Service_Call_ID
@@ -2441,7 +2441,7 @@ SELECT Service_Call_ID,Note_Author, Record_Notes FROM   SV000805 WHERE Note_Serv
       <Query>
         <DataSourceName>MMRPTS</DataSourceName>
         <CommandText>SELECT        Service_Area, RTRIM(Service_Area) + ' - ' + RTRIM(Service_Area_Description) AS Service_Area_Description
-FROM            SV00220
+FROM            SV00220 WITH (NOLOCK)
 UNION
 SELECT        '' AS Expr1, 'Unassigned' AS Expr2</CommandText>
       </Query>
@@ -2460,8 +2460,7 @@ SELECT        '' AS Expr1, 'Unassigned' AS Expr2</CommandText>
       <Query>
         <DataSourceName>MMRPTS</DataSourceName>
         <CommandText>SELECT DISTINCT Type_Call_Short
-FROM            SV00300 AS SM
---WHERE Type_Call_Short != ''
+FROM            SV00300 AS SM WITH (NOLOCK)
 ORDER BY Type_Call_Short</CommandText>
       </Query>
       <Fields>
@@ -2474,9 +2473,8 @@ ORDER BY Type_Call_Short</CommandText>
     <DataSet Name="dsTechnician">
       <Query>
         <DataSourceName>MMRPTS</DataSourceName>
-        <CommandText>SELECT DISTINCT Technician,  TechnicianLabel = CASE WHEN ISNULL(TECHNICIAN, '') = '' THEN 'UNASSIGNED' ELSE UPPER(RTRIM(Technician)) END  FROM SV00300
-ORDER BY TechnicianLabel
-</CommandText>
+        <CommandText>SELECT DISTINCT Technician,  TechnicianLabel = CASE WHEN ISNULL(TECHNICIAN, '') = '' THEN 'UNASSIGNED' ELSE UPPER(RTRIM(Technician)) END  FROM SV00300 (NOLOCK)
+ORDER BY TechnicianLabel</CommandText>
       </Query>
       <Fields>
         <Field Name="Technician">
@@ -2495,7 +2493,7 @@ ORDER BY TechnicianLabel
         <CommandText>SELECT DISTINCT 
 TradeType = RTRIM(User_Define_1a),
 TradeTypeLabel = CASE WHEN ISNULL(User_Define_1a, '') = '' THEN 'UNASSIGNED' ELSE  RTRIM(User_Define_1a)  END 
-FROM            SV00300
+FROM            SV00300 (NOLOCK)
 ORDER BY TradeType</CommandText>
       </Query>
       <Fields>

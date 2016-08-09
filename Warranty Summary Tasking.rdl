@@ -88,7 +88,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -119,7 +118,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -150,7 +148,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -186,7 +183,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -217,7 +213,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -248,7 +243,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -323,7 +317,7 @@ SELECT Service_Call_ID,
 	Task_Code = RTRIM(Task_Code),
 	RTRIM(MAX(CONVERT(VARCHAR(MAX),WS_Response_String))) AS Task_Response,
 	RTRIM(MAX(CONVERT(VARCHAR(MAX),WS_Response_Text))) AS Task_Note
-FROM dbo.SV00317 
+FROM dbo.SV00317 (NOLOCK)
 WHERE Service_Call_ID = @ServiceCallID
 GROUP BY Service_Call_ID, Task_Code </CommandText>
       </Query>

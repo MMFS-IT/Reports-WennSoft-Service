@@ -1247,24 +1247,26 @@
             <Value>=Parameters!Appointment.Value</Value>
           </QueryParameter>
         </QueryParameters>
-        <CommandText>SELECT 
-	RTRIM(SV00300.Service_Call_ID) AS ServiceCallId,
-	RTRIM(SV00300.Service_Description) AS ServiceDescription,
-	RTRIM(SV00200.CUSTNAME) AS CustomerName,
-	RTRIM(SV00200.LOCATNNM) AS LocationName,
-	SV00300.Date_of_Service_Call AS Date,
-	SV00300.WS_Time_1 AS Time,
-	RTRIM(SV00115.Technician_Long_Name) AS TechnicianName
-FROM SV00301
-	JOIN SV00300 ON SV00300.Service_Call_ID = SV00301.Service_Call_ID
-	JOIN SV00200 ON 
-		SV00200.CUSTNMBR = SV00300.CUSTNMBR AND 
-		SV00200.ADRSCODE = SV00300.ADRSCODE
-	JOIN SV00115 ON
-		SV00115.Technician = SV00301.Technician
-WHERE 
-	SV00301.Service_Call_ID = @Service_Call_ID AND
-	SV00301.Appointment = @Appointment</CommandText>
+        <CommandText>SELECT
+    RTRIM(SV00300.Service_Call_ID) AS ServiceCallId ,
+    RTRIM(SV00300.Service_Description) AS ServiceDescription ,
+    RTRIM(SV00200.CUSTNAME) AS CustomerName ,
+    RTRIM(SV00200.LOCATNNM) AS LocationName ,
+    SV00300.Date_of_Service_Call AS Date ,
+    SV00300.WS_Time_1 AS Time ,
+    RTRIM(SV00115.Technician_Long_Name) AS TechnicianName
+FROM
+    SV00301 (NOLOCK)
+JOIN SV00300 (NOLOCK)
+    ON SV00300.Service_Call_ID = SV00301.Service_Call_ID
+JOIN SV00200 (NOLOCK)
+    ON SV00200.CUSTNMBR = SV00300.CUSTNMBR
+       AND SV00200.ADRSCODE = SV00300.ADRSCODE
+JOIN SV00115 (NOLOCK)
+    ON SV00115.Technician = SV00301.Technician
+WHERE
+    SV00301.Service_Call_ID = @Service_Call_ID
+    AND SV00301.Appointment = @Appointment;</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <Fields>
@@ -1309,26 +1311,37 @@ WHERE
             <Value>=Parameters!Service_Call_ID.Value</Value>
           </QueryParameter>
         </QueryParameters>
-        <CommandText>SELECT 
-	@Service_Call_ID AS ServiceCallId,
-	ISNULL(WSMobileJobSafetyTask.Equipment_ID, '') AS EquipmentId,
-	CONVERT(INT, SV00591.Task_List_ID) AS TaskListId,
-	SV00591.Task_List_Description AS TaskListDescription,
-	SV00592.Task_Code AS TaskCode,
-	SV00592.Task_Description AS TaskDescription,
-	ISNULL(WSMobileJobSafetyTask.Response_Value, '') AS ResponseValue,
-	ISNULL(WSMobileJobSafetyTask.Response_Note, '') AS ResponseNote
-FROM SV00591 WITH (NOLOCK)
-JOIN SV00592 WITH (NOLOCK) ON SV00592.Task_List_ID = SV00591.Task_List_ID
-LEFT OUTER JOIN WSMobileJobSafetyTask WITH (NOLOCK) ON
-	WSMobileJobSafetyTask.Service_Call_ID = @Service_Call_ID AND
-	WSMobileJobSafetyTask.Appointment = @Appointment AND
-	WSMobileJobSafetyTask.Task_Code = SV00592.Task_Code AND
-	WSMobileJobSafetyTask.Task_Line_Number = SV00592.Task_Line_Number
-WHERE 
-	SV00591.Task_List_Type = (SELECT OptionValue FROM WSMobileTechOptions WHERE OptionName = 'JobSafetyTaskListType') AND
-	SV00591.Task_List_ID &lt;&gt; '99'
-ORDER BY TaskListId ASC, TaskCode ASC</CommandText>
+        <CommandText>SELECT
+    @Service_Call_ID AS ServiceCallId ,
+    ISNULL(WSMobileJobSafetyTask.Equipment_ID, '') AS EquipmentId ,
+    CONVERT(INT, SV00591.Task_List_ID) AS TaskListId ,
+    SV00591.Task_List_Description AS TaskListDescription ,
+    SV00592.Task_Code AS TaskCode ,
+    SV00592.Task_Description AS TaskDescription ,
+    ISNULL(WSMobileJobSafetyTask.Response_Value, '') AS ResponseValue ,
+    ISNULL(WSMobileJobSafetyTask.Response_Note, '') AS ResponseNote
+FROM
+    SV00591 WITH ( NOLOCK )
+JOIN SV00592 WITH ( NOLOCK )
+    ON SV00592.Task_List_ID = SV00591.Task_List_ID
+LEFT OUTER JOIN WSMobileJobSafetyTask WITH ( NOLOCK )
+    ON WSMobileJobSafetyTask.Service_Call_ID = @Service_Call_ID
+       AND WSMobileJobSafetyTask.Appointment = @Appointment
+       AND WSMobileJobSafetyTask.Task_Code = SV00592.Task_Code
+       AND WSMobileJobSafetyTask.Task_Line_Number = SV00592.Task_Line_Number
+WHERE
+    SV00591.Task_List_Type = (
+                               SELECT
+                                OptionValue
+                               FROM
+                                WSMobileTechOptions (NOLOCK)
+                               WHERE
+                                OptionName = 'JobSafetyTaskListType'
+                             )
+    AND SV00591.Task_List_ID &lt;&gt; '99'
+ORDER BY
+    TaskListId ASC ,
+    TaskCode ASC;</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <Fields>
@@ -1382,7 +1395,7 @@ ORDER BY TaskListId ASC, TaskCode ASC</CommandText>
 	RTRIM(Response_Value) AS ResponseValue
 
 FROM 
-	WSMobileJobSafetyTask
+	WSMobileJobSafetyTask (NOLOCK)
 WHERE 
 	Service_Call_ID = @Service_Call_ID AND 
 	Appointment = @Appointment AND
@@ -1412,20 +1425,31 @@ ORDER BY DEX_ROW_ID ASC</CommandText>
             <Value>=Parameters!Service_Call_ID.Value</Value>
           </QueryParameter>
         </QueryParameters>
-        <CommandText>SELECT 
-	ISNULL(RTRIM(WSMobileJobSafetyTask.Response_Value),'') AS ResponseValue,
-	RTRIM(SV00592.Task_Description) AS TaskDescription
-FROM SV00591
-JOIN SV00592 ON SV00592.Task_List_ID = SV00591.Task_List_ID
-LEFT OUTER JOIN WSMobileJobSafetyTask ON
-	WSMobileJobSafetyTask.Service_Call_ID = @Service_Call_ID AND
-	WSMobileJobSafetyTask.Appointment = @Appointment AND
-	WSMobileJobSafetyTask.Task_Code = SV00592.Task_Code AND
-	WSMobileJobSafetyTask.Task_Line_Number = SV00592.Task_Line_Number
-WHERE 
-	SV00591.Task_List_Type = (SELECT OptionValue FROM WSMobileSetupOption WHERE OptionName = 'JobSafetyTaskListType') AND
-	SV00592.Task_List_ID = '99'
-ORDER BY SV00592.Task_Line_Number ASC, SV00592.Task_Code ASC</CommandText>
+        <CommandText>SELECT
+    ISNULL(RTRIM(WSMobileJobSafetyTask.Response_Value), '') AS ResponseValue ,
+    RTRIM(SV00592.Task_Description) AS TaskDescription
+FROM
+    SV00591 (NOLOCK)
+JOIN SV00592 (NOLOCK)
+    ON SV00592.Task_List_ID = SV00591.Task_List_ID
+LEFT OUTER JOIN WSMobileJobSafetyTask (NOLOCK)
+    ON WSMobileJobSafetyTask.Service_Call_ID = @Service_Call_ID
+       AND WSMobileJobSafetyTask.Appointment = @Appointment
+       AND WSMobileJobSafetyTask.Task_Code = SV00592.Task_Code
+       AND WSMobileJobSafetyTask.Task_Line_Number = SV00592.Task_Line_Number
+WHERE
+    SV00591.Task_List_Type = (
+                               SELECT
+                                OptionValue
+                               FROM
+                                WSMobileSetupOption (NOLOCK)
+                               WHERE
+                                OptionName = 'JobSafetyTaskListType'
+                             )
+    AND SV00592.Task_List_ID = '99'
+ORDER BY
+    SV00592.Task_Line_Number ASC ,
+    SV00592.Task_Code ASC;</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <Fields>
@@ -1454,11 +1478,11 @@ ORDER BY SV00592.Task_Line_Number ASC, SV00592.Task_Code ASC</CommandText>
 	RTRIM(SV00592.Task_Code) AS TaskCode,
     ISNULL(WSMobileJobSafetyTask.Response_Note, '') AS ResponseNote
 FROM
-    SV00591
+    SV00591 (NOLOCK)
 JOIN 
-    SV00592
+    SV00592 (NOLOCK)
     ON SV00592.Task_List_ID = SV00591.Task_List_ID
-LEFT OUTER JOIN WSMobileJobSafetyTask
+LEFT OUTER JOIN WSMobileJobSafetyTask (NOLOCK)
     ON WSMobileJobSafetyTask.Service_Call_ID = @Service_Call_ID
        AND WSMobileJobSafetyTask.Appointment = @Appointment
        AND WSMobileJobSafetyTask.Task_Code = SV00592.Task_Code
@@ -1468,7 +1492,7 @@ WHERE
                                SELECT
                                 OptionValue
                                FROM
-                                WSMobileSetupOption
+                                WSMobileSetupOption (NOLOCK)
                                WHERE
                                 OptionName = 'JobSafetyTaskListType'
                              )

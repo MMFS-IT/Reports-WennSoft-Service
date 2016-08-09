@@ -1,92 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
-  <DataSources>
-    <DataSource Name="MMFS">
-      <DataSourceReference>MMFS</DataSourceReference>
-      <rd:DataSourceID>01c4af58-d508-473e-8bea-57840265bf5c</rd:DataSourceID>
-      <rd:SecurityType>None</rd:SecurityType>
-    </DataSource>
-  </DataSources>
-  <DataSets>
-    <DataSet Name="DataSet1">
-      <Fields>
-        <Field Name="Tech">
-          <DataField>Tech</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Technician_Team">
-          <DataField>Technician_Team</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Service_Call_ID">
-          <DataField>Service_Call_ID</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="LOCATNNM">
-          <DataField>LOCATNNM</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Orig_Date">
-          <DataField>Orig_Date</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="Scheduled">
-          <DataField>Scheduled</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="Call_Complete">
-          <DataField>Call_Complete</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="Last_Appt_Closed">
-          <DataField>Last_Appt_Closed</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="Last_Modified_Date">
-          <DataField>Last_Modified_Date</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="Last_Modify_Time">
-          <DataField>Last_Modify_Time</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="Last_Modify_By">
-          <DataField>Last_Modify_By</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>MMFS</DataSourceName>
-        <CommandText>WITH
-Closed
-AS
-(
-SELECT Service_Call_ID, MAX(Completion_Date) AS Completion_Date FROM SV00301 GROUP BY Service_Call_ID
-HAVING SUM(CASE WHEN(ISNULL(Appointment_Status,'COMPLETE') = 'COMPLETE' OR Appointment_Status = 'CANCELLED')  THEN 0 ELSE 1 END ) = 0 
-)
-
-SELECT 
-	  Tech = RTRIM(S3.Technician_ID)
-	, Technician_Team = RTRIM(S3.Technician_Team  )
-	, Service_Call_ID = RTRIM(S1.Service_Call_ID)
-	, LOCATNNM = RTRIM(S1.LOCATNNM)
-	, Orig_Date = S1.DATE1
-	, Scheduled = S1.Date_of_Service_Call
-	, Call_Complete = S1.Completion_Date
-	, Last_Appt_Closed = ISNULL(C.Completion_Date, 0)
-	, Last_Modified_Date = S1.MODIFDT
-	, Last_Modify_Time = S1.Modified_Time
-	, Last_Modify_By = RTRIM(S1.MDFUSRID)
-FROM SV00300 S1
-JOIN Closed C
-	ON S1.Service_Call_ID = C.Service_Call_ID
-JOIN SV00115 S3
-	ON S1.Technician = S3.Technician	
-WHERE S1. Status_of_Call = 'OPEN'</CommandText>
-        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
-      </Query>
-    </DataSet>
-  </DataSets>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <Body>
     <ReportItems>
       <Tablix Name="Tablix1">
@@ -997,9 +910,9 @@ WHERE S1. Status_of_Call = 'OPEN'</CommandText>
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
-        <DataSetName>DataSet1</DataSetName>
+        <DataSetName>dsReport</DataSetName>
         <Height>0.75in</Height>
-        <Width>10in</Width>
+        <Width>9.99997in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1176,6 +1089,94 @@ WHERE S1. Status_of_Call = 'OPEN'</CommandText>
     <BottomMargin>0.25in</BottomMargin>
     <Style />
   </Page>
-  <rd:ReportID>43a3472f-1e90-443a-9ee5-34d5d5673dea</rd:ReportID>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="MMRPTS">
+      <DataSourceReference>MMRPTS</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>01c4af58-d508-473e-8bea-57840265bf5c</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="dsReport">
+      <Query>
+        <DataSourceName>MMRPTS</DataSourceName>
+        <CommandText>WITH
+Closed
+AS
+(
+SELECT Service_Call_ID, MAX(Completion_Date) AS Completion_Date FROM SV00301 (NOLOCK) GROUP BY Service_Call_ID
+HAVING SUM(CASE WHEN(ISNULL(Appointment_Status,'COMPLETE') = 'COMPLETE' OR Appointment_Status = 'CANCELLED')  THEN 0 ELSE 1 END ) = 0 
+)
+
+SELECT 
+	  Tech = RTRIM(S3.Technician_ID)
+	, Technician_Team = RTRIM(S3.Technician_Team  )
+	, Service_Call_ID = RTRIM(S1.Service_Call_ID)
+	, LOCATNNM = RTRIM(S1.LOCATNNM)
+	, Orig_Date = S1.DATE1
+	, Scheduled = S1.Date_of_Service_Call
+	, Call_Complete = S1.Completion_Date
+	, Last_Appt_Closed = ISNULL(C.Completion_Date, 0)
+	, Last_Modified_Date = S1.MODIFDT
+	, Last_Modify_Time = S1.Modified_Time
+	, Last_Modify_By = RTRIM(S1.MDFUSRID)
+FROM SV00300 S1 (NOLOCK)
+JOIN Closed C
+	ON S1.Service_Call_ID = C.Service_Call_ID
+JOIN SV00115 S3
+	ON S1.Technician = S3.Technician	
+WHERE S1. Status_of_Call = 'OPEN'</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="Tech">
+          <DataField>Tech</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Technician_Team">
+          <DataField>Technician_Team</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Service_Call_ID">
+          <DataField>Service_Call_ID</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="LOCATNNM">
+          <DataField>LOCATNNM</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Orig_Date">
+          <DataField>Orig_Date</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Scheduled">
+          <DataField>Scheduled</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Call_Complete">
+          <DataField>Call_Complete</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Last_Appt_Closed">
+          <DataField>Last_Appt_Closed</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Last_Modified_Date">
+          <DataField>Last_Modified_Date</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Last_Modify_Time">
+          <DataField>Last_Modify_Time</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Last_Modify_By">
+          <DataField>Last_Modify_By</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>43a3472f-1e90-443a-9ee5-34d5d5673dea</rd:ReportID>
 </Report>

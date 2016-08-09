@@ -359,7 +359,6 @@ UPDATE #Consolidated SET ReportTotalRev = @TotalRev, ReportTotalCosts = @TotalCo
  SELECT * FROM #Consolidated 
    ORDER BY Sort, Zone, Trade_Type
 
-
 </CommandText>
     </Query>
     <Fields>

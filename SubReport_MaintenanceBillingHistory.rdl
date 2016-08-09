@@ -203,8 +203,8 @@
   </Page>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
-    <DataSource Name="MMFS">
-      <DataSourceReference>MMFS</DataSourceReference>
+    <DataSource Name="MMRPTS">
+      <DataSourceReference>MMRPTS</DataSourceReference>
       <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>4d4d7e20-5f8e-43d0-903a-dbae9c566fa5</rd:DataSourceID>
     </DataSource>
@@ -212,7 +212,7 @@
   <DataSets>
     <DataSet Name="dsBillingHistory">
       <Query>
-        <DataSourceName>MMFS</DataSourceName>
+        <DataSourceName>MMRPTS</DataSourceName>
         <QueryParameters>
           <QueryParameter Name="@Contract">
             <Value>=Parameters!Contract.Value</Value>
@@ -231,7 +231,7 @@
                     ELSE Billable_Subtotal
                   END
 
-FROM   MM.SV00564_FFSC_Billings
+FROM   MM.SV00564_FFSC_Billings (NOLOCK)
 WHERE Contract_Number = @Contract
 AND Wennsoft_Billing_Date BETWEEN @FromDate AND @ToDate
 ORDER BY CONVERT(VARCHAR,Billing_Date, 112)</CommandText>

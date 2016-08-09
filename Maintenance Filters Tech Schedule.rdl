@@ -2114,8 +2114,8 @@
   </Page>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
-    <DataSource Name="MMFS">
-      <DataSourceReference>MMFS</DataSourceReference>
+    <DataSource Name="MMRPTS">
+      <DataSourceReference>MMRPTS</DataSourceReference>
       <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>d057561b-8afe-4cb8-9f23-b360418b5886</rd:DataSourceID>
     </DataSource>
@@ -2123,7 +2123,7 @@
   <DataSets>
     <DataSet Name="dsReport">
       <Query>
-        <DataSourceName>MMFS</DataSourceName>
+        <DataSourceName>MMRPTS</DataSourceName>
         <QueryParameters>
           <QueryParameter Name="@Verizon">
             <Value>=Parameters!Verizon.Value</Value>
@@ -2135,7 +2135,7 @@
             <Value>=Parameters!All.Value</Value>
           </QueryParameter>
         </QueryParameters>
-        <CommandText>SELECT * FROM [MM].[MaintFiltersTech] WHERE (SiteDescription LIKE 'VERIZON%' AND @Verizon = 1)
+        <CommandText>SELECT * FROM [MM].[MaintFiltersTech] (NOLOCK) WHERE (SiteDescription LIKE 'VERIZON%' AND @Verizon = 1)
 										OR (SiteDescription LIKE 'AT&amp;T%' AND @ATT = 1)	
 										OR (@All = 1)</CommandText>
       </Query>
@@ -2215,6 +2215,10 @@
         <Field Name="Dec">
           <DataField>Dec</DataField>
           <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ID">
+          <DataField>ID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
       </Fields>
     </DataSet>

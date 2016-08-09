@@ -147,7 +147,7 @@
           </QueryParameter>
         </QueryParameters>
         <CommandText>SELECT        Service_Call_ID, Record_Notes, Note_Author = RTRIM(Note_Author)
-FROM            SV000805
+FROM            SV000805 (NOLOCK)
 WHERE        (Service_Call_ID = @ServiceCallID)
 AND Note_Service_Index = 'Description' </CommandText>
       </Query>

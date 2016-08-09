@@ -1180,8 +1180,8 @@
   </Page>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
-    <DataSource Name="MMFS">
-      <DataSourceReference>MMFS</DataSourceReference>
+    <DataSource Name="MMRPTS">
+      <DataSourceReference>MMRPTS</DataSourceReference>
       <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>0cd0a0cc-1f8d-44c8-ad11-63453f761cee</rd:DataSourceID>
     </DataSource>
@@ -1189,10 +1189,16 @@
   <DataSets>
     <DataSet Name="dsReport">
       <Query>
-        <DataSourceName>MMFS</DataSourceName>
+        <DataSourceName>MMRPTS</DataSourceName>
         <QueryParameters>
+          <QueryParameter Name="@StartDate">
+            <Value>=Parameters!StartDate.Value</Value>
+          </QueryParameter>
           <QueryParameter Name="@Customer">
             <Value>=Parameters!Customer.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@EndDate">
+            <Value>=Parameters!EndDate.Value</Value>
           </QueryParameter>
           <QueryParameter Name="@Location">
             <Value>=Parameters!Location.Value</Value>
@@ -1201,7 +1207,12 @@
             <Value>=Parameters!ContractNumber.Value</Value>
           </QueryParameter>
         </QueryParameters>
-        <CommandText>SELECT
+        <CommandText>--DECLARE @ContractNumber VARCHAR(100) = NULL
+--DECLARE @Customer VARCHAR(100) = NULL
+--DECLARE @Location VARCHAR(100) = NULL
+--DECLARE @StartDate DATE = '1/1/2015'
+--DECLARE @EndDate DATE = GETDATE()
+SELECT
     CUSTNMBR = RTRIM(R.CUSTNMBR) ,
     Custname = RTRIM(L.Custname) ,
     ADRSCODE = RTRIM(r.ADRSCODE) ,
@@ -1225,13 +1236,14 @@
     r.RefrigerantReleased ,
     Comment = RTRIM(CONVERT(VARCHAR(MAX), r.CMMTTEXT))
 FROM
-    sv30180 AS R
-LEFT JOIN SV00200 L
+    sv30180 AS R (NOLOCK)
+LEFT JOIN SV00200 L (NOLOCK)
     ON R.CUSTNMBR = L.CUSTNMBR
        AND R.ADRSCODE = L.ADRSCODE
-LEFT JOIN SV40180 RT
+LEFT JOIN SV40180 RT (NOLOCK)
     ON r.RefrigerantTypeID = RT.RefrigerantTypeID
-WHERE
+WHERE r.Service_Date_1 BETWEEN @StartDate AND @EndDate
+AND
     ( L.CUSTNAME = @Customer
       OR @Customer IS NULL
     )
@@ -1241,7 +1253,7 @@ WHERE
     AND ( EXISTS ( SELECT
                     Contract_Number
                    FROM
-                    SV00500 C
+                    SV00500 C (NOLOCK)
                    WHERE
                     C.CUSTNMBR = R.CUSTNMBR
                     AND C.ADRSCODE = R.ADRSCODE
@@ -1343,6 +1355,19 @@ AND R.Void != 1</CommandText>
     </DataSet>
   </DataSets>
   <ReportParameters>
+    <ReportParameter Name="StartDate">
+      <DataType>DateTime</DataType>
+      <Prompt>Service Start Date</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="EndDate">
+      <DataType>DateTime</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>=Today()</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>Service End Date</Prompt>
+    </ReportParameter>
     <ReportParameter Name="Customer">
       <DataType>String</DataType>
       <Nullable>true</Nullable>

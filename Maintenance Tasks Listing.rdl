@@ -1086,8 +1086,8 @@
   </Page>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
-    <DataSource Name="MMFS">
-      <DataSourceReference>MMFS</DataSourceReference>
+    <DataSource Name="MMRPTS">
+      <DataSourceReference>MMRPTS</DataSourceReference>
       <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>b03fc930-0aca-4351-94e8-8e88b878c1ac</rd:DataSourceID>
     </DataSource>
@@ -1095,7 +1095,7 @@
   <DataSets>
     <DataSet Name="dsEquipmentTypes">
       <Query>
-        <DataSourceName>MMFS</DataSourceName>
+        <DataSourceName>MMRPTS</DataSourceName>
         <CommandText>WITH
 Season 
 as
@@ -1111,7 +1111,7 @@ SELECT RTRIM(Task_List_ID) + '_' + Season AS ID, RTRIM(Task_List_ID) + ' ' + Sea
 FROM SV00591 
 , Season
 
-WHERE NOT EXISTS (SELECT * FROM MM.Task_List_Options WHERE Task_List_ID = SV00591.Task_List_ID)
+WHERE NOT EXISTS (SELECT * FROM MM.Task_List_Options (NOLOCK) WHERE Task_List_ID = SV00591.Task_List_ID)
 ORDER BY Prompt</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
@@ -1128,7 +1128,7 @@ ORDER BY Prompt</CommandText>
     </DataSet>
     <DataSet Name="dsMaintenanceTasks">
       <Query>
-        <DataSourceName>MMFS</DataSourceName>
+        <DataSourceName>MMRPTS</DataSourceName>
         <QueryParameters>
           <QueryParameter Name="@EquipmentTypeSeason">
             <Value>=Parameters!EquipmentTypeSeason.Value</Value>
@@ -1166,10 +1166,10 @@ SELECT
      Seasons.Season,
      Task_Description = CASE WHEN SV00593.Sub_Task_Code IS NULL THEN RTRIM(SV00592.Task_Description) ELSE RTRIM(SV00593.Task_Description) END,
      Task_Sort = CASE WHEN SV00593.Sub_Task_Code IS NULL THEN SV00592.Task_Line_Number ELSE SV00593.Sub_Task_Line_Number END
-FROM SV00591 
-JOIN dbo.SV00592
+FROM SV00591 (NOLOCK)
+JOIN dbo.SV00592 (NOLOCK)
 	ON SV00591.Task_List_ID = SV00592.Task_List_ID
-LEFT JOIN dbo.SV00593
+LEFT JOIN dbo.SV00593 (NOLOCK)
 	ON SV00592.Task_List_ID = SV00593.Task_List_ID
 	AND SV00592.Task_Code = SV00593.Task_Code
 JOIN Seasons

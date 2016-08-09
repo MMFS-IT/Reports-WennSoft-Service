@@ -2101,8 +2101,8 @@
             <Value>=Parameters!ContractNumber.Value</Value>
           </QueryParameter>
         </QueryParameters>
-        <CommandText>--DECLARE @ContractNumber VARCHAR(100) = '13487';
---DECLARE @Covered VARCHAR(100) = 'All';
+        <CommandText>--DECLARE @ContractNumber VARCHAR(100) = '23747';
+--DECLARE @Covered VARCHAR(100) = 'Covered By Contract';
 
 WITH
 CO 
@@ -2112,16 +2112,27 @@ SELECT
 	CUSTNMBR,
 	ADRSCODE,
 	Contract_Number,
-	contract_Description,
+	--contract_Description,
 	WSCONTSQ = MAX(WSCONTSQ) 
 	
 FROM SV00500
 GROUP BY
 	CUSTNMBR,
 	ADRSCODE,
-	contract_Description,
+	--contract_Description,
 	Contract_Number
 	
+),
+ContractDescription
+AS
+(
+--Description may change between Contracts
+SELECT S.Contract_Number, S.WSCONTSQ, S.contract_Description
+FROM SV00500 S 
+JOIN CO 
+	ON CO.Contract_Number = S.Contract_Number
+	AND CO.WSCONTSQ = S.WSCONTSQ
+
 )
 
 SELECT 
@@ -2134,7 +2145,7 @@ SELECT
         ADDRESS1 = RTRIM(l.ADDRESS1),
         ltrim(rtrim(l.CITY)) + ', ' + ltrim(rtrim(l.state)) + '  ' + ltrim(rtrim(zip)) as CSZ,
         AcctType = RTRIM(l.User_Define_2a),
-        Contract_Description = RTRIM(isnull(co.contract_Description, '')) ,
+        Contract_Description = RTRIM(isnull(CD.contract_Description, '')) ,
         Equipment_ID = UPPER(RTRIM(e.Equipment_ID)),
         Manufacturer_ID = RTRIM(e.Manufacturer_ID),
         Equipment_Type = RTRIM(e.Equipment_Type),
@@ -2164,15 +2175,15 @@ LEFT JOIN co
         on co.CUSTNMBR = e.CUSTNMBR
            and co.ADRSCODE = e.adrscode
            AND CO.Contract_Number &lt;&gt; '10422A' -- This is the only one with 2 contaract numbers Andrea said it will not happen in future
-           
-           
+LEFT JOIN ContractDescription CD 
+	ON CO.Contract_Number = CD.Contract_Number
+	AND CO.WSCONTSQ = CD.WSCONTSQ
 LEFT JOIN SV00403 C --SV_Equipment_Contract_Coverage_MSTR
 	ON E.CUSTNMBR = C.CUSTNMBR
 	AND E.ADRSCODE = C.ADRSCODE
 	AND E.Equipment_ID = C.Equipment_ID
 	AND CO.WSCONTSQ = C.WSCONTSQ 
 WHERE ( ( CASE WHEN C.Equipment_ID IS NULL THEN 'Not Covered' ELSE 'Covered By Contract' END = @Covered ) OR @Covered = 'All')
---AND ( ( C.Equipment_ID IS NOT NULL AND @Covered = 'Covered') OR @Covered = 'All')
 AND (CO.Contract_Number = @ContractNumber OR @ContractNumber = '')</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>

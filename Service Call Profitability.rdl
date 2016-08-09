@@ -2,8 +2,8 @@
 <Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:cl="http://schemas.microsoft.com/sqlserver/reporting/2010/01/componentdefinition" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/reportdefinition">
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
-    <DataSource Name="MMFS">
-      <DataSourceReference>MMFS</DataSourceReference>
+    <DataSource Name="MMRPTS">
+      <DataSourceReference>MMRPTS</DataSourceReference>
       <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>906f79da-99ed-4a28-85d6-13c039abd589</rd:DataSourceID>
     </DataSource>
@@ -11,24 +11,14 @@
   <DataSets>
     <DataSet Name="dsServiceCall">
       <Query>
-        <DataSourceName>MMFS</DataSourceName>
+        <DataSourceName>MMRPTS</DataSourceName>
         <QueryParameters>
           <QueryParameter Name="@Service_Call_ID">
             <Value>=Parameters!Service_Call_ID.Value</Value>
           </QueryParameter>
         </QueryParameters>
-        <CommandText>
+        <CommandText>--DECLARE @Service_Call_ID VARCHAR(100) = '150723-0082      ';
 WITH 
---BillingAmt
---AS
---(
---SELECT Service_Call_ID 
---	,  Billing_Amount = SUM(Billing_Amount)
---	--,  Total_Cost = SUM(WS_Extended_Cost)
---FROM MM.SV000810_SV000815
---WHERE Service_Call_ID = @Service_Call_ID
---GROUP BY Service_Call_ID
---),
 Billable
 AS
 (
@@ -38,7 +28,7 @@ SELECT
 	, Billable_All = SUM(Billable_All)
 	, Total_Cost = SUM(CASE WHEN Invoice_Type = 8 THEN Cost_All * -1 ELSE Cost_All END) 
 
-FROM MM.SV00700_SV00701 
+FROM BI.SV00700_SV00701 (NOLOCK)
 WHERE Service_Call_ID = @Service_Call_ID
 GROUP BY Service_Call_ID
 )
@@ -70,17 +60,17 @@ SELECT
     , Total_Profit = CASE WHEN Q.Quote_Type IS NULL THEN (B2.Billable_All -  B2.Billable_TAX) - B2.Total_Cost ELSE ISNULL(Q.Billing_Total , 0) - B2.Total_Cost END
     , MarkUp = CASE WHEN Q.Quote_Type IS NULL THEN ISNULL((B2.Billable_All -  B2.Billable_TAX) / NULLIF(B2.Total_Cost, 0), 0) ELSE ISNULL(ISNULL(Q.Billing_Total , 0) / NULLIF(B2.Total_Cost, 0), 0) END
 
-FROM SV00300 S
-JOIN SV00200 L
+FROM SV00300 S (NOLOCK) 
+JOIN SV00200 L (NOLOCK)
  --11.6.12 A.S change join from LOCATNNM To CUSTNMBR 
 	ON L.CUSTNMBR = S.CUSTNMBR  
 	--ON L.LOCATNNM = S.LOCATNNM
 	AND L.ADRSCODE = S.ADRSCODE
-LEFT JOIN UPR00100 E
+LEFT JOIN UPR00100 E (NOLOCK)
 	ON E.EMPLOYID = S.SLPRSNID	
-JOIN SV00115 T
+JOIN SV00115 T (NOLOCK)
 	ON T.Technician = S.Technician	
-LEFT JOIN SV00502 AS q
+LEFT JOIN SV00502 AS q (NOLOCK)
         ON q.Quote_Number = S.Service_Call_ID 
 --LEFT JOIN BillingAmt B
 --	ON B.Service_Call_ID = S.Service_Call_ID
@@ -186,13 +176,14 @@ WHERE S.Service_Call_ID = @Service_Call_ID</CommandText>
     </DataSet>
     <DataSet Name="dsLaborCosts">
       <Query>
-        <DataSourceName>MMFS</DataSourceName>
+        <DataSourceName>MMRPTS</DataSourceName>
         <QueryParameters>
           <QueryParameter Name="@Service_Call_ID">
             <Value>=Parameters!Service_Call_ID.Value</Value>
           </QueryParameter>
         </QueryParameters>
-        <CommandText> SELECT 
+        <CommandText> --DECLARE @Service_Call_ID VARCHAR(100) = '150723-0082      ';
+ SELECT 
       Type =  'Labor'
 	, Q.Quote_Type
 	, IsQuote = CASE WHEN Q.Quote_Type IS NULL THEN 'N' ELSE 'Y' END 
@@ -205,8 +196,8 @@ WHERE S.Service_Call_ID = @Service_Call_ID</CommandText>
 	  Description = RTRIM(ITEMDESC),
 	  Sell = CASE WHEN Q.Quote_Type IS NULL THEN Billing_Amount ELSE 0 END
 
-FROM MM.SV000810_SV000815 S
-LEFT JOIN SV00502 AS q
+FROM BI.SV000810_SV000815 S (NOLOCK)
+LEFT JOIN SV00502 AS q (NOLOCK)
         ON q.Quote_Number = S.Service_Call_ID 
 WHERE Service_Call_ID = @Service_Call_ID
 --AND WS_Cost_Code = 6
@@ -227,13 +218,12 @@ UNION ALL
 	  PoNumber = '',
 	  Description = Call_Invoice_Number,
 	  Sell = Billable_Labor
-FROM MM.SV00700_SV00701 S
-LEFT JOIN SV00502 AS q
+FROM BI.SV00700_SV00701 S (NOLOCK)
+LEFT JOIN SV00502 AS q (NOLOCK)
         ON q.Quote_Number = S.Service_Call_ID 
 WHERE S.Service_Call_ID = @Service_Call_ID
 AND Call_Invoice_Number LIKE 'CR%'
-AND Billable_Labor &lt;&gt; 0
-</CommandText>
+AND Billable_Labor &lt;&gt; 0</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <Fields>
@@ -285,13 +275,14 @@ AND Billable_Labor &lt;&gt; 0
     </DataSet>
     <DataSet Name="dsOtherCosts">
       <Query>
-        <DataSourceName>MMFS</DataSourceName>
+        <DataSourceName>MMRPTS</DataSourceName>
         <QueryParameters>
           <QueryParameter Name="@Service_Call_ID">
             <Value>=Parameters!Service_Call_ID.Value</Value>
           </QueryParameter>
         </QueryParameters>
-        <CommandText> SELECT 
+        <CommandText>  --DECLARE @Service_Call_ID VARCHAR(100) = '150723-0082      ';
+ SELECT 
        Type = CASE WS_Cost_Code  
 								WHEN 1 THEN 'Equipment'
 								WHEN 2 THEN 'Material' 	
@@ -320,12 +311,11 @@ AND Billable_Labor &lt;&gt; 0
 	  Description = RTRIM(ITEMDESC),
 	  Sell = CASE WHEN Q.Quote_Type IS NULL THEN Billing_Amount ELSE 0 END
 
-FROM MM.SV000810_SV000815 S
-LEFT JOIN SV00502 AS q
+FROM BI.SV000810_SV000815 S (NOLOCK)
+LEFT JOIN SV00502 AS q (NOLOCK)
         ON q.Quote_Number = S.Service_Call_ID 
 WHERE Service_Call_ID = @Service_Call_ID
 AND WS_Cost_Code IN (1, 2, 4, 5)
---AND WS_Cost_Code &lt;&gt; 6
 AND Billing_Amount &lt;&gt; 0
 
 
@@ -343,8 +333,8 @@ UNION ALL
 	  PoNumber = '',
 	  Description = Call_Invoice_Number,
 	  Sell = Billable_Material
-FROM MM.SV00700_SV00701 S
-LEFT JOIN SV00502 AS q
+FROM BI.SV00700_SV00701 S (NOLOCK)
+LEFT JOIN SV00502 AS q (NOLOCK)
         ON q.Quote_Number = S.Service_Call_ID 
 WHERE S.Service_Call_ID = @Service_Call_ID
 AND Call_Invoice_Number LIKE 'CR%'
@@ -364,8 +354,8 @@ UNION ALL
 	  PoNumber = '',
 	  Description = Call_Invoice_Number,
 	  Sell = Billable_Equipment
-FROM MM.SV00700_SV00701 S
-LEFT JOIN SV00502 AS q
+FROM BI.SV00700_SV00701 S (NOLOCK)
+LEFT JOIN SV00502 AS q (NOLOCK)
         ON q.Quote_Number = S.Service_Call_ID 
 WHERE S.Service_Call_ID = @Service_Call_ID
 AND Call_Invoice_Number LIKE 'CR%'
@@ -385,8 +375,8 @@ UNION ALL
 	  PoNumber = '',
 	  Description = Call_Invoice_Number,
 	  Sell = Billable_Subs
-FROM MM.SV00700_SV00701 S
-LEFT JOIN SV00502 AS q
+FROM BI.SV00700_SV00701 S (NOLOCK)
+LEFT JOIN SV00502 AS q (NOLOCK)
         ON q.Quote_Number = S.Service_Call_ID 
 WHERE S.Service_Call_ID = @Service_Call_ID
 AND Call_Invoice_Number LIKE 'CR%'
@@ -406,8 +396,8 @@ UNION ALL
 	  PoNumber = '',
 	  Description = Call_Invoice_Number,
 	  Sell = Billable_Other
-FROM MM.SV00700_SV00701 S
-LEFT JOIN SV00502 AS q
+FROM BI.SV00700_SV00701 S (NOLOCK)
+LEFT JOIN SV00502 AS q (NOLOCK)
         ON q.Quote_Number = S.Service_Call_ID 
 WHERE S.Service_Call_ID = @Service_Call_ID
 AND Call_Invoice_Number LIKE 'CR%'

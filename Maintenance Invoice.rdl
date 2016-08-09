@@ -2557,7 +2557,7 @@
           </QueryParameter>
         </QueryParameters>
         <CommandType>StoredProcedure</CommandType>
-        <CommandText>MM.pReport_Invoice_Maintenance</CommandText>
+        <CommandText>MMFS.MM.pReport_Invoice_Maintenance</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <Fields>

@@ -14686,8 +14686,8 @@
   </Page>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
-    <DataSource Name="MMFS">
-      <DataSourceReference>MMFS</DataSourceReference>
+    <DataSource Name="MMRPTS">
+      <DataSourceReference>MMRPTS</DataSourceReference>
       <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>ec2292ab-843f-4908-b0b9-b56deba25259</rd:DataSourceID>
     </DataSource>
@@ -14695,13 +14695,14 @@
   <DataSets>
     <DataSet Name="dsInspection">
       <Query>
-        <DataSourceName>MMFS</DataSourceName>
+        <DataSourceName>MMRPTS</DataSourceName>
         <QueryParameters>
           <QueryParameter Name="@Service_Call_ID">
             <Value>=Parameters!Service_Call_ID.Value</Value>
           </QueryParameter>
         </QueryParameters>
-        <CommandText>SELECT  a.Service_Call_ID,
+        <CommandText>--DECLARE @Service_Call_ID VARCHAR(100) ='150605-0161'
+SELECT  a.Service_Call_ID,
         a.CUSTNMBR,
         a.ADRSCODE,
         a.Status_of_Call,
@@ -14796,22 +14797,22 @@
         sl.Loc_UserDefine6a,
         scn.Note_Service_Index,
         scn.Record_Notes
-FROM    SV00300 AS a
-left outer join SV00302 AS b
+FROM    SV00300 AS a (NOLOCK)
+left outer join SV00302 AS b (NOLOCK)
         ON a.Service_Call_ID = b.Service_Call_ID
-INNER JOIN RM00101 AS cm
+INNER JOIN RM00101 AS cm (NOLOCK)
         ON a.CUSTNMBR = cm.CUSTNMBR
-INNER JOIN SV00100 AS sc
+INNER JOIN SV00100 AS sc (NOLOCK)
         ON a.CUSTNMBR = sc.CUSTNMBR
-LEFT OUTER JOIN SV000805 AS scn
+LEFT OUTER JOIN SV000805 AS scn (NOLOCK)
         ON a.Service_Call_ID = scn.Service_Call_ID
-LEFT OUTER JOIN RM00301 AS sp
+LEFT OUTER JOIN RM00301 AS sp (NOLOCK)
         ON a.SLPRSNID = sp.SLPRSNID
-LEFT OUTER JOIN SV00502 AS q
+LEFT OUTER JOIN SV00502 AS q (NOLOCK)
         ON a.Service_Call_ID = q.Quote_Number
            AND a.CUSTNMBR = q.CUSTNMBR
            AND a.ADRSCODE = q.ADRSCODE
-LEFT OUTER JOIN SV00400 AS e
+LEFT OUTER JOIN SV00400 AS e (NOLOCK)
         ON a.CUSTNMBR = e.CUSTNMBR
            AND a.ADRSCODE = e.ADRSCODE
            AND b.Equipment_ID = e.Equipment_ID
@@ -14834,15 +14835,15 @@ LEFT OUTER JOIN ( SELECT    a.CUSTNMBR,
                             CASE a.PHONE1 WHEN '' THEN '' ELSE '(' + SUBSTRING(a.PHONE1,1,3) + ') ' + SUBSTRING(a.PHONE1,4,3) + '-' + SUBSTRING(a.PHONE1,7,4) END AS Contact1_Phone,
                             a.Contact_Name AS Contact2,
                             a.PHONE2 AS Contact2_Phone
-                  FROM      SV00200 AS a
-                  LEFT OUTER JOIN RM00102 AS b
+                  FROM      SV00200 AS a (NOLOCK)
+                  LEFT OUTER JOIN RM00102 AS b (NOLOCK)
                             ON a.CUSTNMBR = b.CUSTNMBR
                                AND a.ADRSCODE = b.ADRSCODE
                 ) AS sl
         ON a.CUSTNMBR = sl.CUSTNMBR
            AND a.ADRSCODE = sl.ADRSCODE
 left outer join --INNER JOIN
-        RM00102 AS billTo
+        RM00102 AS billTo (NOLOCK)
         ON billTo.CUSTNMBR = a.CUSTNMBR
            AND billTo.ADRSCODE = cm.PRBTADCD
 WHERE   ( a.Service_Call_ID = @Service_Call_ID )

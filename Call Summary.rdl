@@ -42,25 +42,25 @@
    ResolutionDescription = ISNULL(RTRIM(SV00394.Resolution_Description),''),
    ResolutionNote = ISNULL(SV000805.Record_Notes,''),
    EmployeeId = ISNULL(RTRIM(SV00115.EMPLOYID),'')
-FROM SV00300 
-   LEFT OUTER JOIN SV00200
+FROM SV00300 (NOLOCK)
+   LEFT OUTER JOIN SV00200 (NOLOCK)
      ON SV00200.CUSTNMBR = SV00300.CUSTNMBR AND 
            SV00200.ADRSCODE = SV00300.ADRSCODE 
-   LEFT OUTER JOIN RM00102 
+   LEFT OUTER JOIN RM00102 (NOLOCK)
      ON RM00102.CUSTNMBR = SV00300.CUSTNMBR AND 
            RM00102.ADRSCODE = SV00300.ADRSCODE 
-   LEFT OUTER JOIN SV00115 
+   LEFT OUTER JOIN SV00115 (NOLOCK)
      ON SV00115.Technician = SV00300.Technician
-   LEFT OUTER JOIN SV00320
+   LEFT OUTER JOIN SV00320 (NOLOCK)
      ON SV00320.Type_Call_Short = SV00300.Type_Call_Short
-   LEFT OUTER JOIN SV000805
+   LEFT OUTER JOIN SV000805 (NOLOCK)
      ON SV000805.CUSTNMBR = SV00300.CUSTNMBR AND 
            SV000805.ADRSCODE = SV00300.ADRSCODE AND 
            SV000805.Reference_ID = SV00300.Service_Call_ID AND 
            SV000805.Service_Call_ID = SV00300.Service_Call_ID AND 
            WS_Note_Type = 'S' AND 
            Note_Service_Index = 'Resolution'
-   LEFT OUTER JOIN SV00394
+   LEFT OUTER JOIN SV00394 (NOLOCK)
      ON SV00394.Resolution_ID = SV00300.Resolution_ID
 WHERE SV00300.Service_Call_ID = @Service_Call_ID</CommandText>
       </Query>
@@ -175,8 +175,8 @@ WHERE SV00300.Service_Call_ID = @Service_Call_ID</CommandText>
    Hours = Estimate_Hours,
    Status = RTRIM(Appointment_Status),
    CompletionDate = Completion_Date
-FROM SV00301
-   LEFT OUTER JOIN SV00115
+FROM SV00301 (NOLOCK)
+   LEFT OUTER JOIN SV00115 (NOLOCK)
       ON SV00115.Technician = SV00301.Technician
 WHERE SV00301.Service_Call_ID = @Service_Call_ID
 ORDER BY TechnicianName, Appointment</CommandText>
@@ -223,70 +223,79 @@ ORDER BY TechnicianName, Appointment</CommandText>
         <CommandText>--DECLARE @Service_Call_ID VARCHAR(50)= '150306-0570'
 
 SELECT
-   PageBreak = CASE WHEN ISNULL(SV00500.User_Define_2a, '') = '' THEN '0' ELSE SV00302.Equipment_ID END , 	
-   EquipmentId     = SV00302.Equipment_ID, 
-   
-   TaskDescription = RTRIM(SV00302.Task_Description), 
-   TaskStatus      = RTRIM(SV00302.Task_Status), 
-   SV00317.Task_List_ID,
-   SV00317.Task_Line_Number,
-   SV00302.Sub_Task_Line_Number,  
-   SerialNumber    = ISNULL(SV00400.Wennsoft_Serial_Number,''),
-   Sublocation     = RTRIM(ISNULL(SV00400.Location_Equipment,'')),
-   SV00302.Coverage_Code,
-   ResponseType    = SV00317.WS_Response_Type, -- SV00302.Coverage_Code,
-   --Response        = CASE SV00302.Coverage_Code 
-   --                    WHEN 1 THEN CASE ISNULL(SV00303.SV_Response_Boolean, 0) WHEN 0 THEN 'No' WHEN 1 THEN 'Yes' ELSE '' END
-   --                    WHEN 2 THEN ISNULL(SV00304.Response_Note, '')
-   --                    WHEN 3 THEN CONVERT(VARCHAR(20), CONVERT(DECIMAL(9,2), ISNULL(SV00303.SV_Response_Value_1, '0')))
-   --                    WHEN 4 THEN CONVERT(VARCHAR(20), CONVERT(DECIMAL(9,2), ISNULL(SV00303.SV_Response_Value_1, '0'))) + ' : ' + CONVERT(VARCHAR(20), CONVERT(DECIMAL(9,2), ISNULL(SV00303.SV_Response_Value_2, '0')))
-   --                    WHEN 5 THEN CONVERT(VARCHAR(20), CONVERT(DECIMAL(9,2), ISNULL(SV00303.SV_Response_Value_1, '0'))) + ' : ' + CONVERT(VARCHAR(20), CONVERT(DECIMAL(9,2), ISNULL(SV00303.SV_Response_Value_2, '0'))) + ' : ' + CONVERT(VARCHAR(20), CONVERT(DECIMAL(9,2), ISNULL(SV00303.SV_Response_Value_3, '0')))
-   --                    WHEN 6 THEN ISNULL(RTRIM(SV00304.Response_Value), '')
-   --                    WHEN 7 THEN ISNULL(RTRIM(SV00304.Response_Value), '') + ' : ' + ISNULL(CONVERT(VARCHAR(8000), SV00304.Response_Note), '')
-   --                    ELSE ''
-   --                  END
-     Response        = CASE SV00317.WS_Response_Type
-                    WHEN 1 THEN RTRIM(ISNULL(SV00317.WS_Response_String, ''))
-                    WHEN 2 THEN CONVERT(VARCHAR(20), CONVERT(DECIMAL(9,2), (ISNULL(SV00317.WS_Response_Numeric, '0'))))
-                    WHEN 3 THEN CONVERT(VARCHAR(20), ISNULL(SV00317.WS_Response_Integer, ''))
-                    WHEN 4 THEN CASE ISNULL(SV00317.WS_Response_Integer, 0) WHEN 0 THEN 'None' WHEN 1 THEN 'No' WHEN 2 THEN 'Yes' ELSE '' END
-                    WHEN 5 THEN RTRIM(ISNULL(SV00317.WS_Response_String, ''))--WS_Response_List_ID
-                    WHEN 6 THEN ISNULL(CONVERT(VARCHAR(8000), SV00317.WS_Response_Text), '')
-                    WHEN 7 THEN CASE ISNULL(SV00317.WS_Response_Integer, 0) WHEN 0 THEN 'None' WHEN 1 THEN 'Billable' WHEN 2 THEN 'No' WHEN 3 THEN 'Yes' ELSE '' END
-                    WHEN 8 THEN CASE WHEN SV00317.WS_Response_Date='1900-01-01' THEN '' ELSE CONVERT(VARCHAR(20), SV00317.WS_Response_Date, 106) END
-                    ELSE ''
-                    END
-FROM SV00300
-	JOIN SV00302 
-     ON SV00302.Service_Call_ID = SV00300.Service_Call_ID
-   LEFT OUTER JOIN SV00400
-     ON SV00400.CUSTNMBR = SV00300.CUSTNMBR AND 
-        SV00400.ADRSCODE = SV00300.ADRSCODE AND 
-        SV00400.Equipment_ID = SV00302.Equipment_ID
-LEFT OUTER JOIN SV00317
-  ON SV00317.Service_Call_ID       = SV00302.Service_Call_ID AND
-  SV00317.Location_Equipment       = SV00302.Location_Equipment AND
-  SV00317.Equipment_ID             = SV00302.Equipment_ID AND
-  SV00317.Task_List_ID             = SV00302.Task_List_ID AND
-  SV00317.Task_Code                = SV00302.Task_Code AND
-  SV00317.Task_Line_Number         = SV00302.Task_Line_Number
-   --LEFT OUTER JOIN SV00303
-   --  ON SV00303.Service_Call_ID = SV00302.Service_Call_ID AND
-   --     SV00303.Task_Code = SV00302.Task_Code AND
-   --     SV00303.Equipment_ID = SV00302.Equipment_ID AND
-   --     SV00303.SEQNUMBR = SV00302.Task_Line_Number
-   LEFT OUTER JOIN SV00304
-     ON SV00304.Service_Call_ID = SV00302.Service_Call_ID AND
-        SV00304.Task_Code = SV00302.Task_Code AND
-        SV00304.Equipment_ID = SV00302.Equipment_ID AND
-        SV00304.SEQNUMBR = SV00302.Task_Line_Number   
-   LEFT JOIN dbo.SV00500
-     ON SV00500.CUSTNMBR = SV00300.CUSTNMBR AND 
-        SV00500.ADRSCODE = SV00300.ADRSCODE AND 		     
-        SV00500.WSCONTSQ = SV00300.WSCONTSQ AND
-       SV00500.Contract_Number = SV00300.Contract_Number
-WHERE SV00302.Service_Call_ID = @Service_Call_ID 
-AND SV00302.Task_Status = 'Complete'</CommandText>
+    PageBreak = CASE WHEN ISNULL(SV00500.User_Define_2a, '') = '' THEN '0'
+                     ELSE SV00302.Equipment_ID
+                END ,
+    EquipmentId = SV00302.Equipment_ID ,
+    TaskDescription = RTRIM(SV00302.Task_Description) ,
+    TaskStatus = RTRIM(SV00302.Task_Status) ,
+    SV00317.Task_List_ID ,
+    SV00317.Task_Line_Number ,
+    SV00302.Sub_Task_Line_Number ,
+    SerialNumber = ISNULL(SV00400.Wennsoft_Serial_Number, '') ,
+    Sublocation = RTRIM(ISNULL(SV00400.Location_Equipment, '')) ,
+    SV00302.Coverage_Code ,
+    ResponseType = SV00317.WS_Response_Type , -- SV00302.Coverage_Code,
+    Response = CASE SV00317.WS_Response_Type
+                 WHEN 1 THEN RTRIM(ISNULL(SV00317.WS_Response_String, ''))
+                 WHEN 2
+                 THEN CONVERT(VARCHAR(20), CONVERT(DECIMAL(9, 2), ( ISNULL(SV00317.WS_Response_Numeric,
+                                                              '0') )))
+                 WHEN 3
+                 THEN CONVERT(VARCHAR(20), ISNULL(SV00317.WS_Response_Integer,
+                                                  ''))
+                 WHEN 4 THEN CASE ISNULL(SV00317.WS_Response_Integer, 0)
+                               WHEN 0 THEN 'None'
+                               WHEN 1 THEN 'No'
+                               WHEN 2 THEN 'Yes'
+                               ELSE ''
+                             END
+                 WHEN 5 THEN RTRIM(ISNULL(SV00317.WS_Response_String, ''))--WS_Response_List_ID
+                 WHEN 6
+                 THEN ISNULL(CONVERT(VARCHAR(8000), SV00317.WS_Response_Text),
+                             '')
+                 WHEN 7 THEN CASE ISNULL(SV00317.WS_Response_Integer, 0)
+                               WHEN 0 THEN 'None'
+                               WHEN 1 THEN 'Billable'
+                               WHEN 2 THEN 'No'
+                               WHEN 3 THEN 'Yes'
+                               ELSE ''
+                             END
+                 WHEN 8
+                 THEN CASE WHEN SV00317.WS_Response_Date = '1900-01-01'
+                           THEN ''
+                           ELSE CONVERT(VARCHAR(20), SV00317.WS_Response_Date, 106)
+                      END
+                 ELSE ''
+               END
+FROM
+    SV00300 (NOLOCK)
+JOIN SV00302 (NOLOCK)
+    ON SV00302.Service_Call_ID = SV00300.Service_Call_ID
+LEFT OUTER JOIN SV00400 (NOLOCK)
+    ON SV00400.CUSTNMBR = SV00300.CUSTNMBR
+       AND SV00400.ADRSCODE = SV00300.ADRSCODE
+       AND SV00400.Equipment_ID = SV00302.Equipment_ID
+LEFT OUTER JOIN SV00317 (NOLOCK)
+    ON SV00317.Service_Call_ID = SV00302.Service_Call_ID
+       AND SV00317.Location_Equipment = SV00302.Location_Equipment
+       AND SV00317.Equipment_ID = SV00302.Equipment_ID
+       AND SV00317.Task_List_ID = SV00302.Task_List_ID
+       AND SV00317.Task_Code = SV00302.Task_Code
+       AND SV00317.Task_Line_Number = SV00302.Task_Line_Number
+LEFT OUTER JOIN SV00304 (NOLOCK)
+    ON SV00304.Service_Call_ID = SV00302.Service_Call_ID
+       AND SV00304.Task_Code = SV00302.Task_Code
+       AND SV00304.Equipment_ID = SV00302.Equipment_ID
+       AND SV00304.SEQNUMBR = SV00302.Task_Line_Number
+LEFT JOIN dbo.SV00500 (NOLOCK)
+    ON SV00500.CUSTNMBR = SV00300.CUSTNMBR
+       AND SV00500.ADRSCODE = SV00300.ADRSCODE
+       AND SV00500.WSCONTSQ = SV00300.WSCONTSQ
+       AND SV00500.Contract_Number = SV00300.Contract_Number
+WHERE
+    SV00302.Service_Call_ID = @Service_Call_ID
+    AND SV00302.Task_Status = 'Complete';</CommandText>
       </Query>
       <Fields>
         <Field Name="PageBreak">
@@ -349,7 +358,7 @@ AND SV00302.Task_Status = 'Complete'</CommandText>
         </QueryParameters>
         <CommandText>--DECLARE @Service_Call_ID VARCHAR(17) = '110513-0052'
 SELECT 
-   TechnicianName = (SELECT TOP 1 RTRIM(SV00115.Technician_Long_Name) FROM SV00115 WHERE SV00115.EMPLOYID = WS10702.EMPLOYID),
+   TechnicianName = (SELECT TOP 1 RTRIM(SV00115.Technician_Long_Name) FROM SV00115 (NOLOCK) WHERE SV00115.EMPLOYID = WS10702.EMPLOYID),
    Appointment = RTRIM(Appointment),
    TransactionDate = WS_Transaction_Date, 
    Hours = TRXHRUNT, 
@@ -357,15 +366,15 @@ SELECT
    PayCodeDescription = ISNULL(RTRIM(UPR40600.DSCRIPTN),''),
    Description = RTRIM(TRXDSCRN )
    ,Source = 'WS10702'
-FROM WS10702 
-   LEFT OUTER JOIN UPR40600
+FROM WS10702 (NOLOCK)
+   LEFT OUTER JOIN UPR40600 (NOLOCK)
       ON UPR40600.PAYRCORD = WS10702.UPRTRXCD
 WHERE WS_Job_Number = @Service_Call_ID AND 
              WS_Cost_Type = 1 AND
              WS_Transaction_Type = 'SERVICE'
 UNION ALL
 SELECT 
-   TechnicianName = (SELECT TOP 1 RTRIM(SV00115.Technician_Long_Name) FROM SV00115 WHERE SV00115.EMPLOYID = WS30702.EMPLOYID),
+   TechnicianName = (SELECT TOP 1 RTRIM(SV00115.Technician_Long_Name) FROM SV00115 (NOLOCK) WHERE SV00115.EMPLOYID = WS30702.EMPLOYID),
    Appointment = RTRIM(Appointment),
    TransactionDate = WS_Transaction_Date, 
    Hours = TRXHRUNT, 
@@ -373,8 +382,8 @@ SELECT
    PayCodeDescription = ISNULL(RTRIM(UPR40600.DSCRIPTN),''),
    Description = RTRIM(TRXDSCRN)
    ,Source = 'WS30702' 
-FROM WS30702 
-   LEFT OUTER JOIN UPR40600
+FROM WS30702 (NOLOCK)
+   LEFT OUTER JOIN UPR40600 (NOLOCK)
       ON UPR40600.PAYRCORD = WS30702.UPRTRXCD
 WHERE WS_Job_Number = @Service_Call_ID AND 
              WS_Cost_Type = 1 AND
@@ -389,7 +398,7 @@ SELECT
    PayCodeDescription = '',
    Description = 'Material Only'
    ,Source = 'SV00301'
-  FROM SV00301 
+  FROM SV00301 (NOLOCK)
      LEFT OUTER JOIN SV00115
        ON SV00115.Technician = SV00301.Technician
  WHERE SV00301.Service_Call_ID = @Service_Call_ID AND
@@ -407,10 +416,9 @@ SELECT
 	PayCodeDescription = ISNULL(RTRIM(UPR40600.DSCRIPTN),''),
 	Description = RTRIM(ITEMDESC),
 	SOURCE = 'SV000815'
- FROM SV000815 
-   LEFT OUTER JOIN UPR40600
+ FROM SV000815 (NOLOCK)
+   LEFT OUTER JOIN UPR40600 (NOLOCK)
       ON UPR40600.PAYRCORD = SV000815.PAYRCORD
-
 WHERE 
 Service_Call_ID = @Service_Call_ID
 AND Cost_Code_Description LIKE '%LABOR%'
@@ -461,21 +469,21 @@ ORDER BY TransactionDate</CommandText>
           </QueryParameter>
         </QueryParameters>
         <CommandText>SELECT 
-   TechnicianName = (SELECT TOP 1 SV00115.Technician_Long_Name FROM SV00115 WHERE SV00115.EMPLOYID = WS10702.EMPLOYID),
+   TechnicianName = (SELECT TOP 1 SV00115.Technician_Long_Name FROM SV00115 (NOLOCK) WHERE SV00115.EMPLOYID = WS10702.EMPLOYID),
    TransactionDate = WS_Transaction_Date, 
    Quantity = TRXQTY, 
    Description = TRXDSCRN 
-FROM WS10702 
+FROM WS10702 (NOLOCK)
 WHERE WS_Job_Number = @Service_Call_ID AND 
              WS_Cost_Type = 3 AND 
              WS_Transaction_Type = 'SERVICE'
 UNION ALL
 SELECT 
-   TechnicianName = (SELECT TOP 1 SV00115.Technician_Long_Name FROM SV00115 WHERE SV00115.EMPLOYID = WS30702.EMPLOYID),
+   TechnicianName = (SELECT TOP 1 SV00115.Technician_Long_Name FROM SV00115 (NOLOCK) WHERE SV00115.EMPLOYID = WS30702.EMPLOYID),
    TransactionDate = WS_Transaction_Date, 
    Quantity = TRXQTY, 
    Description = TRXDSCRN 
-FROM WS30702 
+FROM WS30702 (NOLOCK)
 WHERE WS_Job_Number = @Service_Call_ID AND 
              WS_Cost_Type = 3 AND 
              WS_Transaction_Type = 'SERVICE'
@@ -509,21 +517,21 @@ ORDER BY TechnicianName, TransactionDate</CommandText>
           </QueryParameter>
         </QueryParameters>
         <CommandText>SELECT 
-   TechnicianName = (SELECT TOP 1 SV00115.Technician_Long_Name FROM SV00115 WHERE SV00115.EMPLOYID = WS10702.EMPLOYID),
+   TechnicianName = (SELECT TOP 1 SV00115.Technician_Long_Name FROM SV00115 (NOLOCK) WHERE SV00115.EMPLOYID = WS10702.EMPLOYID),
    TransactionDate = WS_Transaction_Date, 
    Quantity = TRXQTY, 
    Description = TRXDSCRN 
-FROM WS10702 
+FROM WS10702 (NOLOCK)
 WHERE WS_Job_Number = @Service_Call_ID AND 
              WS_Cost_Type = 2 AND 
              WS_Transaction_Type = 'SERVICE'
 UNION ALL
 SELECT 
-   TechnicianName = (SELECT TOP 1 SV00115.Technician_Long_Name FROM SV00115 WHERE SV00115.EMPLOYID = WS30702.EMPLOYID),
+   TechnicianName = (SELECT TOP 1 SV00115.Technician_Long_Name FROM SV00115 (NOLOCK) WHERE SV00115.EMPLOYID = WS30702.EMPLOYID),
    TransactionDate = WS_Transaction_Date, 
    Quantity = TRXQTY, 
    Description = TRXDSCRN 
-FROM WS30702 
+FROM WS30702 (NOLOCK)
 WHERE WS_Job_Number = @Service_Call_ID AND 
              WS_Cost_Type = 2 AND 
              WS_Transaction_Type = 'SERVICE'
@@ -561,7 +569,7 @@ ORDER BY TechnicianName, TransactionDate</CommandText>
    Quantity = TRXQTY, 
    ItemNumber = ITEMNMBR, 
    ItemDescription = RTRIM(ITEMDESC )
-FROM WS20002 
+FROM WS20002 (NOLOCK)
 WHERE Service_Call_ID = @Service_Call_ID
 UNION ALL
 SELECT 
@@ -569,7 +577,7 @@ SELECT
    Quantity = TRXQTY, 
    ItemNumber = ITEMNMBR, 
    ItemDescription = RTRIM(ITEMDESC )
-FROM SV000810 
+FROM SV000810  (NOLOCK) 
 WHERE Service_Call_ID = @Service_Call_ID AND 
              WS_Cost_Code = 2 AND 
              ITEMNMBR &lt;&gt; '' AND 
@@ -580,7 +588,7 @@ SELECT
    Quantity = TRXQTY, 
    ItemNumber = ITEMNMBR, 
    ItemDescription = RTRIM(ITEMDESC )
-FROM SV000815 
+FROM SV000815  (NOLOCK)
 WHERE Service_Call_ID = @Service_Call_ID AND 
              WS_Cost_Code = 2 AND 
              ITEMNMBR &lt;&gt; '' AND 
@@ -591,7 +599,7 @@ SELECT
    Quantity = TRXQTY, 
    ItemNumber = ITEMNMBR, 
    ItemDescription = RTRIM(ITEMDESC )
-FROM WSS10200 
+FROM WSS10200  (NOLOCK)
 WHERE WS_Job_Number = @Service_Call_ID AND 
              WS_Cost_Code = 2 AND 
              ITEMNMBR &lt;&gt; ''
@@ -601,7 +609,7 @@ SELECT
    Quantity = TRXQTY, 
    ItemNumber = ITEMNMBR, 
    ItemDescription = RTRIM(ITEMDESC )
-FROM WSS30300 
+FROM WSS30300  (NOLOCK)
 WHERE WS_Job_Number = @Service_Call_ID AND 
              WS_Cost_Code = 2 AND 
              ITEMNMBR &lt;&gt; ''
@@ -613,10 +621,9 @@ SELECT
 	Quantity = TRXQTY,
    ItemNumber = ITEMNMBR, 
    ItemDescription = RTRIM(ITEMDESC )
- FROM SV000815 
-   LEFT OUTER JOIN UPR40600
+ FROM SV000815  (NOLOCK)
+   LEFT OUTER JOIN UPR40600  (NOLOCK)
       ON UPR40600.PAYRCORD = SV000815.PAYRCORD
-
 WHERE Service_Call_ID = @Service_Call_ID
 AND Cost_Code_Description ='MATERIAL'
 AND TRXSOURC = 'GJ'             
@@ -658,8 +665,8 @@ ORDER BY TransactionDate</CommandText>
    Quantity = QTYORDER, 
    ItemNumber = ITEMNMBR, 
    ItemDescription = ITEMDESC 
-FROM WS20003 
-   LEFT OUTER JOIN SV00115
+FROM WS20003 (NOLOCK)
+   LEFT OUTER JOIN SV00115 (NOLOCK)
       ON SV00115.Technician = WS20003.Technician
 WHERE Service_Call_ID = @Service_Call_ID
 UNION ALL
@@ -670,8 +677,8 @@ SELECT
    Quantity = TRXQTY, 
    ItemNumber = ITEMNMBR, 
    ItemDescription = ITEMDESC 
-FROM SV000810 
-   LEFT OUTER JOIN SV00115
+FROM SV000810 (NOLOCK)
+   LEFT OUTER JOIN SV00115 (NOLOCK)
       ON SV00115.Technician = SV000810.Technician_ID
 WHERE Service_Call_ID = @Service_Call_ID AND 
              TRXSOURC = 'Purchase Order Entry'
@@ -683,8 +690,8 @@ SELECT
    Quantity = TRXQTY, 
    ItemNumber = ITEMNMBR, 
    ItemDescription = ITEMDESC 
-FROM SV000815 
-   LEFT OUTER JOIN SV00115
+FROM SV000815 (NOLOCK)
+   LEFT OUTER JOIN SV00115 (NOLOCK)
       ON SV00115.Technician = SV000815.Technician_ID
 WHERE Service_Call_ID = @Service_Call_ID AND 
              TRXSOURC = 'Purchase Order Entry'
