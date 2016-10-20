@@ -2101,8 +2101,8 @@
             <Value>=Parameters!ContractNumber.Value</Value>
           </QueryParameter>
         </QueryParameters>
-        <CommandText>--DECLARE @ContractNumber VARCHAR(100) = '23747';
---DECLARE @Covered VARCHAR(100) = 'Covered By Contract';
+        <CommandText>--DECLARE @ContractNumber VARCHAR(100) = '15293';
+--DECLARE @Covered VARCHAR(100) = 'Not Covered';
 
 WITH
 CO 
@@ -2184,7 +2184,13 @@ LEFT JOIN SV00403 C --SV_Equipment_Contract_Coverage_MSTR
 	AND E.Equipment_ID = C.Equipment_ID
 	AND CO.WSCONTSQ = C.WSCONTSQ 
 WHERE ( ( CASE WHEN C.Equipment_ID IS NULL THEN 'Not Covered' ELSE 'Covered By Contract' END = @Covered ) OR @Covered = 'All')
-AND (CO.Contract_Number = @ContractNumber OR @ContractNumber = '')</CommandText>
+AND (CO.Contract_Number = @ContractNumber OR @ContractNumber = '')
+--added 8/23/2016 Jennifer Richmond
+--We use the SSRS report Materials by piece of Equipment to pull covered &amp; not covered equipment per contract and 
+--the report use to not pull the retired equipment for the not covered filter, but now it seems to be pulling those retired pieces. 
+--IS there any way to change that report so the retired pieces do not get pulled under the not covered filter?  
+AND ((C.Equipment_ID IS NULL AND e.Inactive_Retired_Flag = 0 ) OR ( C.Equipment_ID IS NOT NULL ))
+</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <Fields>

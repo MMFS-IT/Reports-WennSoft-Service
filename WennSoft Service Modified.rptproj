@@ -96,6 +96,10 @@
       <Name>dsTradeType.rsd</Name>
       <FullPath>dsTradeType.rsd</FullPath>
     </ProjectItem>
+    <ProjectItem>
+      <Name>dsTechnicianAll.rsd</Name>
+      <FullPath>dsTechnicianAll.rsd</FullPath>
+    </ProjectItem>
   </DataSets>
   <Reports>
     <ProjectItem>

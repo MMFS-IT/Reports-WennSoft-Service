@@ -2253,7 +2253,7 @@ GROUP BY
 Notes
 AS
 (
-SELECT Service_Call_ID,Note_Author, Record_Notes FROM   SV000805 WHERE Note_Service_Index = 'Description' 
+SELECT Service_Call_ID,Note_Author, Record_Notes FROM   SV000805 (nolock) WHERE Note_Service_Index = 'Description' 
 
 )
 

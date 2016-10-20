@@ -221,13 +221,17 @@ WHERE Task_Date &lt; = GETDATE()
         </Field>
       </Fields>
     </DataSet>
-    <DataSet Name="dsTechnician">
+    <DataSet Name="dsTechnicianAll">
       <SharedDataSet>
-        <SharedDataSetReference>dsTechnician</SharedDataSetReference>
+        <SharedDataSetReference>dsTechnicianAll</SharedDataSetReference>
       </SharedDataSet>
       <Fields>
         <Field Name="Technician">
           <DataField>Technician</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Technician_Long_Name">
+          <DataField>Technician_Long_Name</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
@@ -1888,9 +1892,9 @@ WHERE Task_Date &lt; = GETDATE()
       <Prompt>Tech</Prompt>
       <ValidValues>
         <DataSetReference>
-          <DataSetName>dsTechnician</DataSetName>
+          <DataSetName>dsTechnicianAll</DataSetName>
           <ValueField>Technician</ValueField>
-          <LabelField>Technician</LabelField>
+          <LabelField>Technician_Long_Name</LabelField>
         </DataSetReference>
       </ValidValues>
       <MultiValue>true</MultiValue>

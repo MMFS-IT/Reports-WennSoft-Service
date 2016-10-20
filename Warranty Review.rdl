@@ -19,9 +19,6 @@
           <QueryParameter Name="@CallStatus">
             <Value>=Parameters!CallStatus.Value</Value>
           </QueryParameter>
-          <QueryParameter Name="@Divisions">
-            <Value>=Parameters!Divisions.Value</Value>
-          </QueryParameter>
           <QueryParameter Name="@CallType">
             <Value>=Parameters!CallType.Value</Value>
           </QueryParameter>
@@ -247,7 +244,7 @@ WITH    ServiceCalls
     WHERE
         ISNULL(L.Service_Area, '') IN ( @ServiceArea )
         AND SM.Status_of_Call IN ( @CallStatus )
-        AND SM.Divisions IN ( @Divisions )
+        --AND SM.Divisions IN ( @Divisions )
         AND SM.Type_Call_Short IN ( @CallType )
         AND ( SM.Completion_Date &lt;= @WeekEnding
               OR @WeekEnding IS NULL
@@ -363,12 +360,12 @@ WITH    ServiceCalls
           <DataField>WARDES-Task Note</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="WAREQUIP_Task_Note">
-          <DataField>WAREQUIP-Task Note</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="WARDES_Task_Resp">
           <DataField>WARDES-Task Resp</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="WAREQUIP_Task_Note">
+          <DataField>WAREQUIP-Task Note</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="WAREQUIP_Task_Resp">
@@ -383,20 +380,20 @@ WITH    ServiceCalls
           <DataField>WARINSTAL-Task Resp</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="WAROTHER_Task_Note">
-          <DataField>WAROTHER-Task Note</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="WAROTHER_Task_Resp">
-          <DataField>WAROTHER-Task Resp</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="WARJOB_Task_Note">
           <DataField>WARJOB-Task Note</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="WARJOB_Task_Resp">
           <DataField>WARJOB-Task Resp</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="WAROTHER_Task_Note">
+          <DataField>WAROTHER-Task Note</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="WAROTHER_Task_Resp">
+          <DataField>WAROTHER-Task Resp</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
@@ -2799,24 +2796,6 @@ WITH    ServiceCalls
           <DataSetName>dsServiceArea</DataSetName>
           <ValueField>Service_Area</ValueField>
           <LabelField>Service_Area_Description2</LabelField>
-        </DataSetReference>
-      </ValidValues>
-      <MultiValue>true</MultiValue>
-    </ReportParameter>
-    <ReportParameter Name="Divisions">
-      <DataType>String</DataType>
-      <DefaultValue>
-        <DataSetReference>
-          <DataSetName>dsBuisnessUnits</DataSetName>
-          <ValueField>DivisionBusinessUnitCode</ValueField>
-        </DataSetReference>
-      </DefaultValue>
-      <Prompt>Business Unit</Prompt>
-      <ValidValues>
-        <DataSetReference>
-          <DataSetName>dsBuisnessUnits</DataSetName>
-          <ValueField>DivisionBusinessUnitCode</ValueField>
-          <LabelField>DivisionBusinessUnit</LabelField>
         </DataSetReference>
       </ValidValues>
       <MultiValue>true</MultiValue>

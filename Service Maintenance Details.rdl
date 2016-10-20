@@ -119,8 +119,10 @@ WHERE
     AND YEAR(SV00701.DOCDATE) = @Year 
     AND MONTH(SV00701.DOCDATE) = @Month
 	AND  RTRIM(CASE WHEN ISNULL(SV00220.Service_Area_Description, '') = '' THEN 'Unassigned' ELSE Service_Area_Description END) IN (@ServiceAreaDescription)
-    AND  RTRIM(Upr00100.LASTNAME) + ', '
-        + RTRIM(Upr00100.FRSTNAME) + ' ' + RTRIM(Upr00100.MIDLNAME) IN (@SalesPerson)</CommandText>
+	AND  ISNULL(RTRIM(UPR00100.LASTNAME) + ', ' + RTRIM(UPR00100.FRSTNAME) + ' '
+           + RTRIM(UPR00100.MIDLNAME), '') IN (@SalesPerson)
+   --AND  RTRIM(Upr00100.LASTNAME) + ', '
+     --   + RTRIM(Upr00100.FRSTNAME) + ' ' + RTRIM(Upr00100.MIDLNAME) IN (@SalesPerson)</CommandText>
       </Query>
       <Fields>
         <Field Name="Document_Date">

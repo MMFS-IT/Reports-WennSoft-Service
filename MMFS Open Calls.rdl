@@ -1841,7 +1841,6 @@ WHERE Task_Date &lt; = GETDATE()
       <Query>
         <DataSourceName>MMFS</DataSourceName>
         <CommandText>SELECT Technician_Team FROM SV00116
-
 </CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>

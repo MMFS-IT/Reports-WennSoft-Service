@@ -239,7 +239,7 @@ SELECT
     Response = CASE SV00317.WS_Response_Type
                  WHEN 1 THEN RTRIM(ISNULL(SV00317.WS_Response_String, ''))
                  WHEN 2
-                 THEN CONVERT(VARCHAR(20), CONVERT(DECIMAL(9, 2), ( ISNULL(SV00317.WS_Response_Numeric,
+                 THEN CONVERT(VARCHAR(20), CONVERT(DECIMAL(18, 2), ( ISNULL(SV00317.WS_Response_Numeric,
                                                               '0') )))
                  WHEN 3
                  THEN CONVERT(VARCHAR(20), ISNULL(SV00317.WS_Response_Integer,
@@ -306,10 +306,6 @@ WHERE
           <DataField>EquipmentId</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="ResponseType">
-          <DataField>ResponseType</DataField>
-          <rd:TypeName>System.Int16</rd:TypeName>
-        </Field>
         <Field Name="TaskDescription">
           <DataField>TaskDescription</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -340,6 +336,10 @@ WHERE
         </Field>
         <Field Name="Coverage_Code">
           <DataField>Coverage_Code</DataField>
+          <rd:TypeName>System.Int16</rd:TypeName>
+        </Field>
+        <Field Name="ResponseType">
+          <DataField>ResponseType</DataField>
           <rd:TypeName>System.Int16</rd:TypeName>
         </Field>
         <Field Name="Response">

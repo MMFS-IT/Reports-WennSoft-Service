@@ -100,7 +100,10 @@ SELECT
 WHERE
     Type_of_Call IN ( 'BILLABLE', 'CASH ON DELIVER', 'DISPATCH ERROR',
                       'NOT APPR QUOTE', 'PENDING QUOTE', 'QUOTED SERVICE',
-                      'TIME &amp; MATERIAL' )
+                      'TIME &amp; MATERIAL' 
+	--added 8/22/2016 Debbie
+	,'NOT APPR FLD QT', 'PENDING FLD QTE', 'FIELD QUOTE'
+	)
     AND SV00300.Divisions IN (@Divisions)
     AND YEAR(SV00701.DOCDATE) = @Year 
     AND MONTH(SV00701.DOCDATE) = @Month
