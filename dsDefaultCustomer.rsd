@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition">
+  <Description />
+  <DataSet Name="dsDefaultCustomer">
+    <Query>
+      <DataSourceReference>MMRPTS</DataSourceReference>
+      <DataSetParameters>
+        <DataSetParameter Name="@ContractNumber">
+          <ReadOnly>false</ReadOnly>
+          <Nullable>true</Nullable>
+          <OmitFromQuery>false</OmitFromQuery>
+          <rd:DbType>Object</rd:DbType>
+          <rd:IsMultiValued>false</rd:IsMultiValued>
+        </DataSetParameter>
+      </DataSetParameters>
+      <CommandText>SELECT TOP 1 CUSTNMBR FROM SV00053 (NOLOCK) WHERE Contract_Number = @ContractNumber</CommandText>
+    </Query>
+    <Fields>
+      <Field Name="CUSTNMBR">
+        <DataField>CUSTNMBR</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>

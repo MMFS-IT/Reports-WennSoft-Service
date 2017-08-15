@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:cl="http://schemas.microsoft.com/sqlserver/reporting/2010/01/componentdefinition" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/reportdefinition">
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
     <DataSource Name="MMRPTS">
@@ -17,39 +17,65 @@
             <Value>=Parameters!TaskList.Value</Value>
           </QueryParameter>
         </QueryParameters>
-        <CommandText>SELECT 
-      Task_List_Type = RTRIM(SV00591.Task_List_Type)
-   , Task_List_Description = RTRIM(SV00591.Task_List_Description)
-    , Sub_1 = RTRIM(SV00591.Sub_1)
-	, Sub_2 = RTRIM(SV00591.Sub_2)
-	, Sub_3 = RTRIM(SV00591.Sub_3)
-	, Sub_4 = RTRIM(SV00591.Sub_4)
-	, Task_List_ID = RTRIM(SV00591.Task_List_ID) 
-	, Task_Code = RTRIM(SV00592.Task_Code  )
-	, Task_Description = RTRIM(SV00592.Task_Description)
-	, OptionID = RTRIM(ISNULL(O.OptionID, '~') )
-	, Estimate_Hours = SV00592.Estimate_Hours * .01
-	, RT = CASE SV00560.Coverage_Code 
-			WHEN 0 THEN ''
-			WHEN 1 THEN 'YN'
-			WHEN 2 THEN 'TX'
-			WHEN 3 THEN '1N'
-			WHEN 4 THEN '2N'
-			WHEN 5 THEN '3N'
-			WHEN 6 THEN 'DL'
-			WHEN 7 THEN 'LT'
-			END
-, SV00592.Task_Line_Number          
+        <CommandText>--DECLARE @TaskList VARCHAR(20) = 'SPECIAL';
+WITH
+Response
+AS
+(
+SELECT DISTINCT ST2.Task_Code, 
+    SUBSTRING(
+        (
+            SELECT '~' + CASE ST1.WS_Response_Type WHEN 0 THEN 'None' WHEN 1 THEN 'String' WHEN 2 THEN 'Numeric' WHEN 3 THEN 'integer' WHEN 4 THEN 'Yes/No' WHEN 5 THEN 'List' WHEN 6 THEN 'Text' WHEN 7  THEN 'Repair' WHEN 8 THEN 'Date' ELSE '' END  AS [text()]
+            FROM SV00557 ST1
+            WHERE ST1.Task_Code = ST2.Task_Code
+            ORDER BY ST1.Task_Code, ST1.Line_Number
+            FOR XML PATH ('')
+        ), 2, 1000) [ResponseCode]
+FROM SV00557 ST2
+)
+SELECT Task_List_Type = RTRIM(SV00591.Task_List_Type),
+       Task_List_Description = RTRIM(SV00591.Task_List_Description),
+       Sub_1 = RTRIM(SV00591.Sub_1),
+       Sub_2 = RTRIM(SV00591.Sub_2),
+       Sub_3 = RTRIM(SV00591.Sub_3),
+       Sub_4 = RTRIM(SV00591.Sub_4),
+       Task_List_ID = RTRIM(SV00591.Task_List_ID),
+       Task_Code = RTRIM(SV00592.Task_Code),
+       Task_Description = RTRIM(SV00592.Task_Description),
+       OptionID = RTRIM(ISNULL(O.OptionID, '~')),
+       Estimate_Hours = SV00592.Estimate_Hours * .01,
+	   RT = REPLACE(R.ResponseCode, '~', CHAR(10) + CHAR(13)) ,
+       --RT = CASE SV00560.Coverage_Code
+       --         WHEN 0 THEN
+       --             ''
+       --         WHEN 1 THEN
+       --             'YN'
+       --         WHEN 2 THEN
+       --             'TX'
+       --         WHEN 3 THEN
+       --             '1N'
+       --         WHEN 4 THEN
+       --             '2N'
+       --         WHEN 5 THEN
+       --             '3N'
+       --         WHEN 6 THEN
+       --             'DL'
+       --         WHEN 7 THEN
+       --             'LT'
+       --     END,
+       SV00592.Task_Line_Number
 FROM MM.Task_List_Task_Options O (NOLOCK)
-RIGHT JOIN SV00592 (NOLOCK)-- SV_Task_List_Tasks_MSTR   
-	ON O.Task_Code = dbo.SV00592.Task_Code
-	AND O.Task_List_ID = dbo.SV00592.Task_List_ID
-JOIN SV00591 (NOLOCK)-- SV_Task_List_MSTR 
-	ON dbo.SV00592.Task_List_ID = dbo.SV00591.Task_List_ID 
-LEFT JOIN dbo.SV00560 (NOLOCK)
-	ON SV00592.Task_Code = SV00560.Task_Code
-WHERE SV00591.Task_List_Type  IN (@TaskList)
-ORDER BY dbo.SV00592.Task_Description</CommandText>
+    RIGHT JOIN SV00592 (NOLOCK) -- SV_Task_List_Tasks_MSTR   
+        ON O.Task_Code = dbo.SV00592.Task_Code
+           AND O.Task_List_ID = dbo.SV00592.Task_List_ID
+    JOIN SV00591 (NOLOCK) -- SV_Task_List_MSTR 
+        ON dbo.SV00592.Task_List_ID = dbo.SV00591.Task_List_ID
+	LEFT JOIN Response R 
+		ON R.Task_Code = O.Task_Code
+    --LEFT JOIN dbo.SV00560 (NOLOCK)
+    --    ON SV00592.Task_Code = SV00560.Task_Code
+WHERE SV00591.Task_List_Type IN ( @TaskList )
+ORDER BY dbo.SV00592.Task_Description;</CommandText>
       </Query>
       <Fields>
         <Field Name="Task_List_Type">
@@ -459,7 +485,7 @@ SELECT 'LT' as Code, 'DropList+Text' AS RT</CommandText>
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.2in</Height>
+                  <Height>0.4in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -569,7 +595,7 @@ SELECT 'LT' as Code, 'DropList+Text' AS RT</CommandText>
                   <TablixMembers>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>4.41208in</Size>
+                        <Size>4.81in</Size>
                         <CellContents>
                           <Textbox Name="Textbox17">
                             <CanGrow>true</CanGrow>
@@ -636,7 +662,7 @@ SELECT 'LT' as Code, 'DropList+Text' AS RT</CommandText>
                     </TablixMember>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>4.41208in</Size>
+                        <Size>4.81in</Size>
                         <CellContents>
                           <Textbox Name="Task_List_ID1">
                             <CanGrow>true</CanGrow>
@@ -685,7 +711,7 @@ SELECT 'LT' as Code, 'DropList+Text' AS RT</CommandText>
                     </TablixMember>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>4.41208in</Size>
+                        <Size>4.81in</Size>
                         <CellContents>
                           <Textbox Name="Textbox67">
                             <CanGrow>true</CanGrow>
@@ -736,7 +762,7 @@ SELECT 'LT' as Code, 'DropList+Text' AS RT</CommandText>
                     </TablixMember>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>4.41208in</Size>
+                        <Size>4.81in</Size>
                         <CellContents>
                           <Textbox Name="Textbox72">
                             <CanGrow>true</CanGrow>
@@ -826,7 +852,7 @@ SELECT 'LT' as Code, 'DropList+Text' AS RT</CommandText>
                       <TablixMembers>
                         <TablixMember>
                           <TablixHeader>
-                            <Size>2.8125in</Size>
+                            <Size>3.21042in</Size>
                             <CellContents>
                               <Textbox Name="Textbox94">
                                 <CanGrow>true</CanGrow>
@@ -927,7 +953,7 @@ SELECT 'LT' as Code, 'DropList+Text' AS RT</CommandText>
                       <TablixMembers>
                         <TablixMember>
                           <TablixHeader>
-                            <Size>2.8125in</Size>
+                            <Size>3.21042in</Size>
                             <CellContents>
                               <Textbox Name="Textbox58">
                                 <CanGrow>true</CanGrow>
@@ -1046,7 +1072,7 @@ SELECT 'LT' as Code, 'DropList+Text' AS RT</CommandText>
                       <TablixMembers>
                         <TablixMember>
                           <TablixHeader>
-                            <Size>2.8125in</Size>
+                            <Size>3.21042in</Size>
                             <CellContents>
                               <Textbox Name="Textbox59">
                                 <CanGrow>true</CanGrow>
@@ -1187,7 +1213,7 @@ SELECT 'LT' as Code, 'DropList+Text' AS RT</CommandText>
                           <TablixMembers>
                             <TablixMember>
                               <TablixHeader>
-                                <Size>0.30208in</Size>
+                                <Size>0.7in</Size>
                                 <CellContents>
                                   <Textbox Name="Textbox6">
                                     <CanGrow>true</CanGrow>
@@ -1196,7 +1222,7 @@ SELECT 'LT' as Code, 'DropList+Text' AS RT</CommandText>
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value>RT</Value>
+                                            <Value>Response Type</Value>
                                             <Style>
                                               <FontSize>8pt</FontSize>
                                               <FontWeight>Bold</FontWeight>
@@ -1352,7 +1378,7 @@ SELECT 'LT' as Code, 'DropList+Text' AS RT</CommandText>
                           <TablixMembers>
                             <TablixMember>
                               <TablixHeader>
-                                <Size>0.30208in</Size>
+                                <Size>0.7in</Size>
                                 <CellContents>
                                   <Textbox Name="RT">
                                     <CanGrow>true</CanGrow>
@@ -1438,8 +1464,8 @@ SELECT 'LT' as Code, 'DropList+Text' AS RT</CommandText>
               <BreakLocation>Start</BreakLocation>
             </PageBreak>
             <Top>2.86333in</Top>
-            <Height>1.9in</Height>
-            <Width>4.81208in</Width>
+            <Height>2.1in</Height>
+            <Width>5.21in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1623,157 +1649,11 @@ SELECT 'LT' as Code, 'DropList+Text' AS RT</CommandText>
               </Border>
             </Style>
           </Tablix>
-          <Tablix Name="Tablix3">
-            <TablixBody>
-              <TablixColumns>
-                <TablixColumn>
-                  <Width>0.54354in</Width>
-                </TablixColumn>
-                <TablixColumn>
-                  <Width>2.16146in</Width>
-                </TablixColumn>
-              </TablixColumns>
-              <TablixRows>
-                <TablixRow>
-                  <Height>0.25in</Height>
-                  <TablixCells>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox2">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>RT = Response Type Codes </Value>
-                                  <Style>
-                                    <FontWeight>Bold</FontWeight>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox1</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <BackgroundColor>LightSteelBlue</BackgroundColor>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                        <ColSpan>2</ColSpan>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell />
-                  </TablixCells>
-                </TablixRow>
-                <TablixRow>
-                  <Height>0.25in</Height>
-                  <TablixCells>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="OptionID2">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!Code.Value</Value>
-                                  <Style />
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>OptionID1</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="OptionDescription2">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!RT.Value</Value>
-                                  <Style />
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>OptionDescription</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                  </TablixCells>
-                </TablixRow>
-              </TablixRows>
-            </TablixBody>
-            <TablixColumnHierarchy>
-              <TablixMembers>
-                <TablixMember />
-                <TablixMember />
-              </TablixMembers>
-            </TablixColumnHierarchy>
-            <TablixRowHierarchy>
-              <TablixMembers>
-                <TablixMember>
-                  <KeepWithGroup>After</KeepWithGroup>
-                </TablixMember>
-                <TablixMember>
-                  <Group Name="Details2" />
-                </TablixMember>
-              </TablixMembers>
-            </TablixRowHierarchy>
-            <DataSetName>dsRT</DataSetName>
-            <Top>2.36333in</Top>
-            <Left>2.10708in</Left>
-            <Height>0.5in</Height>
-            <Width>2.705in</Width>
-            <ZIndex>3</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-            </Style>
-          </Tablix>
         </ReportItems>
-        <Height>4.76333in</Height>
+        <Height>4.96333in</Height>
         <Style />
       </Body>
-      <Width>4.81208in</Width>
+      <Width>5.21in</Width>
       <Page>
         <PageFooter>
           <Height>0.29167in</Height>
@@ -1875,6 +1755,19 @@ SELECT 'LT' as Code, 'DropList+Text' AS RT</CommandText>
       </ValidValues>
     </ReportParameter>
   </ReportParameters>
+  <ReportParametersLayout>
+    <GridLayoutDefinition>
+      <NumberOfColumns>1</NumberOfColumns>
+      <NumberOfRows>1</NumberOfRows>
+      <CellDefinitions>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>TaskList</ParameterName>
+        </CellDefinition>
+      </CellDefinitions>
+    </GridLayoutDefinition>
+  </ReportParametersLayout>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:ReportID>7da03e51-c60d-4e4f-93c9-65ee0e278350</rd:ReportID>
 </Report>

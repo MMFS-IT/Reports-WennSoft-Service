@@ -1,0 +1,689 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <Body>
+    <ReportItems>
+      <Tablix Name="Tablix1">
+        <TablixBody>
+          <TablixColumns>
+            <TablixColumn>
+              <Width>3in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>2in</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>2in</Width>
+            </TablixColumn>
+          </TablixColumns>
+          <TablixRows>
+            <TablixRow>
+              <Height>0.25in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox1">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Location Name</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox1</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BackgroundColor>LightSteelBlue</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox3">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Status</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox3</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BackgroundColor>LightSteelBlue</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox5">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Technician</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox5</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BackgroundColor>LightSteelBlue</BackgroundColor>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>0.25in</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Location_Name">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!Location_Name.Value</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Location_Name</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Status">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!Status.Value</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Status</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Technician">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!Technician.Value</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Technician</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+          </TablixRows>
+        </TablixBody>
+        <TablixColumnHierarchy>
+          <TablixMembers>
+            <TablixMember />
+            <TablixMember />
+            <TablixMember />
+          </TablixMembers>
+        </TablixColumnHierarchy>
+        <TablixRowHierarchy>
+          <TablixMembers>
+            <TablixMember>
+              <KeepWithGroup>After</KeepWithGroup>
+            </TablixMember>
+            <TablixMember>
+              <Group Name="Details" />
+            </TablixMember>
+          </TablixMembers>
+        </TablixRowHierarchy>
+        <DataSetName>DataSet1</DataSetName>
+        <Height>0.5in</Height>
+        <Width>7in</Width>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
+      </Tablix>
+    </ReportItems>
+    <Height>0.5in</Height>
+    <Style />
+  </Body>
+  <Width>7in</Width>
+  <Page>
+    <PageHeader>
+      <Height>0.72917in</Height>
+      <PrintOnFirstPage>true</PrintOnFirstPage>
+      <PrintOnLastPage>true</PrintOnLastPage>
+      <ReportItems>
+        <Textbox Name="Textbox2">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>SharePoint List Locations Update Pending Sites</Value>
+                  <Style>
+                    <FontWeight>Bold</FontWeight>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Center</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox2</rd:DefaultName>
+          <Top>0.11333in</Top>
+          <Height>0.25in</Height>
+          <Width>7in</Width>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="Textbox7">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>="Owner: " + Parameters!Owner.Value</Value>
+                  <Style />
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Center</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox7</rd:DefaultName>
+          <Top>0.42583in</Top>
+          <Height>0.25in</Height>
+          <Width>7in</Width>
+          <ZIndex>1</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+      </ReportItems>
+      <Style>
+        <Border>
+          <Style>None</Style>
+        </Border>
+      </Style>
+    </PageHeader>
+    <PageFooter>
+      <Height>0.39458in</Height>
+      <PrintOnFirstPage>true</PrintOnFirstPage>
+      <PrintOnLastPage>true</PrintOnLastPage>
+      <ReportItems>
+        <Textbox Name="Textbox4">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>=Globals!ReportName</Value>
+                  <Style>
+                    <Color>DimGray</Color>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style />
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox4</rd:DefaultName>
+          <Top>0.14458in</Top>
+          <Height>0.25in</Height>
+          <Width>3in</Width>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="Textbox6">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>ON Report Server  Change DataSource to SPSADMIN and click Use as Windows Credentials</Value>
+                  <Style>
+                    <Color>Red</Color>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style />
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox6</rd:DefaultName>
+          <Top>0.00916in</Top>
+          <Left>3.02778in</Left>
+          <Height>0.25in</Height>
+          <Width>3.97222in</Width>
+          <ZIndex>1</ZIndex>
+          <Visibility>
+            <Hidden>true</Hidden>
+          </Visibility>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+      </ReportItems>
+      <Style>
+        <Border>
+          <Style>None</Style>
+        </Border>
+      </Style>
+    </PageFooter>
+    <LeftMargin>0.75in</LeftMargin>
+    <RightMargin>0.75in</RightMargin>
+    <TopMargin>0.5in</TopMargin>
+    <BottomMargin>0.5in</BottomMargin>
+    <Style />
+  </Page>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="SharePointService">
+      <ConnectionProperties>
+        <DataProvider>SHAREPOINTLIST</DataProvider>
+        <ConnectString>https://mmfs.macmiller.com/businessunit/Service</ConnectString>
+        <IntegratedSecurity>true</IntegratedSecurity>
+      </ConnectionProperties>
+      <rd:SecurityType>Integrated</rd:SecurityType>
+      <rd:DataSourceID>94fdc572-8b30-4f7b-9ff0-cad265e0d6f2</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="DataSet1">
+      <Query>
+        <DataSourceName>SharePointService</DataSourceName>
+        <CommandText>&lt;RSSharePointList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ListName&gt;Location Updates&lt;/ListName&gt;
+  &lt;ViewFields&gt;
+    &lt;FieldRef Name="Title" /&gt;
+    &lt;FieldRef Name="ServiceContractNum" /&gt;
+    &lt;FieldRef Name="MMFSNotes" /&gt;
+    &lt;FieldRef Name="LocUpdateCategory" /&gt;
+    &lt;FieldRef Name="LocUpdateStatus" /&gt;
+    &lt;FieldRef Name="ServiceNextMaint" /&gt;
+    &lt;FieldRef Name="ServiceTechnician" /&gt;
+    &lt;FieldRef Name="ServiceZone" /&gt;
+    &lt;FieldRef Name="ServiceSalesperson" /&gt;
+    &lt;FieldRef Name="ServiceLocation" /&gt;
+    &lt;FieldRef Name="LinkTitleNoMenu" /&gt;
+    &lt;FieldRef Name="LinkTitle" /&gt;
+    &lt;FieldRef Name="LocUpdateAudit" /&gt;
+    &lt;FieldRef Name="Owner" /&gt;
+    &lt;FieldRef Name="ID" /&gt;
+    &lt;FieldRef Name="ContentType" /&gt;
+    &lt;FieldRef Name="Modified" /&gt;
+    &lt;FieldRef Name="Created" /&gt;
+    &lt;FieldRef Name="Author" /&gt;
+    &lt;FieldRef Name="Editor" /&gt;
+    &lt;FieldRef Name="_UIVersionString" /&gt;
+    &lt;FieldRef Name="Attachments" /&gt;
+    &lt;FieldRef Name="Edit" /&gt;
+    &lt;FieldRef Name="DocIcon" /&gt;
+    &lt;FieldRef Name="ItemChildCount" /&gt;
+    &lt;FieldRef Name="FolderChildCount" /&gt;
+    &lt;FieldRef Name="AppAuthor" /&gt;
+    &lt;FieldRef Name="AppEditor" /&gt;
+  &lt;/ViewFields&gt;
+  &lt;Query&gt;
+    &lt;Where&gt;
+      &lt;And&gt;
+        &lt;Neq&gt;
+          &lt;FieldRef Name="LocUpdateStatus" /&gt;
+          &lt;Value Type="Text"&gt;Complete&lt;/Value&gt;
+        &lt;/Neq&gt;
+        &lt;Neq&gt;
+          &lt;FieldRef Name="LocUpdateStatus" /&gt;
+          &lt;Value Type="Text"&gt;Cancelled&lt;/Value&gt;
+        &lt;/Neq&gt;
+      &lt;/And&gt;
+    &lt;/Where&gt;
+  &lt;/Query&gt;
+&lt;/RSSharePointList&gt;</CommandText>
+        <rd:DesignerState>
+          <QueryDefinition xmlns="http://schemas.microsoft.com/ReportingServices/QueryDefinition/Relational">
+            <SelectedColumns>
+              <ColumnExpression ColumnOwner="Location Updates" ColumnName="Title" />
+              <ColumnExpression ColumnOwner="Location Updates" ColumnName="ServiceContractNum" />
+              <ColumnExpression ColumnOwner="Location Updates" ColumnName="MMFSNotes" />
+              <ColumnExpression ColumnOwner="Location Updates" ColumnName="LocUpdateCategory" />
+              <ColumnExpression ColumnOwner="Location Updates" ColumnName="LocUpdateStatus" />
+              <ColumnExpression ColumnOwner="Location Updates" ColumnName="ServiceNextMaint" />
+              <ColumnExpression ColumnOwner="Location Updates" ColumnName="ServiceTechnician" />
+              <ColumnExpression ColumnOwner="Location Updates" ColumnName="ServiceZone" />
+              <ColumnExpression ColumnOwner="Location Updates" ColumnName="ServiceSalesperson" />
+              <ColumnExpression ColumnOwner="Location Updates" ColumnName="ServiceLocation" />
+              <ColumnExpression ColumnOwner="Location Updates" ColumnName="LinkTitleNoMenu" />
+              <ColumnExpression ColumnOwner="Location Updates" ColumnName="LinkTitle" />
+              <ColumnExpression ColumnOwner="Location Updates" ColumnName="LocUpdateAudit" />
+              <ColumnExpression ColumnOwner="Location Updates" ColumnName="Owner" />
+              <ColumnExpression ColumnOwner="Location Updates" ColumnName="ID" />
+              <ColumnExpression ColumnOwner="Location Updates" ColumnName="ContentType" />
+              <ColumnExpression ColumnOwner="Location Updates" ColumnName="Modified" />
+              <ColumnExpression ColumnOwner="Location Updates" ColumnName="Created" />
+              <ColumnExpression ColumnOwner="Location Updates" ColumnName="Author" />
+              <ColumnExpression ColumnOwner="Location Updates" ColumnName="Editor" />
+              <ColumnExpression ColumnOwner="Location Updates" ColumnName="_UIVersionString" />
+              <ColumnExpression ColumnOwner="Location Updates" ColumnName="Attachments" />
+              <ColumnExpression ColumnOwner="Location Updates" ColumnName="Edit" />
+              <ColumnExpression ColumnOwner="Location Updates" ColumnName="DocIcon" />
+              <ColumnExpression ColumnOwner="Location Updates" ColumnName="ItemChildCount" />
+              <ColumnExpression ColumnOwner="Location Updates" ColumnName="FolderChildCount" />
+              <ColumnExpression ColumnOwner="Location Updates" ColumnName="AppAuthor" />
+              <ColumnExpression ColumnOwner="Location Updates" ColumnName="AppEditor" />
+            </SelectedColumns>
+            <Filters>
+              <Filter Operator="!=">
+                <ColumnExpression ColumnOwner="Location Updates" ColumnName="LocUpdateStatus" />
+                <FilterValue>Complete</FilterValue>
+              </Filter>
+              <Filter Operator="!=">
+                <ColumnExpression ColumnOwner="Location Updates" ColumnName="LocUpdateStatus" />
+                <FilterValue>Cancelled</FilterValue>
+              </Filter>
+            </Filters>
+          </QueryDefinition>
+        </rd:DesignerState>
+      </Query>
+      <Fields>
+        <Field Name="Service_Call__">
+          <DataField>Title</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Contract_Number">
+          <DataField>ServiceContractNum</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Notes">
+          <DataField>MMFSNotes</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Category">
+          <DataField>LocUpdateCategory</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Status">
+          <DataField>LocUpdateStatus</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Next_Scheduled_Maintenance">
+          <DataField>ServiceNextMaint</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Technician">
+          <DataField>ServiceTechnician</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Zone">
+          <DataField>ServiceZone</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Salesperson">
+          <DataField>ServiceSalesperson</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Location_Name">
+          <DataField>ServiceLocation</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Service_Call____linked_to_item_">
+          <DataField>LinkTitleNoMenu</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Service_Call____linked_to_item_with_edit_menu_">
+          <DataField>LinkTitle</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Pre_Post_Audit">
+          <DataField>LocUpdateAudit</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Owner">
+          <DataField>Owner</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ID">
+          <DataField>ID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Content_Type">
+          <DataField>ContentType</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Modified">
+          <DataField>Modified</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Created">
+          <DataField>Created</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Created_By">
+          <DataField>Author</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Modified_By">
+          <DataField>Editor</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Version">
+          <DataField>_UIVersionString</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Attachments">
+          <DataField>Attachments</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="Edit__link_to_edit_item_">
+          <DataField>Edit</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Type__icon_linked_to_document_">
+          <DataField>DocIcon</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Item_Child_Count">
+          <DataField>ItemChildCount</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Folder_Child_Count">
+          <DataField>FolderChildCount</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="App_Created_By">
+          <DataField>AppAuthor</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="App_Modified_By">
+          <DataField>AppEditor</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <Filters>
+        <Filter>
+          <FilterExpression>=Fields!Owner.Value</FilterExpression>
+          <Operator>Equal</Operator>
+          <FilterValues>
+            <FilterValue>=Parameters!Owner.Value</FilterValue>
+          </FilterValues>
+        </Filter>
+      </Filters>
+    </DataSet>
+    <DataSet Name="dsOwners">
+      <Query>
+        <DataSourceName>SharePointService</DataSourceName>
+        <CommandText>&lt;RSSharePointList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ListName&gt;Location Updates&lt;/ListName&gt;
+  &lt;ViewFields&gt;
+    &lt;FieldRef Name="Owner" /&gt;
+  &lt;/ViewFields&gt;
+&lt;Query&gt;
+&lt;OrderBy&gt;
+&lt;FieldRef Name="Owner" Ascending="False" /&gt;
+&lt;/OrderBy&gt;
+&lt;/Query&gt;
+&lt;/RSSharePointList&gt;</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="Owner">
+          <DataField>Owner</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+  <ReportParameters>
+    <ReportParameter Name="Owner">
+      <DataType>String</DataType>
+      <Prompt>Owner (Gates, Bill)</Prompt>
+    </ReportParameter>
+  </ReportParameters>
+  <Code>Public Shared Function RemoveDups(ByVal items As String) As String
+         Dim noDups As New System.Collections.ArrayList()
+         
+         Dim SpStr 
+         SpStr = Split(items ,"|") 
+ 
+         For i As Integer=0 To Ubound(Spstr)
+                   If Not noDups.Contains(SpStr(i).Trim()) Then
+                            noDups.Add(SpStr(i).Trim())                        
+                   End If
+         Next
+ 
+         Dim uniqueItems As String() = New String(noDups.Count-1){}
+         noDups.CopyTo(uniqueItems)
+         uniqueItems.Sort(uniqueItems)
+
+         Dim strRetValue AS String = String.Join("|", uniqueItems)
+         strRetValue = "All|" + strRetValue		
+         Return strRetValue
+
+End Function</Code>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>16f20001-b73d-45fe-93c4-f65c2916787a</rd:ReportID>
+</Report>

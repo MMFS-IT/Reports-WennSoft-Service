@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition">
+  <Description />
+  <DataSet Name="dsTechnician">
+    <Query>
+      <DataSourceReference>MMRPTS</DataSourceReference>
+      <CommandText>SELECT        RTRIM(S.Technician) AS Technician,
+				RTRIM(S.Technician_Long_Name) AS Technician_Long_Name
+FROM            SV00115 AS S WITH (NOLOCK) INNER JOIN
+                         UPR00100 AS E WITH (NOLOCK) ON E.EMPLOYID = S.EMPLOYID
+WHERE        (S.Primary_Skill_Level &lt;&gt; 'SUBCONTRACTOR  ')
+UNION
+SELECT        RTRIM(Technician) AS Technician,
+			RTRIM(S.Technician) AS Technician_Long_Name
+FROM            SV00115 AS S
+WHERE        (RTRIM(Technician) LIKE 'SEENOTES%')
+ORDER BY Technician</CommandText>
+    </Query>
+    <Fields>
+      <Field Name="Technician">
+        <DataField>Technician</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Technician_Long_Name">
+        <DataField>Technician_Long_Name</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>

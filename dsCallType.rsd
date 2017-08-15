@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition">
+  <Description />
+  <DataSet Name="dsCallType">
+    <Query>
+      <DataSourceReference>MMRPTS</DataSourceReference>
+      <CommandText>SELECT CallTypeCode, CallType
+FROM            BI.ServiceCall (NOLOCK)
+WHERE        (ISNULL(CallType, '') &lt;&gt; '')
+UNION
+SELECT CallTypeCode = '', CallType = 'UNASSIGNED'
+ORDER BY CallType</CommandText>
+    </Query>
+    <Fields>
+      <Field Name="CallTypeCode">
+        <DataField>CallTypeCode</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="CallType">
+        <DataField>CallType</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>

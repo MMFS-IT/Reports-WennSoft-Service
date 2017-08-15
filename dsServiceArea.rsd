@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition">
+  <Description />
+  <DataSet Name="dsServiceArea">
+    <Query>
+      <DataSourceReference>MMRPTS</DataSourceReference>
+      <CommandText>SELECT        Service_Area = RTRIM(Service_Area), 
+			  Service_Area_Description = RTRIM(Service_Area_Description),
+			  Service_Area_Description2	= '(' + RTRIM(Service_Area) + ') ' + RTRIM(Service_Area_Description)
+FROM          SV00220</CommandText>
+    </Query>
+    <Fields>
+      <Field Name="Service_Area">
+        <DataField>Service_Area</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Service_Area_Description">
+        <DataField>Service_Area_Description</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+      <Field Name="Service_Area_Description2">
+        <DataField>Service_Area_Description2</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>

@@ -252,13 +252,17 @@ WHERE
         </Field>
       </Fields>
     </DataSet>
-    <DataSet Name="dsSalesPerson">
+    <DataSet Name="dsServiceSalesPerson">
       <SharedDataSet>
-        <SharedDataSetReference>dsDemandServiceSales</SharedDataSetReference>
+        <SharedDataSetReference>dsServiceSalesPerson</SharedDataSetReference>
       </SharedDataSet>
       <Fields>
         <Field Name="SalesPerson">
           <DataField>SalesPerson</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SLPRSNID">
+          <DataField>SLPRSNID</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
@@ -1645,7 +1649,7 @@ WHERE
       <Prompt>Sales Person</Prompt>
       <ValidValues>
         <DataSetReference>
-          <DataSetName>dsSalesPerson</DataSetName>
+          <DataSetName>dsServiceSalesPerson</DataSetName>
           <ValueField>SalesPerson</ValueField>
           <LabelField>SalesPerson</LabelField>
         </DataSetReference>

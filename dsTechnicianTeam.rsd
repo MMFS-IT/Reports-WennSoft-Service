@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SharedDataSet xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/shareddatasetdefinition">
+  <Description />
+  <DataSet Name="dsTechnicianTeam">
+    <Query>
+      <DataSourceReference>MMRPTS</DataSourceReference>
+      <CommandText>-- USING SV00115 -- SV_Technician_MSTR rather than SV00116 SV_Technician_Team_MSTR 
+-- To limit the list to only teams that are in use
+SELECT DISTINCT   
+	Technician_Team = CASE S.Technician_Team WHEN '' THEN 'UNASSIGNED' ELSE RTRIM(S.Technician_Team) END
+FROM SV00115 AS S ( NOLOCK )
+ORDER BY
+    Technician_Team</CommandText>
+    </Query>
+    <Fields>
+      <Field Name="Technician_Team">
+        <DataField>Technician_Team</DataField>
+        <rd:TypeName>System.String</rd:TypeName>
+      </Field>
+    </Fields>
+  </DataSet>
+</SharedDataSet>

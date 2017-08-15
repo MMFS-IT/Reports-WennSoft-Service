@@ -28,10 +28,10 @@
 
 --DECLARE @FromDate DATETIME = '3/23/2016'
 --DECLARE @ToDate DATETIME = '3/23/2016'
---DECLARE @ServiceArea VARCHAR(100) = 'Eastside'
+--DECLARE @ServiceArea VARCHAR(100) = 'Eastside';
 
 
-DECLARE @TABLE TABLE (Contract_Number CHAR(11), LOCATNNM CHAR(31), Service_Area_Description CHAR(31), Typ CHAR(1), Service_Call_ID VARCHAR(17), Call_Cmpl_Date VARCHAR(10), Technician CHAR(11), Appt_Date VARCHAR(10), Actual_Hours DECIMAL(9,2), Sum_Est_Task_Hours DECIMAL(9,2) , Area_Estimate DECIMAL(9,2) );
+CREATE TABLE #MaintOverUnder (Contract_Number CHAR(11), LOCATNNM CHAR(31), Service_Area_Description CHAR(31), Typ CHAR(1), Service_Call_ID VARCHAR(17), Call_Cmpl_Date VARCHAR(10), Technician CHAR(11), Appt_Date VARCHAR(10), Actual_Hours DECIMAL(9,2), Sum_Est_Task_Hours DECIMAL(9,2) , Area_Estimate DECIMAL(9,2) , Area_Actual DECIMAL(9,2) , Area_Var DECIMAL(9,2) );
 					 
 WITH
 Est
@@ -41,9 +41,23 @@ AS
 	Hours =SUM(Estimate_Hours) * .01
 FROM SV00302 (NOLOCK)	
 GROUP BY Service_Call_ID
+),
+Timecard
+AS
+(
+SELECT
+	Service_Call_ID = WS_Job_Number,
+	EMPLOYID,
+	WS_Transaction_Date,
+	Hours = SUM( TRXHRUNT) * .01
+FROM WS30702 (NOLOCK)	
+WHERE Cost_Element = 1
+AND WS_Transaction_Type = 'SERVICE'
+AND UPRTRXCD NOT IN ('P', 'T')
+GROUP BY WS_Job_Number, EMPLOYID, WS_Transaction_Date
 )
 
-INSERT @TABLE
+INSERT #MaintOverUnder
         (
           Contract_Number ,
           LOCATNNM ,
@@ -63,15 +77,17 @@ SELECT
 	, Typ = LEFT(C.Contract_Internal_Name, 1)
 	, S.Service_Call_ID
 	, Call_Cmpl_Date = CONVERT(VARCHAR,S.Completion_Date, 1)
-	, H.Technician
-	, Appt_Date = CONVERT(VARCHAR, H.Task_Date, 1) 
-	, Actual_Hours = H.Actual_Hours * .01
+	, T.Technician
+	, Appt_Date = CONVERT(VARCHAR, Timecard.WS_Transaction_Date, 1) 
+	, Actual_Hours = Timecard.Hours
 	, Sum_Est_Task_Hours = ISNULL(Est.Hours, 0)
 FROM SV00300 S (NOLOCK)
-JOIN SV00301 H (NOLOCK)
-	ON S.Service_Call_ID = H.Service_Call_ID
+--JOIN SV00301 H (NOLOCK)
+--	ON S.Service_Call_ID = H.Service_Call_ID
+JOIN Timecard 
+	ON Timecard.Service_Call_ID = S.Service_Call_ID
 JOIN SV00115 T (NOLOCK)
-	ON T.Technician = H.Technician
+	ON T.EMPLOYID = Timecard.EMPLOYID
 JOIN SV00500 C (NOLOCK)
 	ON C.CUSTNMBR = S.CUSTNMBR
 	AND C.ADRSCODE = S.ADRSCODE
@@ -86,6 +102,7 @@ WHERE S.Type_Call_Short = 'MCC'
 	AND S.Completion_Date BETWEEN  @FromDate AND @ToDate
 	AND A.Service_Area_Description IN (@ServiceArea)
 	AND T.Primary_Skill_Level != 'SUBCONTRACTOR'
+	AND T.SV_Inactive = 0
 	;
 WITH
 B
@@ -94,7 +111,7 @@ AS
 	Service_Call_ID,
 	Service_Area_Description,
 	Sum_Est_Task_Hours
-FROM @TABLE
+FROM #MaintOverUnder
 ),
 A 
 AS
@@ -103,15 +120,35 @@ AS
 	Area_Hours = SUM(Sum_Est_Task_Hours)
 FROM B
 GROUP BY Service_Area_Description
-)	
-UPDATE @TABLE
+)	,
+Actual AS
+(
+SELECT Service_Area_Description, Service_Call_ID, SUM(Actual_Hours) AS Hours FROM #MaintOverUnder GROUP BY Service_Area_Description, Service_Call_ID
+),
+ActualArea
+AS
+(SELECT Service_Area_Description, SUM(Hours) AS Hours FROM Actual GROUP BY Actual.Service_Area_Description)
+
+UPDATE T
 	SET Area_Estimate = Area_Hours
-FROM @TABLE T
+	,Area_Actual = ActualArea.Hours
+FROM #MaintOverUnder T
 JOIN A
 	ON A.Service_Area_Description = T.Service_Area_Description
+JOIN ActualArea 
+	ON A.Service_Area_Description = T.Service_Area_Description;
 
-SELECT * FROM @TABLE
-WHERE Actual_Hours != 0</CommandText>
+
+UPDATE T
+	SET Area_Var = Area_Actual  - Area_Estimate 
+	
+FROM #MaintOverUnder T
+
+
+SELECT * FROM #MaintOverUnder
+WHERE Actual_Hours != 0
+
+DROP TABLE #MaintOverUnder</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <Fields>
@@ -157,6 +194,14 @@ WHERE Actual_Hours != 0</CommandText>
         </Field>
         <Field Name="Area_Estimate">
           <DataField>Area_Estimate</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Area_Actual">
+          <DataField>Area_Actual</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Area_Var">
+          <DataField>Area_Var</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
       </Fields>
@@ -295,7 +340,7 @@ WHERE Actual_Hours != 0</CommandText>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Appt Date</Value>
+                                  <Value>Timecard Date</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -633,7 +678,7 @@ WHERE Actual_Hours != 0</CommandText>
                     <TablixCell />
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox31">
+                        <Textbox Name="Actual_Hours1">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -650,7 +695,7 @@ WHERE Actual_Hours != 0</CommandText>
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox31</rd:DefaultName>
+                          <rd:DefaultName>Actual_Hours1</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -710,7 +755,7 @@ WHERE Actual_Hours != 0</CommandText>
                               <TextRuns>
                                 <TextRun>
                                   <Label>HR_Var</Label>
-                                  <Value>=Sum(Fields!Actual_Hours.Value) - Max(Fields!Sum_Est_Task_Hours.Value)</Value>
+                                  <Value>=SUM(Fields!Actual_Hours.Value) - Max(Fields!Sum_Est_Task_Hours.Value)</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -887,8 +932,8 @@ WHERE Actual_Hours != 0</CommandText>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Label>HR_Var</Label>
-                                  <Value>=Sum(Fields!Actual_Hours.Value) - Max(Fields!Area_Estimate.value)</Value>
+                                  <Label>Area_Var</Label>
+                                  <Value>=SUM(Fields!Actual_Hours.Value) - Fields!Area_Estimate.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -1194,20 +1239,12 @@ WHERE Actual_Hours != 0</CommandText>
                                               </Textbox>
                                             </CellContents>
                                           </TablixHeader>
-                                          <KeepWithGroup>After</KeepWithGroup>
-                                          <RepeatOnNewPage>true</RepeatOnNewPage>
                                         </TablixMember>
                                       </TablixMembers>
-                                      <KeepWithGroup>After</KeepWithGroup>
-                                      <RepeatOnNewPage>true</RepeatOnNewPage>
                                     </TablixMember>
                                   </TablixMembers>
-                                  <KeepWithGroup>After</KeepWithGroup>
-                                  <RepeatOnNewPage>true</RepeatOnNewPage>
                                 </TablixMember>
                               </TablixMembers>
-                              <KeepWithGroup>After</KeepWithGroup>
-                              <RepeatOnNewPage>true</RepeatOnNewPage>
                             </TablixMember>
                           </TablixMembers>
                           <KeepWithGroup>After</KeepWithGroup>
@@ -1425,7 +1462,6 @@ WHERE Actual_Hours != 0</CommandText>
                           </TablixMembers>
                         </TablixMember>
                       </TablixMembers>
-                      <RepeatOnNewPage>true</RepeatOnNewPage>
                     </TablixMember>
                     <TablixMember>
                       <TablixHeader>
@@ -1508,12 +1544,8 @@ WHERE Actual_Hours != 0</CommandText>
                               </Textbox>
                             </CellContents>
                           </TablixHeader>
-                          <KeepWithGroup>Before</KeepWithGroup>
-                          <RepeatOnNewPage>true</RepeatOnNewPage>
                         </TablixMember>
                       </TablixMembers>
-                      <KeepWithGroup>Before</KeepWithGroup>
-                      <RepeatOnNewPage>true</RepeatOnNewPage>
                     </TablixMember>
                   </TablixMembers>
                 </TablixMember>

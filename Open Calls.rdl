@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:cl="http://schemas.microsoft.com/sqlserver/reporting/2010/01/componentdefinition" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/reportdefinition">
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
     <DataSource Name="MMRPTS">
@@ -20,8 +20,8 @@
             <Value>=Parameters!Tech.Value</Value>
           </QueryParameter>
         </QueryParameters>
-        <CommandText>--DECLARE @Tech VARCHAR(50) = 'MOEHRINGM'
---DECLARE @Technician_Team VARCHAR(100) ='EASTSIDE';
+        <CommandText>--DECLARE @Tech VARCHAR(50) = 'BRANDONLT'
+--DECLARE @Technician_Team VARCHAR(100) ='HVAC SEATTLE';
 
 --Modified Where clause on 6/30/2010 added to Appointment Status
 
@@ -101,9 +101,11 @@ WHERE Task_Date &lt; = GETDATE()
           , Service_Description = REPLACE(RTRIM(CONVERT(VARCHAR(MAX),ISNULL(M.Service_Description, ''))) + RTRIM(CONVERT(VARCHAR(MAX),ISNULL(Notes.Record_Notes, ''))),'~', ',')
           --Mosdified 12/10/2012 Frank
           --, MCC_Repair = CASE M.Type_Call_Short WHEN 'MCC' THEN 'MCC' ELSE 'REPAIR' END
-          , MCC_Repair = CASE M.Type_Call_Short WHEN 'MCC' THEN 'MCC' WHEN 'PQT' THEN 'PQT' ELSE 'NON-MCC' END
+          --, MCC_Repair = CASE M.Type_Call_Short WHEN 'MCC' THEN 'MCC' WHEN 'PQT' THEN 'PQT' ELSE 'NON-MCC' END
           , OldestToNewest = CASE M.Type_Call_Short WHEN 'MCC' THEN  CONVERT(VARCHAR, M.Date_Of_Service_Call,112) ELSE  CONVERT(VARCHAR,M.Date1,112) END
           , SortDate_Opened = CONVERT(VARCHAR,M.Date1,112)
+		  , MCC_Repair = CASE M.Type_Call_Short WHEN 'MCC' THEN '1' WHEN 'PFQ' THEN '3' WHEN 'PQT' THEN '3' ELSE '2' END
+	
           FROM SV00300 M (NOLOCK)
           JOIN Technician Tech
           ON Tech.Service_Call_ID = M.Service_Call_ID
@@ -128,7 +130,7 @@ WHERE Task_Date &lt; = GETDATE()
           WHERE M.Status_Of_Call = 'OPEN'
           AND (ISNULL(Tech.Technician_Team, '') IN ( @Technician_Team ) )
           AND Tech.Technician IN ( @Tech )
-        </CommandText>
+ </CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <Fields>
@@ -1260,6 +1262,7 @@ WHERE Task_Date &lt; = GETDATE()
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </Border>
+                            <BackgroundColor>LightSteelBlue</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -1294,6 +1297,7 @@ WHERE Task_Date &lt; = GETDATE()
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </Border>
+                            <BackgroundColor>LightSteelBlue</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -1564,11 +1568,6 @@ WHERE Task_Date &lt; = GETDATE()
                                   <GroupExpression>=Fields!Service_Call_ID.Value</GroupExpression>
                                 </GroupExpressions>
                               </Group>
-                              <SortExpressions>
-                                <SortExpression>
-                                  <Value>=Fields!SortDate_Opened.Value</Value>
-                                </SortExpression>
-                              </SortExpressions>
                               <TablixMembers>
                                 <TablixMember>
                                   <Group Name="Group_TypeCall">
@@ -1638,6 +1637,11 @@ WHERE Task_Date &lt; = GETDATE()
                                   <TablixMembers>
                                     <TablixMember>
                                       <Group Name="Details" />
+                                      <SortExpressions>
+                                        <SortExpression>
+                                          <Value>=Fields!SortDate_Opened.Value</Value>
+                                        </SortExpression>
+                                      </SortExpressions>
                                     </TablixMember>
                                   </TablixMembers>
                                 </TablixMember>
@@ -1654,9 +1658,10 @@ WHERE Task_Date &lt; = GETDATE()
                                       <Paragraph>
                                         <TextRuns>
                                           <TextRun>
-                                            <Value />
+                                            <Value>Total:</Value>
                                             <Style>
-                                              <FontSize>7pt</FontSize>
+                                              <FontSize>8pt</FontSize>
+                                              <FontWeight>Bold</FontWeight>
                                             </Style>
                                           </TextRun>
                                         </TextRuns>
@@ -1669,6 +1674,7 @@ WHERE Task_Date &lt; = GETDATE()
                                         <Color>LightGrey</Color>
                                         <Style>Solid</Style>
                                       </Border>
+                                      <BackgroundColor>LightSteelBlue</BackgroundColor>
                                       <PaddingLeft>2pt</PaddingLeft>
                                       <PaddingRight>2pt</PaddingRight>
                                       <PaddingTop>2pt</PaddingTop>
@@ -1872,10 +1878,9 @@ WHERE Task_Date &lt; = GETDATE()
     <ReportParameter Name="Technician_Team">
       <DataType>String</DataType>
       <DefaultValue>
-        <DataSetReference>
-          <DataSetName>dsTechnicianTeam</DataSetName>
-          <ValueField>Technician_Team</ValueField>
-        </DataSetReference>
+        <Values>
+          <Value>HVAC SEATTLE</Value>
+        </Values>
       </DefaultValue>
       <Prompt>Technician Team</Prompt>
       <ValidValues>
@@ -1889,6 +1894,11 @@ WHERE Task_Date &lt; = GETDATE()
     </ReportParameter>
     <ReportParameter Name="Tech">
       <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>BRANDONLT</Value>
+        </Values>
+      </DefaultValue>
       <Prompt>Tech</Prompt>
       <ValidValues>
         <DataSetReference>
@@ -1900,6 +1910,24 @@ WHERE Task_Date &lt; = GETDATE()
       <MultiValue>true</MultiValue>
     </ReportParameter>
   </ReportParameters>
+  <ReportParametersLayout>
+    <GridLayoutDefinition>
+      <NumberOfColumns>2</NumberOfColumns>
+      <NumberOfRows>1</NumberOfRows>
+      <CellDefinitions>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>Technician_Team</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>Tech</ParameterName>
+        </CellDefinition>
+      </CellDefinitions>
+    </GridLayoutDefinition>
+  </ReportParametersLayout>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:ReportID>090903f2-2ae5-4478-b5be-16d268050a0e</rd:ReportID>
 </Report>

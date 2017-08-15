@@ -17,95 +17,8 @@
             <Value>=Parameters!Technician_ID.Value</Value>
           </QueryParameter>
         </QueryParameters>
-        <CommandText>WITH
-Most_Recent_Contract
-AS
-(
-SELECT C.CUSTNMBR,
-	C.ADRSCODE, 
-	C.Contract_Number, 
-	Max(C.WSCONTSQ) AS Seq
-FROM SV00500 C (NOLOCK)
-INNER JOIN SV00585 S (NOLOCK)
-ON C.WSCONTSQ = S.WSCONTSQ
-	AND C.Contract_Number = S.Contract_Number
-	AND C.ADRSCODE = S.ADRSCODE 
-	AND C.CUSTNMBR = S.CUSTNMBR
-WHERE C.Cancel_Box = 0
-	AND S.Required = 1 
-	AND S.Estimate_Hours &lt;&gt; 0 
-	AND S.Schedule_Date &gt; CAST('1/1/1950' as datetime)
-GROUP BY C.CUSTNMBR, C.ADRSCODE, C.Contract_Number
-
-)
-
-SELECT
-    Technician_ID = RTRIM(SV00115.Technician_ID) ,
-    RIGHT(RTRIM([JOBTITLE]), 2) AS Pay_Lvl ,
-    RTRIM(SV00115.Primary_Skill_Level) AS Skill_Level ,
-    Contract_Number = RTRIM(SV99403.Contract_Number) ,
-    RTRIM(SV00200.LOCATNNM) AS Location_Name ,
-    RTRIM(SV00200.CUSTNAME) AS Customer_Name ,
-    Equipment_ID = RTRIM(SV99403.Equipment_ID)
---, Switch(InStr([SV00582]![Sub_4],"TT")&gt;0,"TRAVEL",InStr([SV00582]![Sub_4],"ZZ")&gt;0,"MAINT",Len(RTrim([SV00582]![Sub_4]))&gt;0,RTrim([SV00582]![Sub_4]),1=1,"MAINT") AS Task_Code
-  , Task_Code = RTRIM(CASE WHEN [SV00582].[Sub_4] LIKE '%TT%' THEN 'TRAVEL' WHEN [SV00582].[Sub_4] LIKE '%ZZ%' THEN 'MAINT' WHEN LEN(RTRIM([SV00582].[Sub_4])) &gt; 0 THEN  RTRIM([SV00582].[Sub_4]) ELSE 'MAINT' END)	
-  , Jan = SUM(CASE WHEN Month([SV00585].[Schedule_Date]) = 1 THEN [SV00585].[Estimate_Hours] * 0.01 ELSE 0 END)
-  , Feb = SUM(CASE WHEN Month([SV00585].[Schedule_Date]) = 2 THEN [SV00585].[Estimate_Hours] * 0.01 ELSE 0 END)
-  , Mar = SUM(CASE WHEN Month([SV00585].[Schedule_Date]) = 3 THEN [SV00585].[Estimate_Hours] * 0.01 ELSE 0 END)
-  , Apr = SUM(CASE WHEN Month([SV00585].[Schedule_Date]) = 4 THEN [SV00585].[Estimate_Hours] * 0.01 ELSE 0 END)
-  , May = SUM(CASE WHEN Month([SV00585].[Schedule_Date]) = 5 THEN [SV00585].[Estimate_Hours] * 0.01 ELSE 0 END)
-  , Jun = SUM(CASE WHEN Month([SV00585].[Schedule_Date]) = 6 THEN [SV00585].[Estimate_Hours] * 0.01 ELSE 0 END)
-  , Jul = SUM(CASE WHEN Month([SV00585].[Schedule_Date]) = 7 THEN [SV00585].[Estimate_Hours] * 0.01 ELSE 0 END)
-  , Aug = SUM(CASE WHEN Month([SV00585].[Schedule_Date]) = 8 THEN [SV00585].[Estimate_Hours] * 0.01 ELSE 0 END)
-  , Sep = SUM(CASE WHEN Month([SV00585].[Schedule_Date]) = 9 THEN [SV00585].[Estimate_Hours] * 0.01 ELSE 0 END)
-  , Oct = SUM(CASE WHEN Month([SV00585].[Schedule_Date]) = 10 THEN [SV00585].[Estimate_Hours] * 0.01 ELSE 0 END)
-  , Nov = SUM(CASE WHEN Month([SV00585].[Schedule_Date]) = 11 THEN [SV00585].[Estimate_Hours] * 0.01 ELSE 0 END)
-  , Dec = SUM(CASE WHEN Month([SV00585].[Schedule_Date]) = 12 THEN [SV00585].[Estimate_Hours] * 0.01 ELSE 0 END)
-  , Total = SUM([SV00585].[Estimate_Hours] * 0.01)
-FROM
-    Most_Recent_Contract
-INNER JOIN ( ( ( SV00115 (NOLOCK)
-                 INNER JOIN UPR00100 E (NOLOCK)
-                    ON SV00115.EMPLOYID = E.EMPLOYID
-               )
-               INNER JOIN ( ( SV99403 (NOLOCK)
-                              INNER JOIN SV00582 (NOLOCK)
-                                ON ( SV99403.CUSTNMBR = SV00582.CUSTNMBR )
-                                   AND ( SV99403.ADRSCODE = SV00582.ADRSCODE )
-                                   AND ( SV99403.Contract_Number = SV00582.Contract_Number )
-                                   AND ( SV99403.WSCONTSQ = SV00582.WSCONTSQ )
-                                   AND ( SV99403.Equipment_ID = SV00582.Equipment_ID )
-                            )
-                            INNER JOIN SV00585 (NOLOCK)
-                                ON ( SV00582.CUSTNMBR = SV00585.CUSTNMBR )
-                                   AND ( SV00582.ADRSCODE = SV00585.ADRSCODE )
-                                   AND ( SV00582.Contract_Number = SV00585.Contract_Number )
-                                   AND ( SV00582.WSCONTSQ = SV00585.WSCONTSQ )
-                                   AND ( SV00582.Equipment_ID = SV00585.Equipment_ID )
-                                   AND ( SV00582.Task_Code = SV00585.Task_Code )
-                          )
-                          ON SV00115.Technician = SV00582.Technician_ID
-             )
-             INNER JOIN SV00200 (NOLOCK)
-                ON ( SV99403.CUSTNMBR = SV00200.CUSTNMBR )
-                   AND ( SV99403.ADRSCODE = SV00200.ADRSCODE )
-           )
-    ON ( Most_Recent_Contract.CUSTNMBR = SV99403.CUSTNMBR )
-       AND ( Most_Recent_Contract.ADRSCODE = SV99403.ADRSCODE )
-       AND ( Most_Recent_Contract.Contract_Number = SV99403.Contract_Number )
-       AND ( Most_Recent_Contract.[Seq] = SV99403.WSCONTSQ )
-WHERE
-    ( (( SV00585.Estimate_Hours ) &gt; 0) )
-AND SV00115.Technician_ID IN (@Technician_ID)
-GROUP BY
-    SV00115.Technician_ID ,
-    RIGHT(RTRIM([JOBTITLE]), 2) ,
-    SV00115.Primary_Skill_Level ,
-    SV99403.Contract_Number ,
-    SV00200.LOCATNNM ,
-    SV00200.CUSTNAME ,
-    SV99403.Equipment_ID,
-	SV00582.Sub_4</CommandText>
+        <CommandText>SELECT * FROM  [MMRPTS].[BI].[TechnicianWorkloadByTech]
+WHERE Technician_ID IN (@Technician_ID)</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <Fields>
@@ -192,6 +105,10 @@ GROUP BY
         <Field Name="Total">
           <DataField>Total</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="ID">
+          <DataField>ID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
       </Fields>
     </DataSet>

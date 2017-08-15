@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:cl="http://schemas.microsoft.com/sqlserver/reporting/2010/01/componentdefinition" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/reportdefinition">
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
     <DataSource Name="MMRPTS">
@@ -35,6 +35,9 @@
         <CommandText>--DECLARE @Divisions VARCHAR(100) = '7040'
 --DECLARE @Year INT = 2014
 --DECLARE @Month INT = 6;
+--DECLARE @TradeType VARCHAR(100)
+--DECLARE @ServiceAreaDescription VARCHAR(100)
+--DECLARE @SalesPerson VARCHAR(100);
 
 WITH  L AS (
         SELECT
@@ -58,8 +61,7 @@ SELECT
     Customer_Name = RTRIM(SV00200.CUSTNAME) ,
     Location_Name = RTRIM(SV00200.LOCATNNM) ,
     Type_of_Call = RTRIM(SV00300.Type_of_Call) ,
-    SalesPerson = RTRIM(Upr00100.LASTNAME) + ', '
-        + RTRIM(Upr00100.FRSTNAME) + ' ' + RTRIM(Upr00100.MIDLNAME) ,
+    SalesPerson = RTRIM(E.LASTNAME) + ', ' + RTRIM(E.FRSTNAME) + ' ' + RTRIM(E.MIDLNAME),
     Completion_Date,
     Service_Area_Description = RTRIM(CASE WHEN ISNULL(SV00220.Service_Area_Description, '') = '' THEN 'Unassigned' ELSE Service_Area_Description END),
     Trade_Type = RTRIM(SV00300.User_Define_1a ) ,
@@ -67,7 +69,7 @@ SELECT
     SV00701.Billable_Tax ,
     SV00701.Billable_All ,
 	Billable_Total = SV00701.Billable_All - SV00701.Billable_Tax,
-	AMU = CASE WHEN SV00701.Cost_All = 0 THEN 0 ELSE (SV00701.Billable_All - SV00701.Billable_Tax) /  CASE WHEN SV00701.Call_Invoice_Number LIKE 'CR%' THEN SV00701.Cost_All * -1 ELSE SV00701.Cost_All END END,
+	AMU = CONVERT(DECIMAL(9,3),CASE WHEN SV00701.Cost_All = 0 THEN 0 ELSE (SV00701.Billable_All - SV00701.Billable_Tax) /  CASE WHEN SV00701.Call_Invoice_Number LIKE 'CR%' THEN SV00701.Cost_All * -1 ELSE SV00701.Cost_All END END),
 	Grand_Total = (SV00701.Billable_All - SV00701.Billable_Tax) +  CASE WHEN SV00701.Call_Invoice_Number LIKE 'CR%' THEN SV00701.Cost_All * -1 ELSE SV00701.Cost_All END
       FROM
         SV00701 (NOLOCK)-- SV_Invoice_History
@@ -92,8 +94,8 @@ SELECT
             ON SV00515.WSReserved_STR1 = SV00517.SVSLARES
       LEFT JOIN L ON L.Service_Call_ID = SV00701.Service_Call_ID
 		AND L.Call_Invoice_Number =  SV00701.Call_Invoice_Number
-      LEFT JOIN dbo.UPR00100 (NOLOCK)
-        ON Upr00100.EMPLOYID = sv00300.SLPRSNID
+      LEFT JOIN dbo.UPR00100 E (NOLOCK)
+        ON E.EMPLOYID = sv00300.SLPRSNID
     --dbo.MM_SmartList_WS_Service_Invoice_History
 /*USE DIVISIONS TO SELECT SEATTLE OR OREGON*/
 /*USE DOCUMENT_DATE FOR THE DATE RANGE FOR EACH MONTH*/
@@ -108,9 +110,8 @@ WHERE
     AND YEAR(SV00701.DOCDATE) = @Year 
     AND MONTH(SV00701.DOCDATE) = @Month
     AND  Service_Area_Description IN (@ServiceAreaDescription)
-    AND SV00300.User_Define_1a IN (@TradeType)
-    AND ISNULL(RTRIM(Upr00100.LASTNAME) + ', '
-        + RTRIM(Upr00100.FRSTNAME) + ' ' + RTRIM(Upr00100.MIDLNAME), '') IN (@SalesPerson)</CommandText>
+   AND SV00300.User_Define_1a IN (@TradeType)  
+	AND sv00300.SLPRSNID IN ( @SalesPerson )</CommandText>
       </Query>
       <Fields>
         <Field Name="Document_Date">
@@ -202,47 +203,6 @@ WHERE
         </Field>
       </Fields>
     </DataSet>
-    <DataSet Name="dsDemandServicesServiceArea">
-      <SharedDataSet>
-        <SharedDataSetReference>dsDemandServicesServiceArea</SharedDataSetReference>
-      </SharedDataSet>
-      <Fields>
-        <Field Name="Service_Area_Description">
-          <DataField>Service_Area_Description</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-      </Fields>
-      <Filters>
-        <Filter>
-          <FilterExpression>=Fields!Service_Area_Description.Value</FilterExpression>
-          <Operator>NotEqual</Operator>
-          <FilterValues>
-            <FilterValue>Local 16 - PDX</FilterValue>
-          </FilterValues>
-        </Filter>
-        <Filter>
-          <FilterExpression>=Fields!Service_Area_Description.Value</FilterExpression>
-          <Operator>NotEqual</Operator>
-          <FilterValues>
-            <FilterValue>Internal Costs</FilterValue>
-          </FilterValues>
-        </Filter>
-        <Filter>
-          <FilterExpression>=Fields!Service_Area_Description.Value</FilterExpression>
-          <Operator>NotEqual</Operator>
-          <FilterValues>
-            <FilterValue>SPTI-OR</FilterValue>
-          </FilterValues>
-        </Filter>
-        <Filter>
-          <FilterExpression>=Fields!Service_Area_Description.Value</FilterExpression>
-          <Operator>NotEqual</Operator>
-          <FilterValues>
-            <FilterValue>Subcontract Area</FilterValue>
-          </FilterValues>
-        </Filter>
-      </Filters>
-    </DataSet>
     <DataSet Name="dsTradeType">
       <SharedDataSet>
         <SharedDataSetReference>dsTradeType</SharedDataSetReference>
@@ -255,12 +215,39 @@ WHERE
       </Fields>
     </DataSet>
     <DataSet Name="dsSalesPerson">
-      <SharedDataSet>
-        <SharedDataSetReference>dsDemandServiceSales</SharedDataSetReference>
-      </SharedDataSet>
+      <Query>
+        <DataSourceName>MMRPTS</DataSourceName>
+        <CommandText>SELECT DISTINCT 
+                         ISNULL(RTRIM(E.LASTNAME) + ', ' + RTRIM(E.FRSTNAME) + ' ' + RTRIM(E.MIDLNAME), S.SLPRSNID) AS SalesPerson, RTRIM(ISNULL(S.SLPRSNID, '')) 
+                         AS SLPRSNID
+FROM            SV00300 AS S LEFT OUTER JOIN
+                         UPR00100 AS E ON S.SLPRSNID = E.EMPLOYID
+ORDER BY SalesPerson</CommandText>
+      </Query>
       <Fields>
         <Field Name="SalesPerson">
           <DataField>SalesPerson</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SLPRSNID">
+          <DataField>SLPRSNID</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="dsServiceArea">
+      <Query>
+        <DataSourceName>MMRPTS</DataSourceName>
+        <CommandText>SELECT        RTRIM(CASE WHEN ISNULL(SV00220.Service_Area_Description, '') = '' THEN 'Unassigned' ELSE Service_Area_Description END) AS Service_Area_Description
+FROM            SV00300 INNER JOIN
+                         SV00220 ON SV00300.Service_Area = SV00220.Service_Area
+WHERE        (SV00300.Divisions LIKE '%40')
+UNION
+SELECT        'Unassigned' AS Expr1</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="Service_Area_Description">
+          <DataField>Service_Area_Description</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
@@ -1545,19 +1532,6 @@ WHERE
       </ValidValues>
       <MultiValue>true</MultiValue>
     </ReportParameter>
-    <ReportParameter Name="ServiceAreaDescription">
-      <DataType>String</DataType>
-      <AllowBlank>true</AllowBlank>
-      <Prompt>Service Area</Prompt>
-      <ValidValues>
-        <DataSetReference>
-          <DataSetName>dsDemandServicesServiceArea</DataSetName>
-          <ValueField>Service_Area_Description</ValueField>
-          <LabelField>Service_Area_Description</LabelField>
-        </DataSetReference>
-      </ValidValues>
-      <MultiValue>true</MultiValue>
-    </ReportParameter>
     <ReportParameter Name="TradeType">
       <DataType>String</DataType>
       <AllowBlank>true</AllowBlank>
@@ -1567,19 +1541,6 @@ WHERE
           <DataSetName>dsTradeType</DataSetName>
           <ValueField>TradeType</ValueField>
           <LabelField>TradeType</LabelField>
-        </DataSetReference>
-      </ValidValues>
-      <MultiValue>true</MultiValue>
-    </ReportParameter>
-    <ReportParameter Name="SalesPerson">
-      <DataType>String</DataType>
-      <AllowBlank>true</AllowBlank>
-      <Prompt>Sales Person</Prompt>
-      <ValidValues>
-        <DataSetReference>
-          <DataSetName>dsSalesPerson</DataSetName>
-          <ValueField>SalesPerson</ValueField>
-          <LabelField>SalesPerson</LabelField>
         </DataSetReference>
       </ValidValues>
       <MultiValue>true</MultiValue>
@@ -1602,7 +1563,70 @@ WHERE
       </DefaultValue>
       <Prompt>Month</Prompt>
     </ReportParameter>
+    <ReportParameter Name="SalesPerson">
+      <DataType>String</DataType>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>Sales Person</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>dsSalesPerson</DataSetName>
+          <ValueField>SLPRSNID</ValueField>
+          <LabelField>SalesPerson</LabelField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
+    <ReportParameter Name="ServiceAreaDescription">
+      <DataType>String</DataType>
+      <Prompt>Service Area</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>dsServiceArea</DataSetName>
+          <ValueField>Service_Area_Description</ValueField>
+          <LabelField>Service_Area_Description</LabelField>
+        </DataSetReference>
+      </ValidValues>
+      <MultiValue>true</MultiValue>
+    </ReportParameter>
   </ReportParameters>
+  <ReportParametersLayout>
+    <GridLayoutDefinition>
+      <NumberOfColumns>2</NumberOfColumns>
+      <NumberOfRows>3</NumberOfRows>
+      <CellDefinitions>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>Divisions</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>TradeType</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>1</RowIndex>
+          <ParameterName>Year</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>1</RowIndex>
+          <ParameterName>Month</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>2</RowIndex>
+          <ParameterName>SalesPerson</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>2</RowIndex>
+          <ParameterName>ServiceAreaDescription</ParameterName>
+        </CellDefinition>
+      </CellDefinitions>
+    </GridLayoutDefinition>
+  </ReportParametersLayout>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:ReportID>4fa67314-38df-4178-b3c4-7c0ca2506dc6</rd:ReportID>
 </Report>
